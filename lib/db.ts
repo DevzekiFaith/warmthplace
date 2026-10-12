@@ -2,13 +2,13 @@ import path from "path";
 import fs from "fs";
 import { PrismaClient } from "@prisma/client";
 
-function resolveDatabaseUrl(): string {
-  const envUrl = process.env.DATABASE_URL;
+const defaultPrismaPath = path.resolve(process.cwd(), "prisma/dev.db");
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = `file:${defaultPrismaPath}`;
+}
 
-  if (!envUrl) {
-    const defaultPrismaPath = path.resolve(process.cwd(), "prisma/dev.db");
-    return `file:${defaultPrismaPath}`;
-  }
+function resolveDatabaseUrl(): string {
+  const envUrl = process.env.DATABASE_URL || `file:${defaultPrismaPath}`;
 
   // Handle SQLite file URLs
   if (envUrl.startsWith("file:")) {

@@ -73,18 +73,72 @@ export default async function HomePage() {
     console.warn("[HomePage] Database query notice during build:", err);
   }
 
-  const shoppableSceneItems = livingRoomProducts.map((p) => ({
-    id: p.id,
-    slug: p.slug,
-    title: p.title,
-    price: p.price,
-    imageUrl: p.images[0]?.url || "/images/catalogue/indigo-tide.jpg",
-    category: p.category,
-    stock: p.stock,
-    shippingClass: p.shippingClass,
-    department: p.department,
-    productType: p.productType,
-  }));
+  const defaultSceneItems = [
+    {
+      id: "scene-item-1",
+      slug: "indigo-tide-evening-lantern",
+      title: "Indigo Tide (Evening Lantern)",
+      price: 450000,
+      imageUrl: "/images/catalogue/indigo-tide.jpg",
+      category: "ORIGINAL_CANVAS",
+      stock: 1,
+      shippingClass: "CRATED_ART",
+      department: "ART",
+      productType: "ORIGINAL",
+    },
+    {
+      id: "scene-item-2",
+      slug: "incised-terracotta-vessel",
+      title: "Incised Terracotta Vessel",
+      price: 65000,
+      imageUrl: "/images/catalogue/incised-terracotta-vessel.jpg",
+      category: "CERAMIC_VESSEL",
+      stock: 4,
+      shippingClass: "STANDARD_PARCEL",
+      department: "DECOR",
+      productType: "DECOR",
+    },
+    {
+      id: "scene-item-3",
+      slug: "strip-woven-throw",
+      title: "Narrow-Loom Strip Throw",
+      price: 48000,
+      imageUrl: "/images/catalogue/strip-woven-throw.jpg",
+      category: "HEIRLOOM_TEXTILE",
+      stock: 6,
+      shippingClass: "STANDARD_PARCEL",
+      department: "DECOR",
+      productType: "DECOR",
+    },
+    {
+      id: "scene-item-4",
+      slug: "fluted-iroko-pedestal-bowl",
+      title: "Fluted Iroko Pedestal Bowl",
+      price: 85000,
+      imageUrl: "/images/catalogue/fluted-iroko-pedestal-bowl.jpg",
+      category: "WOODWORK",
+      stock: 2,
+      shippingClass: "STANDARD_PARCEL",
+      department: "DECOR",
+      productType: "DECOR",
+    },
+  ];
+
+  const shoppableSceneItems =
+    livingRoomProducts.length > 0
+      ? livingRoomProducts.map((p) => ({
+          id: p.id,
+          slug: p.slug,
+          title: p.title,
+          price: p.price,
+          imageUrl: p.images[0]?.url || "/images/catalogue/indigo-tide.jpg",
+          category: p.category,
+          stock: p.stock,
+          shippingClass: p.shippingClass,
+          department: p.department,
+          productType: p.productType,
+        }))
+      : defaultSceneItems;
 
   return (
     <>

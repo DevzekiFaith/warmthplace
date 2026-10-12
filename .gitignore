@@ -30,8 +30,13 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files (local secrets ignored, but committed build defaults preserved)
+.env
+.env.local
+.env*.local
+
+!.env.example
+!.env.production
 
 # vercel
 .vercel
@@ -39,8 +44,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-!.env.example
 /storage/uploads/*
 !/storage/uploads/.gitkeep
 /prisma/*.db-journal

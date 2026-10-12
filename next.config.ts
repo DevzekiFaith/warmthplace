@@ -1,4 +1,10 @@
 import type { NextConfig } from "next";
+import path from "path";
+
+// Ensure DATABASE_URL is defined across all build workers and serverless environments
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = `file:${path.resolve(process.cwd(), "prisma/dev.db")}`;
+}
 
 const isProd = process.env.NODE_ENV === "production";
 
