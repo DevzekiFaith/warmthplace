@@ -34,6 +34,7 @@ export default async function FullShopPage() {
       description="The definitive Warmthplace collection bridging monumental contemporary African canvases with tactile living homeware. Filter by medium, collection, or search term below."
       products={products}
       categories={combinedCategories}
+      department="ALL"
     />
   );
 }

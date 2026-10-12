@@ -42,7 +42,7 @@ interface CatalogueViewProps {
   description: string;
   products: CatalogueProduct[];
   categories: CatalogueCategory[];
-  department: "ART" | "DECOR";
+  department?: "ART" | "DECOR" | "ALL";
   initialCategory?: string;
 }
 
@@ -52,7 +52,7 @@ export function CatalogueView({
   description,
   products,
   categories,
-  department,
+  department = "ALL",
   initialCategory,
 }: CatalogueViewProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>(
@@ -115,7 +115,7 @@ export function CatalogueView({
             className={`filter-pill ${selectedCategory === "ALL" ? "active" : ""}`}
             onClick={() => setSelectedCategory("ALL")}
           >
-            All {department === "ART" ? "Works" : "Pieces"} ({products.length})
+            All {department === "ART" ? "Works" : department === "DECOR" ? "Pieces" : "Works & Objects"} ({products.length})
           </button>
           {categories.map((cat) => {
             const count = products.filter((p) => p.category === cat.id).length;
