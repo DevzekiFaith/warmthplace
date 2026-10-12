@@ -75,20 +75,7 @@ export function Navbar() {
 
   return (
     <>
-      {/* ─── 1. TOP CURATORIAL ANNOUNCEMENT STRIP ─── */}
-      <div className="announcement-strip" role="region" aria-label="Curatorial Announcement">
-        <div className="container announcement-inner">
-          <span className="announcement-primary">
-            Complimentary White-Glove Crated Transit on Orders Over ₦2,000,000
-          </span>
-          <span className="announcement-divider" aria-hidden="true">|</span>
-          <span className="announcement-secondary">
-            Museum Certificate of Authenticity with Every Work
-          </span>
-        </div>
-      </div>
-
-      {/* ─── 2. PRINCIPAL SITE HEADER ─── */}
+      {/* ─── PRINCIPAL SITE HEADER ─── */}
       <header className={`site-header ${scrolled ? "header-scrolled" : ""}`}>
         <div className="container header-inner">
           {/* Brand Logo & Monogram */}

@@ -2370,6 +2370,66 @@ p {
   padding: 1rem clamp(1.5rem, 3vw, 3.25rem) clamp(2rem, 3.5vw, 3.5rem);
   position: relative;
   z-index: 5;
+  transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mockup-hero-body.is-transitioning {
+  opacity: 0.22;
+}
+
+.mockup-slide-img {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
+}
+
+/* Slider Pagination Metadata */
+.mockup-slider-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 4;
+}
+
+.mockup-slide-counter {
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-muted);
+}
+
+.mockup-slide-counter .counter-sep {
+  opacity: 0.4;
+  margin: 0 2px;
+}
+
+.mockup-slide-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mockup-slide-pill {
+  width: 20px;
+  height: 3px;
+  background-color: rgba(36, 34, 30, 0.2);
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mockup-slide-pill:hover {
+  background-color: rgba(36, 34, 30, 0.5);
+  height: 4px;
+}
+
+.mockup-slide-pill.active {
+  width: 40px;
+  background-color: #935742;
+  height: 4px;
 }
 
 .mockup-left-group {
@@ -2467,11 +2527,88 @@ p {
   gap: clamp(8px, 1.1vw, 14px);
 }
 
-.mockup-pointer-triangle {
-  width: 22px;
-  height: 22px;
+.mockup-slider-trigger-cluster {
+  display: flex;
+  align-items: center;
+  gap: 3px;
   flex-shrink: 0;
   margin-right: 2px;
+  position: relative;
+  z-index: 10;
+}
+
+.mockup-pointer-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  outline: none;
+  border-radius: 50%;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+}
+
+.mockup-prev-arrow {
+  width: 17px;
+  height: 17px;
+  opacity: 0.35;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mockup-prev-arrow:hover {
+  opacity: 0.9;
+  transform: translateX(-2px) scale(1.15);
+}
+
+.mockup-next-arrow {
+  width: 25px;
+  height: 25px;
+}
+
+.mockup-next-arrow:hover {
+  transform: translateX(3px) scale(1.22);
+}
+
+.mockup-next-arrow:active {
+  transform: scale(0.95);
+}
+
+.wedge-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(147, 87, 66, 0.35));
+}
+
+.primary-wedge {
+  filter: drop-shadow(0 3px 6px rgba(147, 87, 66, 0.5));
+}
+
+.wedge-pulse-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 1px solid rgba(147, 87, 66, 0.4);
+  animation: pulseWedge 2.8s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+@keyframes pulseWedge {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
 }
 
 .mockup-strip {

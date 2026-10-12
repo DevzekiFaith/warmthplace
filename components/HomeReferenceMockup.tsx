@@ -1,8 +1,157 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
+/**
+ * HeroSlideData defines each slide in the signature triptych collage.
+ * You can add new slides here anytime — each slide automatically uses
+ * the exact same geometric layout (left strip, center arch, center bottom, right strip).
+ */
+export interface HeroSlideData {
+  id: string;
+  tag: string;
+  watermark: string;
+  headline: {
+    line1: string;
+    line2: string;
+  };
+  exploreText: string;
+  exploreHref: string;
+  leftStrip: {
+    src: string;
+    alt: string;
+    title: string;
+    href: string;
+  };
+  centerArch: {
+    src: string;
+    alt: string;
+    title: string;
+    href: string;
+  };
+  centerBottom: {
+    src: string;
+    alt: string;
+    title: string;
+    href: string;
+  };
+  rightStrip: {
+    src: string;
+    alt: string;
+    title: string;
+    href: string;
+  };
+}
+
+export const HERO_SLIDES: HeroSlideData[] = [
+  {
+    id: "gallery-fine-art",
+    tag: "Fine Art",
+    watermark: "Art.",
+    headline: {
+      line1: "Explore the expressions",
+      line2: "of creativity!",
+    },
+    exploreText: "Explore Collections",
+    exploreHref: "#shop-catalogue",
+    leftStrip: {
+      src: "/images/catalogue/harmattan-procession.jpg",
+      alt: "Harmattan Procession",
+      title: "Harmattan Procession — Amina E. Adeleke",
+      href: "/products/harmattan-procession",
+    },
+    centerArch: {
+      src: "/images/catalogue/ancestral-geometry.jpg",
+      alt: "Ancestral Geometry",
+      title: "Ancestral Geometry — Kofi Mensah",
+      href: "/products/ancestral-geometry-i",
+    },
+    centerBottom: {
+      src: "/images/catalogue/market-women-at-dusk.jpg",
+      alt: "Market Women at Dusk",
+      title: "Market Women at Dusk — Amina E. Adeleke",
+      href: "/products/market-women-at-dusk",
+    },
+    rightStrip: {
+      src: "/images/catalogue/indigo-tide.jpg",
+      alt: "Indigo Tide & The Evening Lantern",
+      title: "Indigo Tide & The Evening Lantern — Tariq Osei",
+      href: "/products/indigo-tide-evening-lantern",
+    },
+  },
+  {
+    id: "jazz-trio-expression",
+    tag: "Originals",
+    watermark: "Jazz.",
+    headline: {
+      line1: "Vibrant rhythms.",
+      line2: "Living expressions.",
+    },
+    exploreText: "Discover Original Canvases",
+    exploreHref: "/shop/art",
+    leftStrip: {
+      src: "/images/hero/artwork-abstract-canvas.jpg",
+      alt: "Chromatic Field Impasto Canvas",
+      title: "Chromatic Field — Contemporary African Impasto",
+      href: "/shop/art",
+    },
+    centerArch: {
+      src: "/images/hero/artwork-jazz-trio.jpg",
+      alt: "The Jazz Trio Ensemble",
+      title: "The Jazz Trio Session — Original Framed Canvas",
+      href: "/shop/art",
+    },
+    centerBottom: {
+      src: "/images/hero/hero-jazz-trio.jpg",
+      alt: "The Jazz Trio in Contemporary Living Space",
+      title: "The Jazz Trio in Architectural Living Room",
+      href: "/shop/art",
+    },
+    rightStrip: {
+      src: "/images/hero/artwork-african-drummers.jpg",
+      alt: "Ceremonial African Drummers & Dancers",
+      title: "Ceremonial Drummers — Rhythm on Warm Ochre",
+      href: "/shop/art",
+    },
+  },
+  {
+    id: "living-spaces-tradition",
+    tag: "Curated",
+    watermark: "Form.",
+    headline: {
+      line1: "Transformative art for",
+      line2: "distinctive spaces.",
+    },
+    exploreText: "Explore Curated Living",
+    exploreHref: "/shop/decor",
+    leftStrip: {
+      src: "/images/hero/hero-african-drummers.jpg",
+      alt: "Ceremonial Drummers in Sunlit Hearth",
+      title: "Ceremonial Drummers in Contemporary Living Room",
+      href: "/shop/decor",
+    },
+    centerArch: {
+      src: "/images/catalogue/incised-terracotta-vessel.jpg",
+      alt: "Handcrafted Incised Terracotta Vessel",
+      title: "Incised Terracotta Vessel — Master Potter",
+      href: "/shop/decor",
+    },
+    centerBottom: {
+      src: "/images/hero/artwork-abstract-canvas.jpg",
+      alt: "Textured Chromatic Impasto",
+      title: "Textured Abstract Harmony on Canvas",
+      href: "/shop/art",
+    },
+    rightStrip: {
+      src: "/images/hero/hero-abstract-canvas.jpg",
+      alt: "Abstract Canvas in Sunlit Room",
+      title: "Monumental Abstract in Minimalist Gallery Room",
+      href: "/shop/art",
+    },
+  },
+];
 
 interface HomeReferenceMockupProps {
   onScrollToCatalogue?: () => void;
@@ -10,6 +159,51 @@ interface HomeReferenceMockupProps {
 
 export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockupProps) {
   const [activeBrandName, setActiveBrandName] = useState<"PORT_MUZIRIS" | "WARMTHPLACE">("WARMTHPLACE");
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [isFading, setIsFading] = useState(false);
+  const autoSlideTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const isHoveredRef = useRef(false);
+
+  const totalSlides = HERO_SLIDES.length;
+  const currentSlide = HERO_SLIDES[currentSlideIndex];
+
+  const changeSlide = useCallback(
+    (newIndex: number) => {
+      if (isFading) return;
+      setIsFading(true);
+      setTimeout(() => {
+        setCurrentSlideIndex(newIndex);
+        setIsFading(false);
+      }, 260);
+    },
+    [isFading]
+  );
+
+  const nextSlide = useCallback(() => {
+    const nextIndex = (currentSlideIndex + 1) % totalSlides;
+    changeSlide(nextIndex);
+  }, [currentSlideIndex, totalSlides, changeSlide]);
+
+  const prevSlide = useCallback(() => {
+    const prevIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+    changeSlide(prevIndex);
+  }, [currentSlideIndex, totalSlides, changeSlide]);
+
+  // Auto-advance slider every 6.5s unless hovered
+  useEffect(() => {
+    const startTimer = () => {
+      autoSlideTimerRef.current = setInterval(() => {
+        if (!isHoveredRef.current) {
+          nextSlide();
+        }
+      }, 6500);
+    };
+
+    startTimer();
+    return () => {
+      if (autoSlideTimerRef.current) clearInterval(autoSlideTimerRef.current);
+    };
+  }, [nextSlide]);
 
   const scrollToShop = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -39,7 +233,6 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
           stroke="#2C2720"
           strokeWidth="1.2"
         >
-          {/* Outer isometric triangle */}
           <polygon points="70,12 128,118 12,118" strokeDasharray="3 3" opacity="0.35" />
           <polygon points="70,30 114,108 26,108" opacity="0.4" />
           <line x1="70" y1="12" x2="70" y2="70" opacity="0.3" />
@@ -55,13 +248,10 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
           stroke="#2A2822"
           strokeWidth="1.2"
         >
-          {/* Isometric hexagon outline */}
           <polygon points="60,10 105,36 105,88 60,114 15,88 15,36" opacity="0.32" />
-          {/* Inner isometric Y axis */}
           <line x1="60" y1="62" x2="60" y2="10" opacity="0.38" />
           <line x1="60" y1="62" x2="105" y2="88" opacity="0.38" />
           <line x1="60" y1="62" x2="15" y2="88" opacity="0.38" />
-          {/* Internal dotted projection */}
           <line x1="60" y1="10" x2="60" y2="114" strokeDasharray="2 3" opacity="0.2" />
         </svg>
 
@@ -131,7 +321,15 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
       </div>
 
       {/* ─── 3. THE FLOATING MONITOR / TABLET SCREEN FRAME ─── */}
-      <div className="mockup-bezel-wrapper">
+      <div
+        className="mockup-bezel-wrapper"
+        onMouseEnter={() => {
+          isHoveredRef.current = true;
+        }}
+        onMouseLeave={() => {
+          isHoveredRef.current = false;
+        }}
+      >
         <div className="mockup-bezel">
           {/* Inner Screen Surface */}
           <div className="mockup-screen">
@@ -193,24 +391,23 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
               </nav>
             </header>
 
-            {/* Screen Hero Body */}
-            <div className="mockup-hero-body">
-              {/* Left Group: Watercolor Wash, "Art.", Headline, Link */}
+            {/* Screen Hero Body with Dynamic Content */}
+            <div className={`mockup-hero-body${isFading ? " is-transitioning" : ""}`}>
+              {/* Left Group: Watercolor Wash, Watermark, Headline, Link */}
               <div className="mockup-left-group">
                 {/* Translucent Sky-Blue Watercolor Splash */}
-                <div className="mockup-watercolor-splash" aria-hidden="true">
-                  <svg viewBox="0 0 400 180" fill="none" className="watercolor-svg">
+                <div className="mockup-watercolor-splash" aria-hidden="true" suppressHydrationWarning>
+                  <svg viewBox="0 0 400 180" fill="none" className="watercolor-svg" suppressHydrationWarning>
                     <defs>
                       <filter id="watercolor-blur" x="-20%" y="-20%" width="140%" height="140%">
                         <feGaussianBlur stdDeviation="14" />
                       </filter>
-                      <linearGradient id="watercolor-grad" x1="0%" y1="0%" x2="100%" y2="50%">
-                        <stop offset="0%" stopColor="#9ABFE0" stopOpacity="0.75" />
-                        <stop offset="50%" stopColor="#BCD5EB" stopOpacity="0.6" />
+                      <linearGradient id="watercolor-grad" x1="0%" y1="0%" x2="100%" y2="50%" suppressHydrationWarning>
+                        <stop offset="0%" stopColor="#C4DCED" stopOpacity="0.82" />
+                        <stop offset="55%" stopColor="#9AC0DC" stopOpacity="0.65" />
                         <stop offset="100%" stopColor="#D5E5F2" stopOpacity="0.25" />
                       </linearGradient>
                     </defs>
-                    {/* Organic hand-brushed blob path */}
                     <path
                       d="M20 95 C 10 40, 90 20, 160 35 C 230 15, 330 30, 370 70 C 400 110, 340 145, 270 155 C 200 170, 110 150, 60 140 C 25 130, 15 110, 20 95 Z"
                       fill="url(#watercolor-grad)"
@@ -219,7 +416,7 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
                   </svg>
                 </div>
 
-                {/* Stippled / Halftone "Art." Watermark */}
+                {/* Stippled / Halftone Dynamic Watermark */}
                 <div className="mockup-watermark-art" aria-hidden="true">
                   <svg viewBox="0 0 320 160" className="art-stippled-svg">
                     <defs>
@@ -236,11 +433,10 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
                           fontWeight="400"
                           fill="#FFFFFF"
                         >
-                          Art.
+                          {currentSlide.watermark}
                         </text>
                       </mask>
                     </defs>
-                    {/* Fill text with stippled dot pattern */}
                     <rect
                       x="0"
                       y="0"
@@ -254,22 +450,41 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
 
                 {/* Main Headline */}
                 <h1 className="mockup-headline">
-                  Explore the expressions
+                  {currentSlide.headline.line1}
                   <br />
-                  of creativity!
+                  {currentSlide.headline.line2}
                 </h1>
 
-                {/* Link */}
+                {/* Explore Link */}
                 <a
-                  href="#shop-catalogue"
-                  onClick={scrollToShop}
+                  href={currentSlide.exploreHref}
+                  onClick={currentSlide.exploreHref.startsWith("#") ? scrollToShop : undefined}
                   className="mockup-explore-link"
                 >
-                  Explore Collections
+                  {currentSlide.exploreText}
                 </a>
+
+                {/* Slider Pagination Controls (Left Subtitle Group) */}
+                <div className="mockup-slider-meta">
+                  <span className="mockup-slide-counter">
+                    0{currentSlideIndex + 1} <span className="counter-sep">/</span> 0{totalSlides}
+                  </span>
+                  <div className="mockup-slide-pills">
+                    {HERO_SLIDES.map((slide, idx) => (
+                      <button
+                        key={slide.id}
+                        type="button"
+                        onClick={() => changeSlide(idx)}
+                        className={`mockup-slide-pill${idx === currentSlideIndex ? " active" : ""}`}
+                        aria-label={`Jump to artwork slide ${idx + 1}`}
+                        title={slide.tag}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              {/* Right Group: Signature Artwork Collage Triptych */}
+              {/* Right Group: Signature Artwork Collage Triptych + Interactive Arrow Slider */}
               <div className="mockup-right-group">
                 {/* Background Concentric Radar Rings */}
                 <div className="mockup-concentric-circles" aria-hidden="true">
@@ -283,47 +498,74 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
                 </div>
 
                 <div className="mockup-collage-stage">
-                  {/* 1. Small Terracotta Wedge / Triangle Pointer */}
-                  <div className="mockup-pointer-triangle" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none">
-                      <polygon points="4,2 20,12 4,22" fill="#935742" />
-                    </svg>
+                  {/* ─── 1. INTERACTIVE TERRACOTTA SLIDER ARROW CONTROLLER ─── */}
+                  <div className="mockup-slider-trigger-cluster">
+                    {/* Previous Button (Faded wedge) */}
+                    <button
+                      type="button"
+                      onClick={prevSlide}
+                      className="mockup-pointer-btn mockup-prev-arrow"
+                      aria-label="Previous artwork set"
+                      title="Previous artwork set"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" className="wedge-svg">
+                        <polygon points="20,2 4,12 20,22" fill="#935742" />
+                      </svg>
+                    </button>
+
+                    {/* Primary Terracotta Pointer Wedge (Click to Advance Slide) */}
+                    <button
+                      type="button"
+                      onClick={nextSlide}
+                      className="mockup-pointer-btn mockup-next-arrow"
+                      aria-label="Next artwork set"
+                      title="Click to slide to next artworks"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" className="wedge-svg primary-wedge">
+                        <polygon points="4,2 20,12 4,22" fill="#935742" />
+                      </svg>
+                      <span className="wedge-pulse-ring" aria-hidden="true" />
+                    </button>
                   </div>
 
-                  {/* 2. Left Narrow Strip (Harmattan Procession) */}
+                  {/* ─── 2. Left Narrow Strip ─── */}
                   <Link
-                    href="/products/harmattan-procession"
+                    href={currentSlide.leftStrip.href}
                     className="mockup-strip strip-left"
-                    title="Harmattan Procession — Amina E. Adeleke"
+                    title={currentSlide.leftStrip.title}
                   >
                     <Image
-                      src="/images/catalogue/harmattan-procession.jpg"
-                      alt="Harmattan Procession"
+                      key={`left-${currentSlide.leftStrip.src}`}
+                      src={currentSlide.leftStrip.src}
+                      alt={currentSlide.leftStrip.alt}
                       fill
-                      sizes="80px"
+                      sizes="90px"
                       style={{ objectFit: "cover" }}
                       priority
+                      className="mockup-slide-img"
                     />
                     <div className="strip-hover-curtain">
                       <span>View</span>
                     </div>
                   </Link>
 
-                  {/* 3. Center Column (Semicircle Arch Top + Rectangular Strip Bottom) */}
+                  {/* ─── 3. Center Column (Semicircle Arch Top + Rectangular Strip Bottom) ─── */}
                   <div className="mockup-center-column">
                     {/* Arch Top */}
                     <Link
-                      href="/products/ancestral-geometry-i"
+                      href={currentSlide.centerArch.href}
                       className="mockup-arch-top"
-                      title="Ancestral Geometry — Kofi Mensah"
+                      title={currentSlide.centerArch.title}
                     >
                       <Image
-                        src="/images/catalogue/ancestral-geometry.jpg"
-                        alt="Ancestral Geometry"
+                        key={`arch-${currentSlide.centerArch.src}`}
+                        src={currentSlide.centerArch.src}
+                        alt={currentSlide.centerArch.alt}
                         fill
-                        sizes="130px"
+                        sizes="140px"
                         style={{ objectFit: "cover" }}
                         priority
+                        className="mockup-slide-img"
                       />
                       <div className="strip-hover-curtain">
                         <span>View</span>
@@ -332,17 +574,19 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
 
                     {/* Strip Bottom */}
                     <Link
-                      href="/products/market-women-at-dusk"
+                      href={currentSlide.centerBottom.href}
                       className="mockup-strip strip-center-bottom"
-                      title="Market Women at Dusk — Amina E. Adeleke"
+                      title={currentSlide.centerBottom.title}
                     >
                       <Image
-                        src="/images/catalogue/market-women-at-dusk.jpg"
-                        alt="Market Women at Dusk"
+                        key={`bottom-${currentSlide.centerBottom.src}`}
+                        src={currentSlide.centerBottom.src}
+                        alt={currentSlide.centerBottom.alt}
                         fill
-                        sizes="130px"
+                        sizes="140px"
                         style={{ objectFit: "cover" }}
                         priority
+                        className="mockup-slide-img"
                       />
                       <div className="strip-hover-curtain">
                         <span>View</span>
@@ -350,22 +594,24 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
                     </Link>
                   </div>
 
-                  {/* 4. Deep Teal / Slate Column Silhouette */}
+                  {/* ─── 4. Deep Teal / Slate Column Silhouette ─── */}
                   <div className="mockup-teal-pillar" aria-hidden="true" />
 
-                  {/* 5. Right Signature Tall Strip (Indigo Tide & Swimming Terracotta Fish) */}
+                  {/* ─── 5. Right Signature Tall Strip ─── */}
                   <Link
-                    href="/products/indigo-tide-evening-lantern"
+                    href={currentSlide.rightStrip.href}
                     className="mockup-strip strip-right"
-                    title="Indigo Tide & The Evening Lantern — Tariq Osei"
+                    title={currentSlide.rightStrip.title}
                   >
                     <Image
-                      src="/images/catalogue/indigo-tide.jpg"
-                      alt="Indigo Tide & The Evening Lantern"
+                      key={`right-${currentSlide.rightStrip.src}`}
+                      src={currentSlide.rightStrip.src}
+                      alt={currentSlide.rightStrip.alt}
                       fill
-                      sizes="150px"
+                      sizes="160px"
                       style={{ objectFit: "cover" }}
                       priority
+                      className="mockup-slide-img"
                     />
                     <div className="strip-hover-curtain">
                       <span>View</span>
@@ -373,9 +619,9 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
                   </Link>
                 </div>
 
-                {/* Vertical Label "Sculpture" on the far right */}
+                {/* Vertical Label dynamically reflecting slide tag on the far right */}
                 <div className="mockup-vertical-tag" aria-hidden="true">
-                  <span className="tag-text">Sculpture</span>
+                  <span className="tag-text">{currentSlide.tag}</span>
                   <div className="tag-pin">
                     <span className="tag-line" />
                     <span className="tag-circle" />
