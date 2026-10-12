@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { SITE_NAME, SITE_TAGLINE } from "@/lib/constants";
 
 export function Footer() {
@@ -37,7 +38,45 @@ export function Footer() {
         <div className="footer-main-grid">
           {/* Brand Column */}
           <div className="footer-brand-col">
-            <h3 className="footer-brand-title">{SITE_NAME}</h3>
+            <Link href="/" className="footer-brand-badge" aria-label="Warmthplace Arts Home">
+              <div className="footer-brand-emblem">
+                <Image
+                  src="/images/brand/warmthplace-emblem-circle.png"
+                  alt="Warmthplace Arts Emblem"
+                  width={54}
+                  height={54}
+                  className="brand-emblem-img"
+                />
+              </div>
+              <div>
+                <span
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontSize: "1.2rem",
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "var(--color-gallery-ivory)",
+                    display: "block",
+                    lineHeight: 1.1,
+                  }}
+                >
+                  Warmthplace
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.62rem",
+                    letterSpacing: "0.26em",
+                    textTransform: "uppercase",
+                    color: "var(--color-muted-brass)",
+                    display: "block",
+                    marginTop: "4px",
+                  }}
+                >
+                  Arts
+                </span>
+              </div>
+            </Link>
             <p className="footer-brand-tagline">{SITE_TAGLINE}</p>
             <p className="footer-brand-desc">
               A balanced contemporary African art house and homeware studio based

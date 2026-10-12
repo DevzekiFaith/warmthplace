@@ -2,283 +2,332 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import { useCart } from "./CartContext";
 import { useCurrency } from "./CurrencyContext";
 
+interface NavLinkItem {
+  label: string;
+  href: string;
+  kicker: string;
+}
+
 export function Navbar() {
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchQuery, setMobileSearchQuery] = useState("");
   const { totals, openCart } = useCart();
   const { currency, setCurrency, currencies } = useCurrency();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Scroll listener for sticky header styling
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 380);
+      setScrolled(window.scrollY > 24);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { label: "Art", href: "/shop/art" },
-    { label: "Home Décor", href: "/shop/decor" },
-    { label: "Collections", href: "/collections" },
-    { label: "Artists", href: "/artists" },
-    { label: "Journal", href: "/journal" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Handle escape key to close drawer & manage body scroll lock
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    if (mobileMenuOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  const navLinks: NavLinkItem[] = [
+    { label: "Art", href: "/shop/art", kicker: "Originals & Bronzes" },
+    { label: "Home Décor", href: "/shop/decor", kicker: "Ceramics & Textiles" },
+    { label: "Collections", href: "/collections", kicker: "Curated Series" },
+    { label: "Artists", href: "/artists", kicker: "Studio Masters" },
+    { label: "Journal", href: "/journal", kicker: "Curatorial Stories" },
+    { label: "About", href: "/about", kicker: "The Art House" },
+    { label: "Contact", href: "/contact", kicker: "Private Viewings" },
   ];
 
-  // On the home page, the 1/1 reference mockup displays the initial header.
-  // The global gallery navbar glides in smoothly when the collector scrolls into the catalogue.
-  if (isHome && !scrolled) {
-    return null;
-  }
+  const handleMobileSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (mobileSearchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(mobileSearchQuery.trim())}`);
+      setMobileMenuOpen(false);
+      setMobileSearchQuery("");
+    }
+  };
 
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "var(--color-ink-charcoal)",
-          color: "var(--color-gallery-ivory)",
-          fontSize: "0.74rem",
-          letterSpacing: "0.08em",
-          textAlign: "center",
-          padding: "0.45rem 1rem",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "1.5rem",
-        }}
-      >
-        <span>
-          Complimentary White-Glove Crated Transit on Orders Over ₦2,000,000
-        </span>
-        <span style={{ opacity: 0.5 }}>|</span>
-        <span style={{ color: "var(--color-muted-brass)" }}>
-          Museum Certificate of Authenticity with Every Original Work
-        </span>
-      </div>
-
-      <header
-        className="site-header"
-        style={
-          isHome
-            ? {
-                position: "sticky",
-                top: 0,
-                zIndex: 100,
-                boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                animation: "fadeInDown 0.3s ease",
-              }
-            : undefined
-        }
-      >
-      <div className="container header-inner">
-        {/* Brand Logo & Monogram */}
-        <Link href="/" className="brand-monogram">
-          {/* Architectural Arch Emblem inspired by reference image */}
-          <svg
-            className="brand-arch-logo"
-            viewBox="0 0 36 44"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            {/* Outer arch */}
-            <path
-              d="M3 41V18C3 9.71573 9.71573 3 18 3C26.2843 3 33 9.71573 33 18V41"
-              stroke="#24221E"
-              strokeWidth="1.8"
-            />
-            {/* Inner arch */}
-            <path
-              d="M8 41V20C8 14.4772 12.4772 10 18 10C23.5228 10 28 14.4772 28 20V41"
-              stroke="#24221E"
-              strokeWidth="1.2"
-            />
-            {/* Central vertical spine / portal accent */}
-            <line x1="18" y1="12" x2="18" y2="41" stroke="#A64B32" strokeWidth="1.2" />
-            <circle cx="18" cy="6.5" r="1.5" fill="#B89A65" />
-          </svg>
-          <div className="brand-text">
-            <span className="brand-title">Warmthplace</span>
-            <span className="brand-subtitle">Art Studio</span>
-          </div>
-        </Link>
-
-        {/* Desktop Navigation Links */}
-        <nav aria-label="Main Navigation">
-          <ul className="nav-links">
-            {navLinks.map((link) => {
-              const isActive =
-                pathname === link.href ||
-                (link.href !== "/" && pathname.startsWith(link.href));
-              return (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={`nav-link ${isActive ? "active" : ""}`}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        {/* Action Controls: Currency Switcher, Search, Bag */}
-        <div className="header-actions">
-          {/* Currency Switcher */}
-          <select
-            className="currency-select"
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
-            aria-label="Select Currency"
-            title="Switch display currency"
-          >
-            {Object.entries(currencies).map(([code, config]) => (
-              <option key={code} value={code}>
-                {config.label}
-              </option>
-            ))}
-          </select>
-
-          {/* Search Trigger */}
-          <Link
-            href="/search"
-            className="action-icon-btn"
-            aria-label="Search Collection"
-            title="Search collection"
-          >
-            <svg
-              width="19"
-              height="19"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </Link>
-
-          {/* Cart Bag Trigger */}
-          <button
-            type="button"
-            className="action-icon-btn"
-            onClick={openCart}
-            aria-label={`Shopping bag with ${totals.itemCount} items`}
-            title="View shopping bag"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <path d="M16 10a4 4 0 0 1-8 0" />
-            </svg>
-            {totals.itemCount > 0 && (
-              <span className="cart-count-badge">{totals.itemCount}</span>
-            )}
-          </button>
-
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            className="action-icon-btn mobile-nav-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle navigation menu"
-          >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              {mobileMenuOpen ? (
-                <>
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </>
-              ) : (
-                <>
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </>
-              )}
-            </svg>
-          </button>
+      {/* ─── 1. TOP CURATORIAL ANNOUNCEMENT STRIP ─── */}
+      <div className="announcement-strip" role="region" aria-label="Curatorial Announcement">
+        <div className="container announcement-inner">
+          <span className="announcement-primary">
+            Complimentary White-Glove Crated Transit on Orders Over ₦2,000,000
+          </span>
+          <span className="announcement-divider" aria-hidden="true">|</span>
+          <span className="announcement-secondary">
+            Museum Certificate of Authenticity with Every Work
+          </span>
         </div>
       </div>
 
-      {/* Mobile Menu Slideout */}
-      {mobileMenuOpen && (
+      {/* ─── 2. PRINCIPAL SITE HEADER ─── */}
+      <header className={`site-header ${scrolled ? "header-scrolled" : ""}`}>
+        <div className="container header-inner">
+          {/* Brand Logo & Monogram */}
+          <Link href="/" className="brand-monogram" aria-label="Warmthplace Arts Home">
+            <div className="brand-emblem-wrap">
+              <Image
+                src="/images/brand/warmthplace-emblem-circle.png"
+                alt="Warmthplace Arts Monogram Emblem"
+                width={42}
+                height={42}
+                priority
+                className="brand-emblem-img"
+              />
+            </div>
+            <div className="brand-text">
+              <span className="brand-title">Warmthplace</span>
+              <span className="brand-subtitle">Arts</span>
+            </div>
+          </Link>
+
+          {/* Desktop Navigation Links */}
+          <nav className="desktop-nav" aria-label="Main Navigation">
+            <ul className="nav-links">
+              {navLinks.map((link) => {
+                const isActive =
+                  pathname === link.href ||
+                  (link.href !== "/" && pathname.startsWith(link.href));
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className={`nav-link ${isActive ? "active" : ""}`}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          {/* Action Controls: Currency Switcher, Search, Bag, Mobile Toggle */}
+          <div className="header-actions">
+            {/* Desktop / Tablet Currency Switcher */}
+            <div className="currency-select-wrap">
+              <select
+                className="currency-select"
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
+                aria-label="Select Currency"
+                title="Switch display currency"
+              >
+                {Object.entries(currencies).map(([code, config]) => (
+                  <option key={code} value={code}>
+                    {config.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Search Trigger */}
+            <Link
+              href="/search"
+              className="action-icon-btn"
+              aria-label="Search Collection"
+              title="Search collection"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </Link>
+
+            {/* Shopping Bag Trigger */}
+            <button
+              type="button"
+              className="action-icon-btn bag-btn"
+              onClick={openCart}
+              aria-label={`Shopping bag with ${totals.itemCount} items`}
+              title="View shopping bag"
+            >
+              <svg
+                width="19"
+                height="19"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+              {totals.itemCount > 0 && (
+                <span className="cart-count-badge" aria-label={`${totals.itemCount} items in cart`}>
+                  {totals.itemCount}
+                </span>
+              )}
+            </button>
+
+            {/* Mobile / Tablet Menu Button */}
+            <button
+              type="button"
+              className={`action-icon-btn mobile-nav-toggle ${mobileMenuOpen ? "is-open" : ""}`}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-drawer"
+            >
+              <span className="hamburger-box">
+                <span className="hamburger-inner" />
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* ─── 3. MOBILE & TABLET DRAWER NAVIGATION ─── */}
         <div
-          style={{
-            backgroundColor: "var(--color-gallery-ivory)",
-            borderBottom: "1px solid var(--border-medium)",
-            padding: "1.5rem 2rem 2rem",
-          }}
+          id="mobile-nav-drawer"
+          className={`mobile-drawer-wrapper ${mobileMenuOpen ? "is-visible" : ""}`}
+          aria-hidden={!mobileMenuOpen}
         >
-          <ul
-            style={{
-              listStyle: "none",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1.2rem",
-            }}
-          >
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  style={{
-                    fontSize: "1.1rem",
-                    fontWeight: 500,
-                    fontFamily: "var(--font-serif)",
-                    display: "block",
-                  }}
+          {/* Backdrop */}
+          <div
+            className="mobile-drawer-backdrop"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Drawer Sheet */}
+          <div className="mobile-drawer-sheet">
+            {/* Mobile Search Form */}
+            <form onSubmit={handleMobileSearch} className="mobile-drawer-search">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                className="mobile-search-icon"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                type="search"
+                className="mobile-search-input"
+                placeholder="Search art, ceramics, artists..."
+                value={mobileSearchQuery}
+                onChange={(e) => setMobileSearchQuery(e.target.value)}
+                aria-label="Search collection"
+              />
+              {mobileSearchQuery && (
+                <button
+                  type="submit"
+                  className="mobile-search-submit"
+                  aria-label="Submit Search"
                 >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-            <li style={{ paddingTop: "0.8rem", borderTop: "1px solid var(--border-subtle)" }}>
+                  Go
+                </button>
+              )}
+            </form>
+
+            {/* Quick Currency Selector Pills */}
+            <div className="mobile-currency-bar">
+              <span className="mobile-currency-label">Currency</span>
+              <div className="mobile-currency-pills">
+                {Object.entries(currencies).map(([code, config]) => (
+                  <button
+                    key={code}
+                    type="button"
+                    onClick={() => setCurrency(code)}
+                    className={`mobile-currency-pill ${currency === code ? "active" : ""}`}
+                  >
+                    {config.symbol} {code}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation Pathway Links */}
+            <nav className="mobile-nav-list" aria-label="Mobile Navigation">
+              {navLinks.map((link) => {
+                const isActive =
+                  pathname === link.href ||
+                  (link.href !== "/" && pathname.startsWith(link.href));
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`mobile-nav-item ${isActive ? "active" : ""}`}
+                  >
+                    <div className="mobile-nav-item-content">
+                      <span className="mobile-nav-item-title">{link.label}</span>
+                      <span className="mobile-nav-item-kicker">{link.kicker}</span>
+                    </div>
+                    <span className="mobile-nav-item-arrow" aria-hidden="true">→</span>
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Drawer Footer Information */}
+            <div className="mobile-drawer-footer">
+              <div className="mobile-drawer-contact">
+                <span className="mobile-footer-tag">Victoria Island, Lagos</span>
+                <span className="mobile-footer-sub">Worldwide Insured Transit</span>
+                <a href="mailto:concierge@warmthplace.com" className="mobile-footer-email">
+                  concierge@warmthplace.com
+                </a>
+              </div>
+
               <Link
                 href="/admin"
                 onClick={() => setMobileMenuOpen(false)}
-                style={{ fontSize: "0.82rem", color: "var(--color-ink-light)" }}
+                className="mobile-admin-link"
               >
-                Curatorial Administration →
+                Curatorial Administration ↗
               </Link>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
-      )}
-    </header>
+      </header>
     </>
   );
 }

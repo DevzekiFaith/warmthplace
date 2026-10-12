@@ -9,7 +9,7 @@ interface HomeReferenceMockupProps {
 }
 
 export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockupProps) {
-  const [activeBrandName, setActiveBrandName] = useState<"PORT_MUZIRIS" | "WARMTHPLACE">("PORT_MUZIRIS");
+  const [activeBrandName, setActiveBrandName] = useState<"PORT_MUZIRIS" | "WARMTHPLACE">("WARMTHPLACE");
 
   const scrollToShop = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -135,9 +135,9 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
         <div className="mockup-bezel">
           {/* Inner Screen Surface */}
           <div className="mockup-screen">
-            {/* Header: Classical Arch Emblem + Menu */}
+            {/* Header: Official Warmthplace Emblem + Responsive Menu */}
             <header className="mockup-screen-header">
-              {/* Arch Emblem Logo */}
+              {/* Brand Logo Cluster */}
               <div
                 className="mockup-logo-cluster"
                 onClick={() =>
@@ -145,63 +145,50 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
                     prev === "PORT_MUZIRIS" ? "WARMTHPLACE" : "PORT_MUZIRIS"
                   )
                 }
-                title="Click to toggle reference title (Port Muziris / Warmthplace)"
+                title="Click to toggle reference title"
                 role="button"
                 tabIndex={0}
               >
-                <svg
-                  className="mockup-arch-svg"
-                  viewBox="0 0 44 48"
-                  fill="none"
-                  stroke="#7A6F5D"
-                  strokeWidth="1.5"
-                >
-                  {/* Outer Roman Arch */}
-                  <path d="M6 46V18C6 9.163 13.163 2 22 2C30.837 2 38 9.163 38 18V46" />
-                  {/* Inner Arch */}
-                  <path d="M12 46V20C12 14.477 16.477 10 22 10C27.523 10 32 14.477 32 20V46" />
-                  {/* Vertical Center Spine */}
-                  <line x1="22" y1="10" x2="22" y2="46" stroke="#9E8D77" strokeWidth="1" />
-                  {/* Keystones */}
-                  <line x1="12" y1="20" x2="6" y2="18" stroke="#9E8D77" strokeWidth="1" />
-                  <line x1="32" y1="20" x2="38" y2="18" stroke="#9E8D77" strokeWidth="1" />
-                  <circle cx="22" cy="6" r="1.5" fill="#9E8D77" />
-                </svg>
+                <div className="mockup-emblem-icon-wrap">
+                  <Image
+                    src="/images/brand/warmthplace-emblem-circle.png"
+                    alt="Warmthplace Arts Emblem"
+                    width={34}
+                    height={34}
+                    className="brand-emblem-img"
+                  />
+                </div>
 
                 <div className="mockup-brand-typography">
-                  {activeBrandName === "PORT_MUZIRIS" ? (
-                    <>
-                      <span className="mockup-brand-line">PORT</span>
-                      <span className="mockup-brand-line">MUZIRIS</span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="mockup-brand-line">WARMTH</span>
-                      <span className="mockup-brand-line">PLACE</span>
-                    </>
-                  )}
+                  <span className="mockup-brand-line">
+                    {activeBrandName === "PORT_MUZIRIS" ? "PORT MUZIRIS" : "WARMTHPLACE"}
+                  </span>
+                  <span className="mockup-brand-subline">ARTS</span>
                 </div>
               </div>
 
-              {/* Navigation Items (Exact match to reference) */}
+              {/* Navigation Items (Responsive & Art-Studio Aligned) */}
               <nav className="mockup-screen-nav" aria-label="Reference Navigation">
                 <Link href="/" className="mockup-nav-item active">
                   Home
                 </Link>
-                <Link href="/about" className="mockup-nav-item">
-                  About
-                </Link>
-                <Link href="/collections" className="mockup-nav-item">
-                  Accomodation
-                </Link>
-                <Link href="/shop/decor" className="mockup-nav-item">
-                  Resort Services
-                </Link>
                 <Link href="/shop/art" className="mockup-nav-item">
                   Art
                 </Link>
+                <Link href="/shop/decor" className="mockup-nav-item">
+                  Home Décor
+                </Link>
+                <Link href="/collections" className="mockup-nav-item">
+                  Collections
+                </Link>
+                <Link href="/artists" className="mockup-nav-item">
+                  Artists
+                </Link>
+                <Link href="/about" className="mockup-nav-item">
+                  About
+                </Link>
                 <Link href="/contact" className="mockup-nav-item">
-                  Contact Us
+                  Contact
                 </Link>
               </nav>
             </header>

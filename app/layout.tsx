@@ -25,6 +25,10 @@ export const metadata: Metadata = {
     "African bronze sculpture",
     "fine art prints Africa",
   ],
+  icons: {
+    icon: "/images/brand/warmthplace-emblem-circle.png",
+    apple: "/images/brand/warmthplace-emblem-circle.png",
+  },
   authors: [{ name: "Warmthplace Art Studio Curatorial Team" }],
   openGraph: {
     title: `${SITE_NAME} — ${SITE_TAGLINE}`,
