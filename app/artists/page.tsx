@@ -11,16 +11,22 @@ export const metadata: Metadata = {
 };
 
 export default async function ArtistsIndexPage() {
-  const artists = await prisma.artist.findMany({
-    where: { published: true },
-    include: {
-      products: {
-        where: { status: "PUBLISHED" },
-        select: { id: true },
+  let artists: any[] = [];
+  try {
+    artists = await prisma.artist.findMany({
+      where: { published: true },
+      include: {
+        products: {
+          where: { status: "PUBLISHED" },
+          select: { id: true },
+        },
       },
-    },
-    orderBy: { position: "asc" },
-  });
+      orderBy: { position: "asc" },
+    });
+  } catch (err) {
+    console.warn("[ArtistsIndexPage] Database query notice during build:", err);
+    artists = [];
+  }
 
   return (
     <div className="container" style={{ paddingBottom: "7rem" }}>

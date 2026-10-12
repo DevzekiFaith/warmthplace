@@ -11,16 +11,22 @@ export const metadata: Metadata = {
 };
 
 export default async function CollectionsIndexPage() {
-  const collections = await prisma.collection.findMany({
-    where: { published: true },
-    include: {
-      products: {
-        where: { status: "PUBLISHED" },
-        select: { id: true },
+  let collections: any[] = [];
+  try {
+    collections = await prisma.collection.findMany({
+      where: { published: true },
+      include: {
+        products: {
+          where: { status: "PUBLISHED" },
+          select: { id: true },
+        },
       },
-    },
-    orderBy: { position: "asc" },
-  });
+      orderBy: { position: "asc" },
+    });
+  } catch (err) {
+    console.warn("[CollectionsIndexPage] Database query notice during build:", err);
+    collections = [];
+  }
 
   return (
     <div className="container" style={{ paddingBottom: "7rem" }}>

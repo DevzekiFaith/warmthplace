@@ -10,8 +10,14 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminPortalPage() {
-  const [totalProducts, totalArtists, totalCollections, totalArticles, recentProducts] =
-    await Promise.all([
+  let totalProducts = 0;
+  let totalArtists = 0;
+  let totalCollections = 0;
+  let totalArticles = 0;
+  let recentProducts: any[] = [];
+
+  try {
+    const res = await Promise.all([
       prisma.product.count(),
       prisma.artist.count(),
       prisma.collection.count(),
@@ -24,6 +30,14 @@ export default async function AdminPortalPage() {
         },
       }),
     ]);
+    totalProducts = res[0];
+    totalArtists = res[1];
+    totalCollections = res[2];
+    totalArticles = res[3];
+    recentProducts = res[4];
+  } catch (err) {
+    console.warn("[AdminPortalPage] Database query notice during build:", err);
+  }
 
   return (
     <div className="container" style={{ paddingTop: "3rem", paddingBottom: "7rem" }}>

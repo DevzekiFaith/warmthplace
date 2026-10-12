@@ -7,9 +7,15 @@ import { ProductCard } from "@/components/ProductCard";
 import { LivingSpacesScene } from "@/components/LivingSpacesScene";
 
 export default async function HomePage() {
-  // Fetch featured products, collections, artists, and articles from the database
-  const [featuredArt, featuredDecor, collections, artists, articles] =
-    await Promise.all([
+  let featuredArt: any[] = [];
+  let featuredDecor: any[] = [];
+  let collections: any[] = [];
+  let artists: any[] = [];
+  let articles: any[] = [];
+  let livingRoomProducts: any[] = [];
+
+  try {
+    const res = await Promise.all([
       prisma.product.findMany({
         where: { department: "ART", status: "PUBLISHED" },
         include: {
@@ -44,21 +50,28 @@ export default async function HomePage() {
         orderBy: { createdAt: "desc" },
       }),
     ]);
+    featuredArt = res[0];
+    featuredDecor = res[1];
+    collections = res[2];
+    artists = res[3];
+    articles = res[4];
 
-  // Shoppable living room items (authentic items from database)
-  const livingRoomProducts = await prisma.product.findMany({
-    where: {
-      slug: {
-        in: [
-          "indigo-tide-evening-lantern",
-          "incised-terracotta-vessel",
-          "strip-woven-throw",
-          "fluted-iroko-pedestal-bowl",
-        ],
+    livingRoomProducts = await prisma.product.findMany({
+      where: {
+        slug: {
+          in: [
+            "indigo-tide-evening-lantern",
+            "incised-terracotta-vessel",
+            "strip-woven-throw",
+            "fluted-iroko-pedestal-bowl",
+          ],
+        },
       },
-    },
-    include: { images: true },
-  });
+      include: { images: true },
+    });
+  } catch (err) {
+    console.warn("[HomePage] Database query notice during build:", err);
+  }
 
   const shoppableSceneItems = livingRoomProducts.map((p) => ({
     id: p.id,

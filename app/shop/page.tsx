@@ -11,16 +11,22 @@ export const metadata: Metadata = {
 };
 
 export default async function FullShopPage() {
-  const products = await prisma.product.findMany({
-    where: {
-      status: "PUBLISHED",
-    },
-    include: {
-      artist: { select: { name: true, slug: true } },
-      images: { orderBy: { position: "asc" } },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  let products: any[] = [];
+  try {
+    products = await prisma.product.findMany({
+      where: {
+        status: "PUBLISHED",
+      },
+      include: {
+        artist: { select: { name: true, slug: true } },
+        images: { orderBy: { position: "asc" } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (err) {
+    console.warn("[FullShopPage] Database query notice during build:", err);
+    products = [];
+  }
 
   const combinedCategories = [
     ...ART_CATEGORIES.map((c) => ({ id: c.id, label: c.label })),

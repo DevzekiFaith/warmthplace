@@ -11,17 +11,23 @@ export const metadata: Metadata = {
 };
 
 export default async function ArtShopPage() {
-  const products = await prisma.product.findMany({
-    where: {
-      department: "ART",
-      status: "PUBLISHED",
-    },
-    include: {
-      artist: { select: { name: true, slug: true } },
-      images: { orderBy: { position: "asc" } },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  let products: any[] = [];
+  try {
+    products = await prisma.product.findMany({
+      where: {
+        department: "ART",
+        status: "PUBLISHED",
+      },
+      include: {
+        artist: { select: { name: true, slug: true } },
+        images: { orderBy: { position: "asc" } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (err) {
+    console.warn("[ArtShopPage] Database query notice during build:", err);
+    products = [];
+  }
 
   return (
     <CatalogueView
