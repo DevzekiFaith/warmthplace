@@ -13,66 +13,85 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = await prisma.product.findUnique({
-    where: { slug },
-    include: {
-      artist: { select: { name: true } },
-      images: { take: 1 },
-    },
-  });
+  try {
+    const product = await prisma.product.findUnique({
+      where: { slug },
+      include: {
+        artist: { select: { name: true } },
+        images: { take: 1 },
+      },
+    });
 
-  if (!product) return { title: "Artwork Not Found" };
+    if (!product) return { title: "Artwork Not Found" };
 
-  const artistText = product.artist ? `by ${product.artist.name}` : "";
-  const imageUrl = product.images[0]?.url || "/images/catalogue/indigo-tide.jpg";
+    const artistText = product.artist ? `by ${product.artist.name}` : "";
+    const imageUrl = product.images[0]?.url || "/images/catalogue/indigo-tide.jpg";
 
-  return {
-    title: `${product.title} ${artistText}`,
-    description: product.description.slice(0, 160),
-    openGraph: {
-      title: `${product.title} | ${SITE_NAME}`,
+    return {
+      title: `${product.title} ${artistText}`,
       description: product.description.slice(0, 160),
-      images: [{ url: imageUrl, alt: product.title }],
-    },
-  };
+      openGraph: {
+        title: `${product.title} | ${SITE_NAME}`,
+        description: product.description.slice(0, 160),
+        images: [{ url: imageUrl, alt: product.title }],
+      },
+    };
+  } catch (err) {
+    console.warn("[ProductMetadata] Database query notice:", err);
+    return { title: "Artwork Details — Warmthplace" };
+  }
+}
+
+async function getProduct(slug: string) {
+  try {
+    return await prisma.product.findUnique({
+      where: { slug },
+      include: {
+        artist: {
+          select: {
+            name: true,
+            slug: true,
+            discipline: true,
+            location: true,
+          },
+        },
+        images: { orderBy: { position: "asc" } },
+      },
+    });
+  } catch (err) {
+    console.warn("[ProductDetailPage] Database query notice:", err);
+    return null;
+  }
 }
 
 export default async function ProductDetailPage({ params }: Props) {
   const { slug } = await params;
-
-  const product = await prisma.product.findUnique({
-    where: { slug },
-    include: {
-      artist: {
-        select: {
-          name: true,
-          slug: true,
-          discipline: true,
-          location: true,
-        },
-      },
-      images: { orderBy: { position: "asc" } },
-    },
-  });
+  const product = await getProduct(slug);
 
   if (!product || product.status !== "PUBLISHED") {
     notFound();
   }
 
   // Recommended products (other pieces in the same department or by same artist)
-  const recommendations = await prisma.product.findMany({
-    where: {
-      department: product.department,
-      id: { not: product.id },
-      status: "PUBLISHED",
-    },
-    include: {
-      artist: { select: { name: true, slug: true } },
-      images: { orderBy: { position: "asc" } },
-    },
-    take: 3,
-    orderBy: { createdAt: "desc" },
-  });
+  let recommendations: any[] = [];
+  try {
+    recommendations = await prisma.product.findMany({
+      where: {
+        department: product.department,
+        id: { not: product.id },
+        status: "PUBLISHED",
+      },
+      include: {
+        artist: { select: { name: true, slug: true } },
+        images: { orderBy: { position: "asc" } },
+      },
+      take: 3,
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (err) {
+    console.warn("[ProductDetailPage] Recommendations query notice:", err);
+    recommendations = [];
+  }
 
   // Schema.org Product structured data for SEO
   const jsonLd = {

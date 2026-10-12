@@ -37,14 +37,20 @@ export default async function SearchPage(props: SearchPageProps) {
     ];
   }
 
-  const results = await prisma.product.findMany({
-    where: whereClause,
-    include: {
-      artist: { select: { name: true, slug: true } },
-      images: { orderBy: { position: "asc" } },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  let results: any[] = [];
+  try {
+    results = await prisma.product.findMany({
+      where: whereClause,
+      include: {
+        artist: { select: { name: true, slug: true } },
+        images: { orderBy: { position: "asc" } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (err) {
+    console.warn("[SearchPage] Database query notice:", err);
+    results = [];
+  }
 
   return (
     <div className="container" style={{ paddingTop: "3rem", paddingBottom: "7rem" }}>

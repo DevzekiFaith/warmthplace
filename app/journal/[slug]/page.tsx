@@ -13,23 +13,37 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const article = await prisma.article.findUnique({
-    where: { slug },
-  });
+  try {
+    const article = await prisma.article.findUnique({
+      where: { slug },
+    });
 
-  if (!article) return { title: "Article Not Found" };
+    if (!article) return { title: "Article Not Found" };
 
-  return {
-    title: `${article.title} — Warmthplace Journal`,
-    description: article.excerpt,
-  };
+    return {
+      title: `${article.title} — Warmthplace Journal`,
+      description: article.excerpt,
+    };
+  } catch (err) {
+    console.warn("[JournalMetadata] Database query notice:", err);
+    return { title: "Journal Article — Warmthplace" };
+  }
+}
+
+async function getArticle(slug: string) {
+  try {
+    return await prisma.article.findUnique({
+      where: { slug },
+    });
+  } catch (err) {
+    console.warn("[JournalArticlePage] Database query notice:", err);
+    return null;
+  }
 }
 
 export default async function JournalArticlePage({ params }: Props) {
   const { slug } = await params;
-  const article = await prisma.article.findUnique({
-    where: { slug },
-  });
+  const article = await getArticle(slug);
 
   if (!article || !article.published) {
     notFound();

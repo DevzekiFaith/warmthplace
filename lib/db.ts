@@ -24,9 +24,15 @@ function resolveDatabaseUrl(): string {
     const inCwd = path.resolve(/*turbopackIgnore: true*/ process.cwd(), cleanRel);
 
     if (fs.existsSync(inPrisma)) {
+      try {
+        if (!fs.existsSync(inCwd)) fs.copyFileSync(inPrisma, inCwd);
+      } catch {}
       return `file:${inPrisma}`;
     }
     if (fs.existsSync(inCwd)) {
+      try {
+        if (!fs.existsSync(inPrisma)) fs.copyFileSync(inCwd, inPrisma);
+      } catch {}
       return `file:${inCwd}`;
     }
 

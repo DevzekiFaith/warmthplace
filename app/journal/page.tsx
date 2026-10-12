@@ -13,10 +13,16 @@ export const metadata: Metadata = {
 };
 
 export default async function JournalIndexPage() {
-  const articles = await prisma.article.findMany({
-    where: { published: true },
-    orderBy: { createdAt: "desc" },
-  });
+  let articles: any[] = [];
+  try {
+    articles = await prisma.article.findMany({
+      where: { published: true },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (err) {
+    console.warn("[JournalIndexPage] Database query notice:", err);
+    articles = [];
+  }
 
   return (
     <div className="container" style={{ paddingBottom: "7rem" }}>

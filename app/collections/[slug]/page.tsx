@@ -12,32 +12,46 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const col = await prisma.collection.findUnique({
-    where: { slug },
-  });
+  try {
+    const col = await prisma.collection.findUnique({
+      where: { slug },
+    });
 
-  if (!col) return { title: "Collection Not Found" };
+    if (!col) return { title: "Collection Not Found" };
 
-  return {
-    title: `${col.title} — Curated Collection`,
-    description: col.description,
-  };
+    return {
+      title: `${col.title} — Curated Collection`,
+      description: col.description,
+    };
+  } catch (err) {
+    console.warn("[CollectionMetadata] Database query notice:", err);
+    return { title: "Curated Collection — Warmthplace" };
+  }
+}
+
+async function getCollection(slug: string) {
+  try {
+    return await prisma.collection.findUnique({
+      where: { slug },
+      include: {
+        products: {
+          where: { status: "PUBLISHED" },
+          include: {
+            artist: { select: { name: true, slug: true } },
+            images: { orderBy: { position: "asc" } },
+          },
+        },
+      },
+    });
+  } catch (err) {
+    console.warn("[CollectionDetailPage] Database query notice:", err);
+    return null;
+  }
 }
 
 export default async function CollectionDetailPage({ params }: Props) {
   const { slug } = await params;
-  const collection = await prisma.collection.findUnique({
-    where: { slug },
-    include: {
-      products: {
-        where: { status: "PUBLISHED" },
-        include: {
-          artist: { select: { name: true, slug: true } },
-          images: { orderBy: { position: "asc" } },
-        },
-      },
-    },
-  });
+  const collection = await getCollection(slug);
 
   if (!collection) {
     notFound();

@@ -12,33 +12,46 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const artist = await prisma.artist.findUnique({
-    where: { slug },
-  });
+  try {
+    const artist = await prisma.artist.findUnique({
+      where: { slug },
+    });
 
-  if (!artist) return { title: "Artist Not Found" };
+    if (!artist) return { title: "Artist Not Found" };
 
-  return {
-    title: `${artist.name} — Artist Profile`,
-    description: artist.shortBio,
-  };
+    return {
+      title: `${artist.name} — Artist Profile`,
+      description: artist.shortBio,
+    };
+  } catch (err) {
+    console.warn("[ArtistProfileMetadata] Database query notice:", err);
+    return { title: "Artist Profile — Warmthplace" };
+  }
+}
+
+async function getArtist(slug: string) {
+  try {
+    return await prisma.artist.findUnique({
+      where: { slug },
+      include: {
+        products: {
+          where: { status: "PUBLISHED" },
+          include: {
+            artist: { select: { name: true, slug: true } },
+            images: { orderBy: { position: "asc" } },
+          },
+        },
+      },
+    });
+  } catch (err) {
+    console.warn("[ArtistProfilePage] Database query notice:", err);
+    return null;
+  }
 }
 
 export default async function ArtistProfilePage({ params }: Props) {
   const { slug } = await params;
-
-  const artist = await prisma.artist.findUnique({
-    where: { slug },
-    include: {
-      products: {
-        where: { status: "PUBLISHED" },
-        include: {
-          artist: { select: { name: true, slug: true } },
-          images: { orderBy: { position: "asc" } },
-        },
-      },
-    },
-  });
+  const artist = await getArtist(slug);
 
   if (!artist) {
     notFound();
