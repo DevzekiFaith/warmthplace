@@ -43,38 +43,14 @@ export function Footer() {
                 <Image
                   src="/images/brand/warmthplace-emblem-circle.png"
                   alt="Warmthplace Arts Emblem"
-                  width={54}
-                  height={54}
+                  width={64}
+                  height={64}
                   className="brand-emblem-img"
                 />
               </div>
-              <div>
-                <span
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "1.2rem",
-                    letterSpacing: "0.14em",
-                    textTransform: "uppercase",
-                    color: "var(--color-gallery-ivory)",
-                    display: "block",
-                    lineHeight: 1.1,
-                  }}
-                >
-                  Warmthplace
-                </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "0.62rem",
-                    letterSpacing: "0.26em",
-                    textTransform: "uppercase",
-                    color: "var(--color-muted-brass)",
-                    display: "block",
-                    marginTop: "4px",
-                  }}
-                >
-                  Arts
-                </span>
+              <div className="footer-brand-text">
+                <span className="footer-brand-title">Warmthplace</span>
+                <span className="footer-brand-subtitle">Arts</span>
               </div>
             </Link>
             <p className="footer-brand-tagline">{SITE_TAGLINE}</p>
