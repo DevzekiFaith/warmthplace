@@ -229,31 +229,16 @@ export default function CheckoutPage() {
       </div>
 
       <form onSubmit={handlePlaceOrder}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: "clamp(2rem, 4vw, 4rem)",
-            alignItems: "start",
-          }}
-        >
+        <div className="checkout-main-grid">
           {/* Left Column: Collector Details & Shipping & Payment */}
           <div>
             {/* 1. Collector Contact Information */}
-            <div
-              style={{
-                backgroundColor: "#FFFFFF",
-                border: "1px solid var(--border-subtle)",
-                padding: "2rem",
-                borderRadius: "2px",
-                marginBottom: "2rem",
-              }}
-            >
+            <div className="checkout-section-card">
               <h2 style={{ fontSize: "1.35rem", marginBottom: "1.5rem" }}>
                 1. Collector Information
               </h2>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+              <div className="checkout-fields-2col">
                 <div>
                   <label style={{ display: "block", fontSize: "0.76rem", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, marginBottom: "0.35rem" }}>
                     Full Name *
@@ -299,15 +284,7 @@ export default function CheckoutPage() {
             </div>
 
             {/* 2. Delivery & Crating Destination */}
-            <div
-              style={{
-                backgroundColor: "#FFFFFF",
-                border: "1px solid var(--border-subtle)",
-                padding: "2rem",
-                borderRadius: "2px",
-                marginBottom: "2rem",
-              }}
-            >
+            <div className="checkout-section-card">
               <h2 style={{ fontSize: "1.35rem", marginBottom: "1.5rem" }}>
                 2. Shipping & Crated Transit
               </h2>
@@ -371,7 +348,7 @@ export default function CheckoutPage() {
                 />
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+              <div className="checkout-fields-3col">
                 <div>
                   <label style={{ display: "block", fontSize: "0.76rem", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, marginBottom: "0.35rem" }}>
                     City *
@@ -429,15 +406,7 @@ export default function CheckoutPage() {
             </div>
 
             {/* 3. Payment Protocol */}
-            <div
-              style={{
-                backgroundColor: "#FFFFFF",
-                border: "1px solid var(--border-subtle)",
-                padding: "2rem",
-                borderRadius: "2px",
-                marginBottom: "2rem",
-              }}
-            >
+            <div className="checkout-section-card">
               <h2 style={{ fontSize: "1.35rem", marginBottom: "1.5rem" }}>
                 3. Payment Protocol
               </h2>
@@ -561,7 +530,7 @@ export default function CheckoutPage() {
             style={{
               backgroundColor: "var(--color-gallery-ivory)",
               border: "1px solid var(--border-subtle)",
-              padding: "2rem",
+              padding: "clamp(1.25rem, 3.5vw, 2rem)",
               borderRadius: "2px",
               position: "sticky",
               top: "90px",

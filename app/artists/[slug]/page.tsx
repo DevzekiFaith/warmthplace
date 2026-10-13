@@ -87,27 +87,8 @@ export default async function ArtistProfilePage({ params }: Props) {
       </div>
 
       {/* Artist Profile Header Section */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1.35fr",
-          gap: "clamp(2.5rem, 5vw, 5rem)",
-          alignItems: "center",
-          paddingBottom: "4rem",
-          borderBottom: "1px solid var(--border-subtle)",
-          marginBottom: "4.5rem",
-        }}
-      >
-        <div
-          style={{
-            position: "relative",
-            height: "520px",
-            borderRadius: "3px",
-            overflow: "hidden",
-            boxShadow: "var(--shadow-card)",
-            background: "#EEEAE1",
-          }}
-        >
+      <div className="artist-profile-header-grid">
+        <div className="artist-profile-portrait">
           <Image
             src={artist.portraitImage || "/images/catalogue/harmattan-procession.jpg"}
             alt={artist.name}

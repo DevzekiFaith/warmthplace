@@ -33,25 +33,10 @@ export default function ContactPage() {
         </p>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "clamp(2.5rem, 5vw, 4.5rem)",
-          alignItems: "start",
-        }}
-      >
+      <div className="contact-layout-grid">
         {/* Left Column: Studio Information & Curatorial Details */}
         <div>
-          <div
-            style={{
-              backgroundColor: "var(--color-gallery-ivory)",
-              border: "1px solid var(--border-subtle)",
-              padding: "2.5rem",
-              borderRadius: "2px",
-              marginBottom: "2.5rem",
-            }}
-          >
+          <div className="contact-section-card">
             <span className="kicker" style={{ color: "var(--color-terracotta)" }}>
               Studio & Physical Gallery
             </span>

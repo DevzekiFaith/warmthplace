@@ -283,7 +283,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                 </button>
               </div>
             ) : (
-              <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+              <div className="pdp-actions-row">
                 {product.productType !== "ORIGINAL" && (
                   <div
                     style={{

@@ -34,16 +34,8 @@ export default function AboutPage() {
       </div>
 
       {/* Narrative Split 1 */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "clamp(2.5rem, 5vw, 5rem)",
-          alignItems: "center",
-          marginBottom: "6rem",
-        }}
-      >
-        <div style={{ position: "relative", height: "480px", borderRadius: "3px", overflow: "hidden" }}>
+      <div className="about-split-grid">
+        <div className="about-split-image">
           <Image
             src="/images/catalogue/harmattan-procession.jpg"
             alt="Warmthplace curatorial gallery canvas"
@@ -78,15 +70,7 @@ export default function AboutPage() {
       </div>
 
       {/* Narrative Split 2 */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "clamp(2.5rem, 5vw, 5rem)",
-          alignItems: "center",
-          marginBottom: "6rem",
-        }}
-      >
+      <div className="about-split-grid">
         <div>
           <span className="kicker">Direct Collaboration</span>
           <h2 style={{ fontSize: "2.2rem", marginTop: "0.4rem", marginBottom: "1rem" }}>
@@ -102,7 +86,7 @@ export default function AboutPage() {
             a physical museum Certificate of Authenticity, and the certainty that the
             artist has been fairly remunerated to sustain their multi-generational practice.
           </p>
-          <div style={{ display: "flex", gap: "1rem" }}>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <Link href="/artists" className="btn btn-secondary">
               Meet Our Artists →
             </Link>
@@ -112,7 +96,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div style={{ position: "relative", height: "480px", borderRadius: "3px", overflow: "hidden" }}>
+        <div className="about-split-image">
           <Image
             src="/images/catalogue/incised-terracotta-vessel.jpg"
             alt="Handcrafted ceramic vessel detail"

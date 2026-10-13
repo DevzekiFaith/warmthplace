@@ -74,7 +74,9 @@ export function EnquiryModal({
           borderRadius: "3px",
           maxWidth: "520px",
           width: "100%",
-          padding: "2.5rem 2rem",
+          maxHeight: "90vh",
+          overflowY: "auto",
+          padding: "clamp(1.5rem, 4vw, 2.5rem)",
           boxShadow: "var(--shadow-elevated)",
           position: "relative",
         }}
@@ -85,9 +87,20 @@ export function EnquiryModal({
           onClick={onClose}
           style={{
             position: "absolute",
-            top: "1.25rem",
-            right: "1.25rem",
+            top: "1rem",
+            right: "1rem",
+            width: "36px",
+            height: "36px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "50%",
+            border: "1px solid var(--border-medium)",
+            backgroundColor: "#FFFFFF",
             color: "var(--color-ink-charcoal)",
+            cursor: "pointer",
+            fontSize: "1rem",
+            zIndex: 10,
           }}
           aria-label="Close Enquiry Modal"
         >

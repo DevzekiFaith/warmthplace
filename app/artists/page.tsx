@@ -42,13 +42,7 @@ export default async function ArtistsIndexPage() {
         </p>
       </header>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
-          gap: "3rem",
-        }}
-      >
+      <div className="artists-grid">
         {artists.map((artist) => (
           <article
             key={artist.id}

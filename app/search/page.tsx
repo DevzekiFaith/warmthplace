@@ -86,7 +86,7 @@ export default async function SearchPage(props: SearchPageProps) {
         </form>
 
         {/* Department Filters */}
-        <div style={{ display: "flex", gap: "0.75rem" }}>
+        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
           <Link
             href={`/search?q=${encodeURIComponent(cleanQ)}&dept=ALL`}
             className={`filter-pill ${dept === "ALL" ? "active" : ""}`}

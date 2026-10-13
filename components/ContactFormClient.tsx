@@ -112,7 +112,7 @@ export function ContactFormClient() {
       style={{
         backgroundColor: "#FFFFFF",
         border: "1px solid var(--border-subtle)",
-        padding: "clamp(2rem, 4vw, 3rem)",
+        padding: "clamp(1.25rem, 4vw, 3rem)",
         borderRadius: "2px",
       }}
     >

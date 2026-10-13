@@ -220,6 +220,47 @@ export function Navbar() {
 
           {/* Drawer Sheet */}
           <div className="mobile-drawer-sheet">
+            {/* Dedicated Drawer Top Bar with Brand & Close Button */}
+            <div className="mobile-drawer-header">
+              <div className="mobile-drawer-brand">
+                <div className="mobile-drawer-emblem">
+                  <Image
+                    src="/images/brand/warmthplace-emblem-circle.png"
+                    alt="Warmthplace Arts Emblem"
+                    width={32}
+                    height={32}
+                    className="brand-emblem-img"
+                  />
+                </div>
+                <div className="mobile-drawer-brand-text">
+                  <span className="mobile-drawer-title">Warmthplace</span>
+                  <span className="mobile-drawer-subtitle">Arts & Living</span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                className="mobile-drawer-close"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close navigation menu"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+
             {/* Mobile Search Form */}
             <form onSubmit={handleMobileSearch} className="mobile-drawer-search">
               <svg

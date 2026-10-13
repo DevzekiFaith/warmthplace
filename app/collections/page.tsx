@@ -48,23 +48,14 @@ export default async function CollectionsIndexPage() {
           return (
             <div
               key={col.id}
+              className="collection-feature-grid"
               style={{
-                display: "grid",
-                gridTemplateColumns: "1.1fr 1fr",
-                gap: "clamp(2rem, 4vw, 4rem)",
-                alignItems: "center",
-                backgroundColor: "var(--color-canvas-light)",
-                border: "1px solid var(--border-subtle)",
-                borderRadius: "3px",
-                overflow: "hidden",
                 direction: isEven ? "rtl" : "ltr",
               }}
             >
               <div
+                className="collection-feature-image"
                 style={{
-                  position: "relative",
-                  height: "440px",
-                  background: "#EEEAE1",
                   direction: "ltr",
                 }}
               >

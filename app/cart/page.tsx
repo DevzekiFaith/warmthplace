@@ -89,14 +89,7 @@ export default function CartPage() {
           </div>
         </div>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.4fr 1fr",
-            gap: "clamp(2rem, 5vw, 4.5rem)",
-            alignItems: "start",
-          }}
-        >
+        <div className="cart-layout-grid">
           {/* Items List */}
           <div>
             <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>

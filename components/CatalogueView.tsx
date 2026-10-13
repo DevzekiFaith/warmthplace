@@ -145,7 +145,8 @@ export function CatalogueView({
                 backgroundColor: "#FFFFFF",
                 fontSize: "0.8rem",
                 color: "var(--color-ink-charcoal)",
-                width: "220px",
+                width: "clamp(180px, 100%, 240px)",
+                maxWidth: "100%",
               }}
             />
             <svg
