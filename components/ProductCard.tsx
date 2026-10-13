@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCart } from "./CartContext";
 import { useCurrency } from "./CurrencyContext";
 import { BASE_CURRENCY } from "@/lib/constants";
@@ -38,6 +39,7 @@ export interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const router = useRouter();
   const { addItem } = useCart();
   const { currency, format } = useCurrency();
 
@@ -50,7 +52,7 @@ export function ProductCard({ product }: ProductCardProps) {
     e.preventDefault();
     e.stopPropagation();
     if (product.enquiryOnly) {
-      window.location.href = `/products/${product.slug}#enquire`;
+      router.push(`/products/${product.slug}#enquire`);
       return;
     }
     addItem({

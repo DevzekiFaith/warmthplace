@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db";
 import { ProductDetailsClient } from "@/components/ProductDetailsClient";
 import { ProductCard } from "@/components/ProductCard";
 import { SITE_NAME } from "@/lib/constants";
+import { getHeroProduct } from "@/lib/heroProducts";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -13,6 +14,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  const hero = getHeroProduct(slug);
   try {
     const product = await prisma.product.findUnique({
       where: { slug },
@@ -22,7 +24,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     });
 
-    if (!product) return { title: "Artwork Not Found" };
+    if (!product) {
+      if (hero) {
+        return {
+          title: `${hero.title} by ${hero.artist.name}`,
+          description: hero.description.slice(0, 160),
+          openGraph: {
+            title: `${hero.title} | ${SITE_NAME}`,
+            description: hero.description.slice(0, 160),
+            images: [{ url: hero.images[0].url, alt: hero.title }],
+          },
+        };
+      }
+      return { title: "Artwork Not Found" };
+    }
 
     const artistText = product.artist ? `by ${product.artist.name}` : "";
     const imageUrl = product.images[0]?.url || "/images/catalogue/indigo-tide.jpg";
@@ -38,13 +53,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   } catch (err) {
     console.warn("[ProductMetadata] Database query notice:", err);
+    if (hero) return { title: `${hero.title} by ${hero.artist.name}`, description: hero.description.slice(0, 160) };
     return { title: "Artwork Details — Warmthplace" };
   }
 }
 
 async function getProduct(slug: string) {
   try {
-    return await prisma.product.findUnique({
+    const dbProduct = await prisma.product.findUnique({
       where: { slug },
       include: {
         artist: {
@@ -58,9 +74,10 @@ async function getProduct(slug: string) {
         images: { orderBy: { position: "asc" } },
       },
     });
+    return dbProduct ?? getHeroProduct(slug) ?? null;
   } catch (err) {
     console.warn("[ProductDetailPage] Database query notice:", err);
-    return null;
+    return getHeroProduct(slug) ?? null;
   }
 }
 

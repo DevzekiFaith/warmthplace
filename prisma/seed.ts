@@ -40,7 +40,7 @@ async function main() {
       { key: "site_name", value: "Warmthplace Art Studio" },
       { key: "site_tagline", value: "African Art. Contemporary Living. Enduring Stories." },
       { key: "store_currency", value: "NGN" },
-      { key: "contact_email", value: "concierge@warmthplace.com" },
+      { key: "contact_email", value: "nkempearl2@gmail.com" },
       { key: "contact_phone", value: "+234 1 888 2026" },
       { key: "studio_address", value: "7 Victoria Island Crescent, Lagos, Nigeria" },
     ],
@@ -159,6 +159,36 @@ async function main() {
       portraitImage: "/images/catalogue/ancestral-geometry.jpg",
       coverImage: "/images/catalogue/strip-woven-throw.jpg",
       position: 4,
+      isSample: true,
+    },
+  });
+
+  const adebayo = await prisma.artist.create({
+    data: {
+      slug: "adebayo-olufemi",
+      name: "Adebayo Olufemi",
+      discipline: "Contemporary Painter & Figurative Colorist",
+      location: "Lagos, Nigeria",
+      shortBio: "Captures the syncopated energy and nocturnal vibrancy of Lagos musical and cultural gatherings.",
+      bio: "Adebayo Olufemi is a celebrated contemporary painter whose high-contrast impasto works document West Africa's vibrant live music scenes. Working primarily with heavy oil pigments and palette-knife techniques, Olufemi translates musical syncopation into rich visual rhythms.",
+      portraitImage: "/images/hero/artwork-jazz-trio.jpg",
+      coverImage: "/images/hero/hero-jazz-trio.jpg",
+      position: 5,
+      isSample: true,
+    },
+  });
+
+  const zainab = await prisma.artist.create({
+    data: {
+      slug: "zainab-chinedu",
+      name: "Zainab Chinedu",
+      discipline: "Figurative Painter & Ceremonial Colorist",
+      location: "Abuja, Nigeria",
+      shortBio: "Explores communal ritual, sacred dance, and kinetic rhythms with warm mineral ochres and raw pigments.",
+      bio: "Zainab Chinedu crafts monumental figurative works centered on community cohesion and ceremonial celebration. Her layered surfaces evoke sun-baked earth, ritual attire, and ancestral resonance.",
+      portraitImage: "/images/hero/artwork-african-drummers.jpg",
+      coverImage: "/images/hero/hero-african-drummers.jpg",
+      position: 6,
       isSample: true,
     },
   });
@@ -677,6 +707,138 @@ async function main() {
     },
   });
 
+  // 13 - The Jazz Trio Session (Hero Artwork & Interior In-Situ)
+  await prisma.product.create({
+    data: {
+      slug: "the-jazz-trio-session",
+      title: "The Jazz Trio Session",
+      department: "ART",
+      category: "ORIGINAL_PAINTING",
+      productType: "ORIGINAL",
+      description: "An extraordinary original framed canvas capturing three musicians locked in improvisational conversation. Saturated cobalt, saffron and burnt sienna strokes pulse with the syncopation of a late-night Lagos jazz session. Signed by the artist, framed in hand-finished oak, and shipped with a museum certificate of authenticity.",
+      medium: "Oil and palette-knife impasto on stretched linen, oak float frame",
+      materials: "Linen canvas, professional oils, solid oak frame",
+      year: 2026,
+      widthCm: 100,
+      heightCm: 120,
+      depthCm: 5.0,
+      weightKg: 7.4,
+      orientation: "PORTRAIT",
+      price: 385000000, // ₦3,850,000 (~$2,560 USD)
+      currency: "NGN",
+      stock: 1,
+      status: "PUBLISHED",
+      enquiryOnly: false,
+      shippingClass: "FRAGILE",
+      featured: true,
+      isSample: true,
+      artistId: adebayo.id,
+      collections: { connect: [{ id: colHeirloom.id }] },
+      images: {
+        create: [
+          {
+            url: "/images/hero/artwork-jazz-trio.jpg",
+            alt: "The Jazz Trio Session original framed canvas by Adebayo Olufemi",
+            position: 0,
+          },
+          {
+            url: "/images/hero/hero-jazz-trio.jpg",
+            alt: "The Jazz Trio Session displayed in a contemporary living room",
+            position: 1,
+          },
+        ],
+      },
+    },
+  });
+
+  // 14 - Ceremonial African Drummers & Dancers (Hero Artwork & Interior In-Situ)
+  await prisma.product.create({
+    data: {
+      slug: "ceremonial-african-drummers",
+      title: "Ceremonial African Drummers & Dancers",
+      department: "ART",
+      category: "ORIGINAL_PAINTING",
+      productType: "ORIGINAL",
+      description: "A rhythmic celebration of communal ceremony: drummers and dancers rendered in expressive figures against a warm ochre ground. Layered acrylic and mineral pigments give the surface a tactile, sun-baked richness that anchors any sunlit living space.",
+      medium: "Acrylic and mineral pigment on stretched cotton canvas",
+      materials: "Cotton canvas, acrylic, natural mineral pigment, timber stretcher",
+      year: 2026,
+      widthCm: 90,
+      heightCm: 130,
+      depthCm: 4.0,
+      weightKg: 6.1,
+      orientation: "PORTRAIT",
+      price: 420000000, // ₦4,200,000 (~$2,800 USD)
+      currency: "NGN",
+      stock: 1,
+      status: "PUBLISHED",
+      enquiryOnly: false,
+      shippingClass: "FRAGILE",
+      featured: true,
+      isSample: true,
+      artistId: zainab.id,
+      collections: { connect: [{ id: colHeirloom.id }] },
+      images: {
+        create: [
+          {
+            url: "/images/hero/artwork-african-drummers.jpg",
+            alt: "Ceremonial African Drummers and Dancers canvas by Zainab Chinedu",
+            position: 0,
+          },
+          {
+            url: "/images/hero/hero-african-drummers.jpg",
+            alt: "Ceremonial Drummers canvas in a sunlit living room",
+            position: 1,
+          },
+        ],
+      },
+    },
+  });
+
+  // 15 - Chromatic Field: Contemporary Impasto Canvas (Hero Artwork & Interior In-Situ)
+  await prisma.product.create({
+    data: {
+      slug: "chromatic-field-impasto",
+      title: "Chromatic Field: Contemporary Impasto Canvas",
+      department: "ART",
+      category: "ORIGINAL_PAINTING",
+      productType: "ORIGINAL",
+      description: "A monumental abstract built from thick, sculpted ribbons of colour. Chromatic Field rewards close looking with ridges, scrapes and layered pigment, while from across the room it reads as a luminous field of harmony. Ideal as a statement piece in minimalist interiors.",
+      medium: "Heavy-body acrylic impasto on stretched canvas",
+      materials: "Cotton canvas, heavy-body acrylic, modelling paste",
+      year: 2026,
+      widthCm: 120,
+      heightCm: 120,
+      depthCm: 5.0,
+      weightKg: 8.2,
+      orientation: "SQUARE",
+      price: 315000000, // ₦3,150,000 (~$2,100 USD)
+      currency: "NGN",
+      stock: 1,
+      status: "PUBLISHED",
+      enquiryOnly: false,
+      shippingClass: "FRAGILE",
+      featured: true,
+      isSample: true,
+      artistId: tariq.id,
+      collections: { connect: [{ id: colHeirloom.id }] },
+      images: {
+        create: [
+          {
+            url: "/images/hero/artwork-abstract-canvas.jpg",
+            alt: "Chromatic Field impasto abstract canvas by Tariq Osei",
+            position: 0,
+          },
+          {
+            url: "/images/hero/hero-abstract-canvas.jpg",
+            alt: "Chromatic Field abstract canvas in a sunlit room",
+            position: 1,
+          },
+        ],
+      },
+    },
+  });
+
   // 7. Editorial Articles
   await prisma.article.createMany({
     data: [
@@ -759,7 +921,7 @@ Each vessel available through Warmthplace Art Studio carries this direct lineage
     ],
   });
 
-  console.log("Database seeded successfully with 12 products, 4 artists, 3 collections, 3 articles, 4 shipping zones, and admin account!");
+  console.log("Database seeded successfully with 15 products, 6 artists, 3 collections, 3 articles, 4 shipping zones, and admin account!");
 }
 
 main()

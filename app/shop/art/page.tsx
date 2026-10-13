@@ -1,8 +1,9 @@
 import React from "react";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/db";
-import { ART_CATEGORIES, SITE_NAME } from "@/lib/constants";
+import { ART_CATEGORIES } from "@/lib/constants";
 import { CatalogueView } from "@/components/CatalogueView";
+import { HERO_PRODUCTS } from "@/lib/heroProducts";
 
 export const metadata: Metadata = {
   title: "African Contemporary Art Collection",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ArtShopPage() {
-  let products: any[] = [];
+  let products = [];
   try {
     products = await prisma.product.findMany({
       where: {
@@ -24,9 +25,12 @@ export default async function ArtShopPage() {
       },
       orderBy: { createdAt: "desc" },
     });
+    if (products.length === 0) {
+      products = HERO_PRODUCTS.filter((p) => p.department === "ART");
+    }
   } catch (err) {
     console.warn("[ArtShopPage] Database query notice during build:", err);
-    products = [];
+    products = HERO_PRODUCTS.filter((p) => p.department === "ART");
   }
 
   return (

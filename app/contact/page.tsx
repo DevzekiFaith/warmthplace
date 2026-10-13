@@ -1,7 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { ContactFormClient } from "@/components/ContactFormClient";
 import { SITE_NAME } from "@/lib/constants";
 
@@ -91,23 +90,23 @@ export default function ContactPage() {
                 </h4>
                 <p style={{ fontSize: "0.95rem", lineHeight: 1.6, margin: 0 }}>
                   Email:{" "}
-                  <a href="mailto:concierge@warmthplace.com" style={{ color: "var(--color-terracotta)", textDecoration: "underline" }}>
-                    concierge@warmthplace.com
+                  <a href="mailto:nkempearl2@gmail.com" style={{ color: "var(--color-terracotta)", textDecoration: "underline" }}>
+                    nkempearl2@gmail.com
                   </a>
                   <br />
                   Telephone:{" "}
-                  <a href="tel:+23418882026" style={{ color: "inherit", fontWeight: 500 }}>
-                    +234 1 888 2026
+                  <a href="tel:+2348133084124" style={{ color: "inherit", fontWeight: 500 }}>
+                    +234 813 308 4124
                   </a>
                   <br />
                   WhatsApp Concierge:{" "}
                   <a
-                    href="https://wa.me/23418882026?text=Hello%20Warmthplace%20Curatorial%20Team,%20I%20would%20like%20to%20enquire%20about%20a%20work."
+                    href="https://wa.me/2348133084124?text=Hello%20Warmthplace%20Curatorial%20Team,%20I%20would%20like%20to%20enquire%20about%20a%20work."
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: "var(--color-terracotta)", textDecoration: "underline" }}
                   >
-                    +234 1 888 2026 (Live Chat)
+                    +234 813 308 4124 (Live Chat)
                   </a>
                 </p>
               </div>

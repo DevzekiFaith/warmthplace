@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/components/CartContext";
 import { useCurrency } from "@/components/CurrencyContext";
-import { SITE_NAME } from "@/lib/constants";
 
 interface ShippingOption {
   id: string;
@@ -48,7 +47,7 @@ const SHIPPING_OPTIONS: ShippingOption[] = [
 
 export default function CheckoutPage() {
   const { items, totals, clearCart } = useCart();
-  const { format, currency } = useCurrency();
+  const { format } = useCurrency();
 
   const [selectedZone, setSelectedZone] = useState<string>("lagos");
   const [paymentMethod, setPaymentMethod] = useState<"paystack" | "bank_transfer" | "concierge_invoice">("paystack");
@@ -491,10 +490,39 @@ export default function CheckoutPage() {
                     style={{ marginTop: "0.25rem" }}
                   />
                   <div>
-                    <strong style={{ fontSize: "0.95rem" }}>Direct Studio Bank Transfer (Zenith Bank / Standard Chartered)</strong>
+                    <strong style={{ fontSize: "0.95rem" }}>Direct Bank Transfer — Access Bank</strong>
                     <p style={{ fontSize: "0.82rem", color: "var(--color-ink-light)", margin: "0.25rem 0 0" }}>
-                      Recommended for monumental original works. Account instructions will be dispatched to your email.
+                      Recommended for original artwork acquisitions. Please use your order number as payment reference.
                     </p>
+                    {paymentMethod === "bank_transfer" && (
+                      <div
+                        style={{
+                          marginTop: "0.85rem",
+                          padding: "1rem",
+                          backgroundColor: "var(--color-gallery-ivory)",
+                          border: "1px solid var(--border-subtle)",
+                          borderRadius: "2px",
+                          fontSize: "0.88rem",
+                          lineHeight: 1.75,
+                        }}
+                      >
+                        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", columnGap: "1.5rem", rowGap: "0.2rem" }}>
+                          <span style={{ color: "var(--color-ink-light)", fontWeight: 500 }}>Bank:</span>
+                          <span style={{ fontWeight: 600 }}>Access Bank</span>
+                          <span style={{ color: "var(--color-ink-light)", fontWeight: 500 }}>Account Name:</span>
+                          <span style={{ fontWeight: 600 }}>Agbo Nkem</span>
+                          <span style={{ color: "var(--color-ink-light)", fontWeight: 500 }}>Account Number:</span>
+                          <span style={{ fontWeight: 700, letterSpacing: "0.08em", color: "var(--color-terracotta)" }}>0044730376</span>
+                          <span style={{ color: "var(--color-ink-light)", fontWeight: 500 }}>WhatsApp:</span>
+                          <a href="tel:+2348133084124" style={{ color: "inherit", fontWeight: 600 }}>+234 813 308 4124</a>
+                        </div>
+                        <p style={{ margin: "0.75rem 0 0", fontSize: "0.78rem", color: "var(--color-ink-light)" }}>
+                          After transfer, please send your payment confirmation to{" "}
+                          <a href="mailto:nkempearl2@gmail.com" style={{ color: "var(--color-terracotta)" }}>nkempearl2@gmail.com</a>{" "}
+                          or WhatsApp the above number.
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </label>
 

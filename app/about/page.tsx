@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { SITE_NAME, SITE_TAGLINE } from "@/lib/constants";
+import { SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: `About ${SITE_NAME} — Curatorial Philosophy & Craft`,

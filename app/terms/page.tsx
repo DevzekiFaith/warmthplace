@@ -133,8 +133,8 @@ export default function TermsPage() {
       <div style={{ borderTop: "1px solid var(--border-subtle)", paddingTop: "2rem" }}>
         <p style={{ fontSize: "0.85rem", color: "var(--color-ink-light)" }}>
           Questions regarding collector terms or gallery representation agreements should be directed to{" "}
-          <a href="mailto:concierge@warmthplace.com" style={{ color: "var(--color-terracotta)", textDecoration: "underline" }}>
-            concierge@warmthplace.com
+          <a href="mailto:nkempearl2@gmail.com" style={{ color: "var(--color-terracotta)", textDecoration: "underline" }}>
+            nkempearl2@gmail.com
           </a>
           .
         </p>

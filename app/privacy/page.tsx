@@ -100,8 +100,8 @@ export default function PrivacyPage() {
           </p>
           <p>
             To exercise your privacy rights, contact our Data Protection Officer at{" "}
-            <a href="mailto:concierge@warmthplace.com" style={{ color: "var(--color-terracotta)", textDecoration: "underline" }}>
-              concierge@warmthplace.com
+            <a href="mailto:nkempearl2@gmail.com" style={{ color: "var(--color-terracotta)", textDecoration: "underline" }}>
+              nkempearl2@gmail.com
             </a>
             .
           </p>

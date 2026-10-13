@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { ProductCard } from "@/components/ProductCard";
+import { getHeroArtist } from "@/lib/heroProducts";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -12,12 +13,21 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  const heroArtist = getHeroArtist(slug);
   try {
     const artist = await prisma.artist.findUnique({
       where: { slug },
     });
 
-    if (!artist) return { title: "Artist Not Found" };
+    if (!artist) {
+      if (heroArtist) {
+        return {
+          title: `${heroArtist.name} — Artist Profile`,
+          description: heroArtist.shortBio,
+        };
+      }
+      return { title: "Artist Not Found" };
+    }
 
     return {
       title: `${artist.name} — Artist Profile`,
@@ -25,13 +35,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   } catch (err) {
     console.warn("[ArtistProfileMetadata] Database query notice:", err);
+    if (heroArtist) return { title: `${heroArtist.name} — Artist Profile`, description: heroArtist.shortBio };
     return { title: "Artist Profile — Warmthplace" };
   }
 }
 
 async function getArtist(slug: string) {
   try {
-    return await prisma.artist.findUnique({
+    const dbArtist = await prisma.artist.findUnique({
       where: { slug },
       include: {
         products: {
@@ -43,9 +54,10 @@ async function getArtist(slug: string) {
         },
       },
     });
+    return dbArtist ?? getHeroArtist(slug) ?? null;
   } catch (err) {
     console.warn("[ArtistProfilePage] Database query notice:", err);
-    return null;
+    return getHeroArtist(slug) ?? null;
   }
 }
 

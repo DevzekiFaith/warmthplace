@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Link from "next/link";
 import { ProductCard } from "./ProductCard";
 
 interface CatalogueProduct {
@@ -64,7 +63,7 @@ export function CatalogueView({
 
   // Filter and sort products
   const filteredProducts = useMemo(() => {
-    let result = products.filter((p) => {
+    const result = products.filter((p) => {
       // Category filter
       if (selectedCategory !== "ALL" && p.category !== selectedCategory) {
         return false;
@@ -85,14 +84,12 @@ export function CatalogueView({
     });
 
     // Sort
-    result.sort((a, b) => {
+    return [...result].sort((a, b) => {
       if (selectedSort === "price-asc") return a.price - b.price;
       if (selectedSort === "price-desc") return b.price - a.price;
       if (selectedSort === "title-asc") return a.title.localeCompare(b.title);
       return 0; // featured default
     });
-
-    return result;
   }, [products, selectedCategory, selectedSort, selectedAvailability, searchQuery]);
 
   return (
@@ -170,6 +167,25 @@ export function CatalogueView({
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
           </div>
+
+          {/* Availability Filter */}
+          <select
+            value={selectedAvailability}
+            onChange={(e) => setSelectedAvailability(e.target.value)}
+            style={{
+              padding: "0.45rem 0.85rem",
+              borderRadius: "2px",
+              border: "1px solid var(--border-medium)",
+              backgroundColor: "transparent",
+              fontSize: "0.8rem",
+              color: "var(--color-ink-charcoal)",
+              cursor: "pointer",
+            }}
+            aria-label="Filter availability"
+          >
+            <option value="all">All Availability</option>
+            <option value="in-stock">Available Now</option>
+          </select>
 
           {/* Sort Selector */}
           <select

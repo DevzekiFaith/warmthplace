@@ -299,8 +299,11 @@ export function Navbar() {
               <div className="mobile-drawer-contact">
                 <span className="mobile-footer-tag">Victoria Island, Lagos</span>
                 <span className="mobile-footer-sub">Worldwide Insured Transit</span>
-                <a href="mailto:concierge@warmthplace.com" className="mobile-footer-email">
-                  concierge@warmthplace.com
+                <a href="mailto:nkempearl2@gmail.com" className="mobile-footer-email">
+                  nkempearl2@gmail.com
+                </a>
+                <a href="tel:+2348133084124" style={{ fontSize: "0.82rem", color: "var(--color-ink-muted)", marginTop: "0.25rem", display: "block" }}>
+                  +234 813 308 4124
                 </a>
               </div>
 

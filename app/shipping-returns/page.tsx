@@ -265,8 +265,8 @@ export default function ShippingReturnsPage() {
           <p>
             To initiate an inspection review or coordinate return freight, please contact our Curatorial
             Concierge at{" "}
-            <a href="mailto:concierge@warmthplace.com" style={{ color: "var(--color-terracotta)", textDecoration: "underline" }}>
-              concierge@warmthplace.com
+            <a href="mailto:nkempearl2@gmail.com" style={{ color: "var(--color-terracotta)", textDecoration: "underline" }}>
+              nkempearl2@gmail.com
             </a>{" "}
             or speak directly with your dedicated curator.
           </p>
