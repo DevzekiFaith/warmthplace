@@ -1347,8 +1347,28 @@ p {
   transition: transform var(--transition-slow);
 }
 
-.product-card:hover .product-image {
+.product-image-primary {
+  object-fit: cover;
+  transition: opacity 0.4s ease, transform var(--transition-slow);
+}
+
+.product-card:hover .product-image-primary.has-secondary {
+  opacity: 0;
+}
+
+.product-card:hover .product-image-primary {
   transform: scale(1.04);
+}
+
+.product-image-secondary {
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform var(--transition-slow);
+}
+
+.product-card:hover .product-image-secondary {
+  opacity: 1;
+  transform: scale(1.02);
 }
 
 .product-badges-overlay {

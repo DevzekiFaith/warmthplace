@@ -44,7 +44,6 @@ export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   const { currency, format } = useCurrency();
   const [isSaved, setIsSaved] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   const primaryImage = product.images[0] || {
     url: "/images/catalogue/harmattan-procession.jpg",
@@ -90,112 +89,52 @@ export function ProductCard({ product }: ProductCardProps) {
   const hIn = h ? (h * 0.393701).toFixed(0) : null;
 
   const dualDimensions =
-    w && h
-      ? `${h}H × ${w}W cm (${hIn}&quot; × ${wIn}&quot;)`
-      : null;
+    w && h ? `${h}H × ${w}W cm (${hIn}" × ${wIn}")` : null;
 
   const isArt = product.department === "ART";
 
   return (
-    <article
-      className="product-card"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "var(--color-canvas-pure)",
-        border: "1px solid var(--border-subtle)",
-        borderRadius: "2px",
-        overflow: "hidden",
-        position: "relative",
-        transition: "all var(--transition-normal)",
-      }}
-    >
+    <article className="product-card">
       <Link
         href={`/products/${product.slug}`}
         className="product-image-container"
         tabIndex={0}
-        style={{
-          position: "relative",
-          aspectRatio: "3 / 4",
-          backgroundColor: "#EEEAE1",
-          overflow: "hidden",
-          display: "block",
-        }}
       >
-        {/* Primary Artwork Image */}
+        {/* Primary Artwork Image with CSS-driven transition */}
         <Image
           src={primaryImage.url}
           alt={primaryImage.alt || product.title}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
-          className="product-image"
+          className={`product-image-primary ${secondaryImage ? "has-secondary" : ""}`}
           loading="lazy"
-          style={{
-            objectFit: "cover",
-            opacity: secondaryImage && isHovered ? 0 : 1,
-            transform: isHovered ? "scale(1.04)" : "scale(1)",
-            transition: "opacity 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-          }}
         />
 
-        {/* Secondary In-Situ Room View on Hover (Pinterest Gallery Display effect) */}
+        {/* Secondary In-Situ Room View on Hover (Pure CSS, 100% hydration-safe) */}
         {secondaryImage && (
           <Image
             src={secondaryImage.url}
             alt={`${product.title} displayed in room interior`}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+            className="product-image-secondary"
             loading="lazy"
-            style={{
-              objectFit: "cover",
-              opacity: isHovered ? 1 : 0,
-              transform: isHovered ? "scale(1.02)" : "scale(1)",
-              transition: "opacity 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-            }}
           />
         )}
 
         {/* Overlay Badges */}
-        <div
-          className="product-badges-overlay"
-          style={{
-            position: "absolute",
-            top: "0.85rem",
-            left: "0.85rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.35rem",
-            zIndex: 3,
-            pointerEvents: "none",
-          }}
-        >
+        <div className="product-badges-overlay">
           {isArt && (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem", alignItems: "flex-start" }}>
-              <span
-                style={{
-                  backgroundColor: "rgba(255, 255, 255, 0.94)",
-                  backdropFilter: "blur(6px)",
-                  color: "var(--color-ink-charcoal)",
-                  fontSize: "0.68rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  padding: "0.25rem 0.6rem",
-                  borderRadius: "2px",
-                  border: "1px solid var(--border-subtle)",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
-                }}
-              >
+              <span className="badge badge-original" style={{ fontSize: "0.68rem", padding: "0.25rem 0.6rem" }}>
                 Original Work
               </span>
               {secondaryImage && (
                 <span
                   style={{
-                    backgroundColor: isHovered ? "rgba(36, 34, 30, 0.92)" : "rgba(255, 255, 255, 0.92)",
+                    backgroundColor: "rgba(255, 255, 255, 0.94)",
                     backdropFilter: "blur(6px)",
-                    color: isHovered ? "#FFFFFF" : "var(--color-ink-charcoal)",
+                    color: "var(--color-ink-charcoal)",
                     fontSize: "0.68rem",
                     fontWeight: 600,
                     letterSpacing: "0.12em",
@@ -207,7 +146,6 @@ export function ProductCard({ product }: ProductCardProps) {
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "0.3rem",
-                    transition: "all 0.3s ease",
                   }}
                 >
                   <span style={{ width: "5px", height: "5px", borderRadius: "50%", backgroundColor: "#C5A059" }} />
@@ -284,17 +222,8 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* =========================================================
           DIV ARRANGEMENT: ARTWORK DETAILS (PINTEREST / MESON ART STYLE)
          ========================================================= */}
-      <div
-        className="product-info"
-        style={{
-          padding: "1.2rem 1.25rem 1.4rem",
-          display: "flex",
-          flexDirection: "column",
-          flexGrow: 1,
-          backgroundColor: "#FFFFFF",
-        }}
-      >
-        {/* Line 1: Artist attribution with verified check */}
+      <div className="product-info">
+        {/* Line 1: Artist attribution with verified check & Catalog Ref */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.3rem" }}>
           {product.artist ? (
             <Link
@@ -305,10 +234,6 @@ export function ProductCard({ product }: ProductCardProps) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.3rem",
-                fontSize: "0.78rem",
-                color: "var(--color-ink-light)",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
                 fontWeight: 600,
               }}
             >
@@ -316,16 +241,7 @@ export function ProductCard({ product }: ProductCardProps) {
               <span style={{ color: "#2E7D32", fontSize: "0.75rem" }}>✓</span>
             </Link>
           ) : (
-            <span
-              className="product-artist"
-              style={{
-                fontSize: "0.78rem",
-                color: "var(--color-ink-light)",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                fontWeight: 600,
-              }}
-            >
+            <span className="product-artist">
               Warmthplace Studio
             </span>
           )}
@@ -345,34 +261,14 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Line 2: Artwork Title */}
-        <h3
-          className="product-title"
-          style={{
-            fontFamily: "var(--font-serif)",
-            fontSize: "1.25rem",
-            fontWeight: 500,
-            lineHeight: 1.25,
-            color: "var(--color-ink-charcoal)",
-            marginBottom: "0.45rem",
-          }}
-        >
+        <h3 className="product-title">
           <Link href={`/products/${product.slug}`}>{product.title}</Link>
         </h3>
 
         {/* Line 3: Medium & Dual Metric/Imperial Dimensions */}
-        <div
-          className="product-meta-specs"
-          style={{
-            fontSize: "0.8rem",
-            color: "var(--color-ink-muted)",
-            marginBottom: "0.45rem",
-            lineHeight: 1.4,
-          }}
-        >
+        <div className="product-meta-specs">
           {dualDimensions ? (
-            <span>
-              1P • <span dangerouslySetInnerHTML={{ __html: dualDimensions }} />
-            </span>
+            <span>1P • {dualDimensions}</span>
           ) : (
             product.medium || product.materials || "Original fine art"
           )}
@@ -380,7 +276,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
         {/* Line 4: Framing Specification Pill */}
         {isArt && (
-          <div style={{ marginBottom: "0.85rem" }}>
+          <div style={{ marginBottom: "0.5rem" }}>
             <span
               style={{
                 display: "inline-block",
@@ -397,36 +293,30 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
 
-        {/* Line 5: Price Row with Currency Switcher Support */}
+        {/* Line 5: Delivery Days & Arrival Notice */}
         <div
-          className="product-price-row"
           style={{
-            marginTop: "auto",
+            fontSize: "0.74rem",
+            color: "#2E7D32",
             display: "flex",
-            alignItems: "baseline",
-            justifyContent: "space-between",
-            paddingTop: "0.75rem",
-            borderTop: "1px solid var(--border-subtle)",
+            alignItems: "center",
+            gap: "0.35rem",
+            marginBottom: "0.75rem",
           }}
         >
-          <span
-            className="product-price-primary"
-            style={{
-              fontSize: "1.1rem",
-              fontWeight: 600,
-              color: "var(--color-ink-charcoal)",
-            }}
-          >
+          <span>🚚</span>
+          <span>Delivers in 5–7 business days • Insured Crate</span>
+        </div>
+
+        {/* Line 6: Price Row with Currency Switcher Support */}
+        <div className="product-price-row">
+          <span className="product-price-primary">
             {format(product.price)}
           </span>
 
           {currency !== BASE_CURRENCY ? (
             <span
               className="product-price-indicative"
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--color-ink-light)",
-              }}
               title="Official base checkout currency is Nigerian Naira (NGN)"
             >
               Base: {formatPrice(product.price, BASE_CURRENCY)}

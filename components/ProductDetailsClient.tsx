@@ -9,6 +9,7 @@ import { ImageZoom } from "@/components/ImageZoom";
 import { EnquiryModal } from "@/components/EnquiryModal";
 import { RoomScaleVisualizer } from "@/components/RoomScaleVisualizer";
 import { ArtTearSheetModal } from "@/components/ArtTearSheetModal";
+import { EstimatedDeliveryBox } from "@/components/EstimatedDeliveryBox";
 import { BASE_CURRENCY } from "@/lib/constants";
 import { formatPrice } from "@/lib/currency";
 
@@ -848,6 +849,12 @@ export function ProductDetailsClient({ product }: ProductProps) {
               </div>
             </div>
           </div>
+
+          {/* Estimated Delivery Days, Arrival Date & Timeline (Meson Art / Pinterest Feature) */}
+          <EstimatedDeliveryBox
+            shippingClass={product.shippingClass}
+            isOriginal={product.productType === "ORIGINAL"}
+          />
 
           {/* Availability & Commerce Action Buttons */}
           <div style={{ marginBottom: "2.5rem" }}>
