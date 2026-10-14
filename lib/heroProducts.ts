@@ -31,41 +31,7 @@ export interface HeroProduct {
 }
 
 export const HERO_PRODUCTS: HeroProduct[] = [
-  {
-    id: "hero-the-jazz-trio-session",
-    slug: "the-jazz-trio-session",
-    title: "The Jazz Trio Session",
-    department: "ART",
-    category: "ORIGINAL_PAINTING",
-    productType: "ORIGINAL",
-    editionSize: null,
-    description:
-      "An original framed canvas capturing three musicians locked in improvisational conversation. Saturated cobalt, saffron and burnt sienna strokes pulse with the syncopation of a late-night Lagos jazz session. Signed by the artist, framed in hand-finished oak, and shipped with a certificate of authenticity.",
-    medium: "Oil and palette-knife impasto on stretched linen, oak float frame",
-    materials: "Linen canvas, professional oils, solid oak frame",
-    year: 2026,
-    widthCm: 100,
-    heightCm: 120,
-    depthCm: 5,
-    weightKg: 7.4,
-    orientation: "PORTRAIT",
-    price: 385000000,
-    currency: "NGN",
-    stock: 1,
-    status: "PUBLISHED",
-    enquiryOnly: false,
-    shippingClass: "FRAGILE",
-    artist: {
-      name: "Nkem Agbo",
-      slug: "nkem-agbo",
-      discipline: "Contemporary Painter & Mixed-Media Impasto Colorist",
-      location: "Enugu & Lagos, Nigeria",
-    },
-    images: [
-      { url: "/images/hero/artwork-jazz-trio.jpg", alt: "The Jazz Trio Session original framed canvas", position: 0 },
-      { url: "/images/hero/hero-jazz-trio.jpg", alt: "The Jazz Trio Session displayed in a contemporary living room", position: 1 },
-    ],
-  },
+
   {
     id: "hero-ceremonial-african-drummers",
     slug: "ceremonial-african-drummers",
@@ -134,40 +100,6 @@ export const HERO_PRODUCTS: HeroProduct[] = [
     images: [
       { url: "/images/hero/artwork-abstract-canvas.jpg", alt: "Chromatic Field impasto abstract canvas", position: 0 },
       { url: "/images/hero/hero-abstract-canvas.jpg", alt: "Chromatic Field abstract canvas in a sunlit room", position: 1 },
-    ],
-  },
-  {
-    id: "hero-lagos-jazz-trio",
-    slug: "lagos-jazz-trio",
-    title: "Lagos Jazz Trio",
-    department: "ART",
-    category: "ORIGINAL_PAINTING",
-    productType: "ORIGINAL",
-    editionSize: null,
-    description:
-      "Three jazz musicians frozen in improvisational communion — a double bass, trumpet, and flute — rendered in explosive geometric shapes of cobalt blue, crimson, gold, ivory, and forest green against a richly textured violet-purple ground. Palette-knife impasto technique gives the surface a sculptural quality that vibrates with musical energy. Signed recto and verso. Shipped with certificate of authenticity.",
-    medium: "Oil and palette-knife impasto on stretched Belgian linen, black oak float frame",
-    materials: "Belgian linen, professional oil pigments, solid black oak frame",
-    year: 2026,
-    widthCm: 120,
-    heightCm: 100,
-    depthCm: 5,
-    weightKg: 8.2,
-    orientation: "LANDSCAPE",
-    price: 395000000,
-    currency: "NGN",
-    stock: 1,
-    status: "PUBLISHED",
-    enquiryOnly: false,
-    shippingClass: "FRAGILE",
-    artist: {
-      name: "Nkem Agbo",
-      slug: "nkem-agbo",
-      discipline: "Contemporary Painter & Mixed-Media Impasto Colorist",
-      location: "Enugu & Lagos, Nigeria",
-    },
-    images: [
-      { url: "/images/catalogue/jazz-trio-session.jpg", alt: "Lagos Jazz Trio original oil painting — three musicians in cobalt, crimson and gold", position: 0 },
     ],
   },
   {
@@ -514,35 +446,7 @@ export interface HeroArtist {
 }
 
 export const HERO_ARTISTS: HeroArtist[] = [
-  {
-    id: "hero-artist-adebayo-olufemi",
-    slug: "adebayo-olufemi",
-    name: "Adebayo Olufemi",
-    discipline: "Contemporary Painter & Figurative Colorist",
-    location: "Lagos, Nigeria",
-    shortBio: "Captures the syncopated energy and nocturnal vibrancy of Lagos musical and cultural gatherings.",
-    bio: "Adebayo Olufemi is a celebrated contemporary painter whose high-contrast impasto works document West Africa's vibrant live music scenes. Working primarily with heavy oil pigments and palette-knife techniques, Olufemi translates musical syncopation into rich visual rhythms that celebrate communal communion.",
-    portraitImage: "/images/hero/artwork-jazz-trio.jpg",
-    coverImage: "/images/hero/hero-jazz-trio.jpg",
-    products: [
-      {
-        id: "hero-the-jazz-trio-session",
-        slug: "the-jazz-trio-session",
-        title: "The Jazz Trio Session",
-        department: "ART",
-        category: "ORIGINAL_PAINTING",
-        productType: "ORIGINAL",
-        price: 385000000,
-        currency: "NGN",
-        stock: 1,
-        shippingClass: "FRAGILE",
-        artist: { name: "Adebayo Olufemi", slug: "adebayo-olufemi" },
-        images: [
-          { url: "/images/hero/artwork-jazz-trio.jpg", alt: "The Jazz Trio Session original framed canvas", position: 0 },
-        ],
-      },
-    ],
-  },
+
   {
     id: "hero-artist-zainab-chinedu",
     slug: "zainab-chinedu",
@@ -646,22 +550,6 @@ export const HERO_ARTISTS: HeroArtist[] = [
         artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
         images: [
           { url: "/images/catalogue/oya-the-dancer.jpg", alt: "Oya the Dancer figurative canvas by Nkem Agbo", position: 0 },
-        ],
-      },
-      {
-        id: "hero-lagos-jazz-trio",
-        slug: "lagos-jazz-trio",
-        title: "Lagos Jazz Trio",
-        department: "ART",
-        category: "ORIGINAL_PAINTING",
-        productType: "ORIGINAL",
-        price: 395000000,
-        currency: "NGN",
-        stock: 1,
-        shippingClass: "FRAGILE",
-        artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
-        images: [
-          { url: "/images/catalogue/jazz-trio-session.jpg", alt: "Lagos Jazz Trio original oil painting by Nkem Agbo", position: 0 },
         ],
       },
       {

@@ -722,50 +722,6 @@ async function main() {
     },
   });
 
-  // 13 - The Jazz Trio Session (Hero Artwork & Interior In-Situ)
-  await prisma.product.create({
-    data: {
-      slug: "the-jazz-trio-session",
-      title: "The Jazz Trio Session",
-      department: "ART",
-      category: "ORIGINAL_PAINTING",
-      productType: "ORIGINAL",
-      description: "An extraordinary original framed canvas capturing three musicians locked in improvisational conversation. Saturated cobalt, saffron and burnt sienna strokes pulse with the syncopation of a late-night Lagos jazz session. Signed by the artist, framed in hand-finished oak, and shipped with a museum certificate of authenticity.",
-      medium: "Oil and palette-knife impasto on stretched linen, oak float frame",
-      materials: "Linen canvas, professional oils, solid oak frame",
-      year: 2026,
-      widthCm: 100,
-      heightCm: 120,
-      depthCm: 5.0,
-      weightKg: 7.4,
-      orientation: "PORTRAIT",
-      price: 385000000, // ₦3,850,000 (~$2,560 USD)
-      currency: "NGN",
-      stock: 1,
-      status: "PUBLISHED",
-      enquiryOnly: false,
-      shippingClass: "FRAGILE",
-      featured: true,
-      isSample: true,
-      artistId: adebayo.id,
-      collections: { connect: [{ id: colHeirloom.id }] },
-      images: {
-        create: [
-          {
-            url: "/images/hero/artwork-jazz-trio.jpg",
-            alt: "The Jazz Trio Session original framed canvas by Adebayo Olufemi",
-            position: 0,
-          },
-          {
-            url: "/images/hero/hero-jazz-trio.jpg",
-            alt: "The Jazz Trio Session displayed in a contemporary living room",
-            position: 1,
-          },
-        ],
-      },
-    },
-  });
-
   // 14 - Ceremonial African Drummers & Dancers (Hero Artwork & Interior In-Situ)
   await prisma.product.create({
     data: {

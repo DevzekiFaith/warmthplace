@@ -82,9 +82,9 @@ export const HERO_SLIDES: HeroSlideData[] = [
     },
   },
   {
-    id: "jazz-trio-expression",
+    id: "golden-harvest-expression",
     tag: "Originals",
-    watermark: "Jazz.",
+    watermark: "Harvest.",
     headline: {
       line1: "Vibrant rhythms.",
       line2: "Living expressions.",
@@ -98,16 +98,16 @@ export const HERO_SLIDES: HeroSlideData[] = [
       href: "/products/chromatic-field-impasto",
     },
     centerArch: {
-      src: "/images/hero/artwork-jazz-trio.jpg",
-      alt: "The Jazz Trio Ensemble",
-      title: "The Jazz Trio Session — Original Framed Canvas",
-      href: "/products/the-jazz-trio-session",
+      src: "/images/catalogue/golden-harvest-matriarchs.jpg",
+      alt: "Golden Harvest of the Matriarchs",
+      title: "Golden Harvest of the Matriarchs — Nkem Agbo",
+      href: "/products/golden-harvest-matriarchs",
     },
     centerBottom: {
-      src: "/images/hero/hero-jazz-trio.jpg",
-      alt: "The Jazz Trio in Contemporary Living Space",
-      title: "The Jazz Trio in Architectural Living Room",
-      href: "/products/the-jazz-trio-session",
+      src: "/images/catalogue/golden-harvest-matriarchs-room.jpg",
+      alt: "Golden Harvest in Contemporary Living Space",
+      title: "Golden Harvest of the Matriarchs in Curated Interior",
+      href: "/products/golden-harvest-matriarchs",
     },
     rightStrip: {
       src: "/images/hero/artwork-african-drummers.jpg",
