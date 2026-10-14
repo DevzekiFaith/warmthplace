@@ -7,10 +7,12 @@ import { useCart } from "@/components/CartContext";
 import { useCurrency } from "@/components/CurrencyContext";
 import { ImageZoom } from "@/components/ImageZoom";
 import { EnquiryModal } from "@/components/EnquiryModal";
+import { RoomScaleVisualizer } from "@/components/RoomScaleVisualizer";
+import { ArtTearSheetModal } from "@/components/ArtTearSheetModal";
 import { BASE_CURRENCY } from "@/lib/constants";
 import { formatPrice } from "@/lib/currency";
 
-interface ProductProps {
+export interface ProductProps {
   product: {
     id: string;
     slug: string;
@@ -50,13 +52,39 @@ export function ProductDetailsClient({ product }: ProductProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
+  const [scaleVisualizerOpen, setScaleVisualizerOpen] = useState(false);
+  const [tearSheetOpen, setTearSheetOpen] = useState(false);
+  const [selectedFrame, setSelectedFrame] = useState<"Natural Oak" | "Obsidian Black" | "Champagne Gold" | "Frameless Gallery Wrap">("Natural Oak");
+  const [viewMode, setViewMode] = useState<"canvas" | "gallery">("canvas");
+  const [isSaved, setIsSaved] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+
   const { addItem } = useCart();
   const { format, currency } = useCurrency();
 
-  const currentImage = product.images[selectedImageIndex] || {
+  const isArt = product.department === "ART";
+
+  // Dimensions math
+  const w = product.widthCm || 120;
+  const h = product.heightCm || 100;
+  const d = product.depthCm || 5;
+  const wIn = (w * 0.393701).toFixed(1);
+  const hIn = (h * 0.393701).toFixed(1);
+  const dIn = (d * 0.393701).toFixed(1);
+  const weightLbs = ((product.weightKg || 7.5) * 2.20462).toFixed(1);
+
+  // Determine current image depending on view mode
+  // If product has 2 images and gallery mode is selected, show image[1] (room view)
+  const roomImage = product.images.length > 1 ? product.images[1] : null;
+  const canvasImage = product.images[0] || {
     url: "/images/catalogue/harmattan-procession.jpg",
     alt: product.title,
   };
+
+  const currentImage =
+    viewMode === "gallery" && roomImage
+      ? roomImage
+      : product.images[selectedImageIndex] || canvasImage;
 
   const handleAddToCart = () => {
     addItem(
@@ -70,8 +98,8 @@ export function ProductDetailsClient({ product }: ProductProps) {
         productType: product.productType,
         price: product.price,
         currency: product.currency,
-        imageUrl: currentImage.url,
-        imageAlt: currentImage.alt,
+        imageUrl: canvasImage.url,
+        imageAlt: canvasImage.alt,
         stock: product.stock,
         shippingClass: product.shippingClass,
       },
@@ -79,14 +107,303 @@ export function ProductDetailsClient({ product }: ProductProps) {
     );
   };
 
+  const handleShare = () => {
+    if (typeof window !== "undefined") {
+      navigator.clipboard.writeText(window.location.href);
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2400);
+    }
+  };
+
+  const handleToggleSave = () => {
+    setIsSaved(!isSaved);
+  };
+
+  // Frame preview style
+  const getFramePreviewStyle = () => {
+    if (viewMode === "gallery") return {};
+    switch (selectedFrame) {
+      case "Obsidian Black":
+        return {
+          border: "10px solid #1A1A1A",
+          boxShadow: "0 18px 40px rgba(0,0,0,0.28), inset 0 0 0 2px rgba(255,255,255,0.08)",
+        };
+      case "Champagne Gold":
+        return {
+          border: "10px solid #C5A059",
+          boxShadow: "0 18px 40px rgba(0,0,0,0.22), 0 0 12px rgba(197, 160, 89, 0.25)",
+        };
+      case "Frameless Gallery Wrap":
+        return {
+          border: "none",
+          boxShadow: "0 16px 36px rgba(0,0,0,0.24)",
+        };
+      case "Natural Oak":
+      default:
+        return {
+          border: "10px solid #C4A47C",
+          boxShadow: "0 18px 40px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.12)",
+        };
+    }
+  };
+
   const isOutOfStock = product.stock <= 0;
 
   return (
     <>
       <div className="pdp-grid">
-        {/* Left Column: Gallery & Interactive Zoom */}
+        {/* =========================================================
+            LEFT COLUMN: GALLERY & ARCHITECTURAL VIEW MODES
+           ========================================================= */}
         <div className="pdp-gallery-container">
-          <ImageZoom src={currentImage.url} alt={currentImage.alt} />
+          {/* View Mode Switcher: Studio Canvas vs. Gallery Display vs. Room Scale */}
+          {isArt && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "0.85rem",
+                padding: "0.35rem 0.5rem",
+                backgroundColor: "var(--color-canvas-pure)",
+                borderRadius: "3px",
+                border: "1px solid var(--border-subtle)",
+              }}
+            >
+              <div style={{ display: "flex", gap: "0.35rem" }}>
+                <button
+                  type="button"
+                  onClick={() => setViewMode("canvas")}
+                  style={{
+                    padding: "0.4rem 0.85rem",
+                    fontSize: "0.76rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    borderRadius: "2px",
+                    border: viewMode === "canvas" ? "1px solid var(--color-ink-charcoal)" : "1px solid transparent",
+                    backgroundColor: viewMode === "canvas" ? "var(--color-ink-charcoal)" : "transparent",
+                    color: viewMode === "canvas" ? "#FFFFFF" : "var(--color-ink-muted)",
+                    transition: "all var(--transition-fast)",
+                  }}
+                >
+                  🖼️ Studio Canvas
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setViewMode("gallery")}
+                  style={{
+                    padding: "0.4rem 0.85rem",
+                    fontSize: "0.76rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    borderRadius: "2px",
+                    border: viewMode === "gallery" ? "1px solid var(--color-ink-charcoal)" : "1px solid transparent",
+                    backgroundColor: viewMode === "gallery" ? "var(--color-ink-charcoal)" : "transparent",
+                    color: viewMode === "gallery" ? "#FFFFFF" : "var(--color-ink-muted)",
+                    transition: "all var(--transition-fast)",
+                  }}
+                >
+                  🏛️ Gallery Display
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setScaleVisualizerOpen(true)}
+                style={{
+                  fontSize: "0.76rem",
+                  fontWeight: 600,
+                  color: "var(--color-terracotta)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.35rem",
+                  padding: "0.4rem 0.65rem",
+                  borderRadius: "2px",
+                  border: "1px dashed var(--color-terracotta)",
+                  backgroundColor: "rgba(166, 75, 50, 0.05)",
+                }}
+              >
+                📐 View in Room (Scale)
+              </button>
+            </div>
+          )}
+
+          {/* Interactive Image Frame with Badges */}
+          <div
+            style={{
+              position: "relative",
+              borderRadius: "3px",
+              overflow: "hidden",
+              transition: "all 0.3s ease",
+              ...getFramePreviewStyle(),
+            }}
+          >
+            {/* Top Badge Overlay */}
+            <div
+              style={{
+                position: "absolute",
+                top: "1rem",
+                left: "1rem",
+                zIndex: 4,
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.4rem",
+                pointerEvents: "none",
+              }}
+            >
+              {viewMode === "gallery" ? (
+                <span
+                  style={{
+                    backgroundColor: "rgba(36, 34, 30, 0.88)",
+                    backdropFilter: "blur(6px)",
+                    color: "#FFFFFF",
+                    fontSize: "0.72rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    padding: "0.35rem 0.75rem",
+                    borderRadius: "2px",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.4rem",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                  }}
+                >
+                  <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#C5A059" }} />
+                  Gallery Display
+                </span>
+              ) : (
+                <span
+                  style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.92)",
+                    backdropFilter: "blur(6px)",
+                    color: "var(--color-ink-charcoal)",
+                    fontSize: "0.72rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    padding: "0.35rem 0.75rem",
+                    borderRadius: "2px",
+                    border: "1px solid var(--border-subtle)",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+                  }}
+                >
+                  Original Canvas • Impasto
+                </span>
+              )}
+            </div>
+
+            {/* Quick Pin / Save Button overlay */}
+            <button
+              type="button"
+              onClick={handleToggleSave}
+              aria-label={isSaved ? "Saved to your collection" : "Save to collection"}
+              style={{
+                position: "absolute",
+                top: "1rem",
+                right: "1rem",
+                zIndex: 4,
+                width: "38px",
+                height: "38px",
+                borderRadius: "50%",
+                backgroundColor: isSaved ? "var(--color-terracotta)" : "rgba(255, 255, 255, 0.92)",
+                backdropFilter: "blur(6px)",
+                color: isSaved ? "#FFFFFF" : "var(--color-ink-charcoal)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "1.1rem",
+                border: "1px solid var(--border-subtle)",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
+                transition: "all var(--transition-fast)",
+              }}
+              title={isSaved ? "Saved to your collection" : "Save / Pin Artwork"}
+            >
+              {isSaved ? "♥" : "♡"}
+            </button>
+
+            {/* In-Situ Gallery Stage simulation if gallery mode & no secondary room photo */}
+            {viewMode === "gallery" && !roomImage ? (
+              <div
+                style={{
+                  position: "relative",
+                  aspectRatio: "3 / 4",
+                  backgroundColor: "#EBE7DF",
+                  backgroundImage: "radial-gradient(circle at 50% 25%, #FFFFFF 0%, #EBE7DF 80%)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "2rem",
+                }}
+              >
+                {/* Overhead spotlight beam */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "360px",
+                    height: "220px",
+                    background: "radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 70%)",
+                    pointerEvents: "none",
+                  }}
+                />
+
+                {/* Framed Canvas on Gallery Wall */}
+                <div
+                  style={{
+                    position: "relative",
+                    width: "82%",
+                    aspectRatio: `${w} / ${h}`,
+                    ...getFramePreviewStyle(),
+                    borderRadius: "2px",
+                    overflow: "hidden",
+                    marginBottom: "38px",
+                  }}
+                >
+                  <Image
+                    src={canvasImage.url}
+                    alt={canvasImage.alt}
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+
+                {/* Stone Plinth Bench on floor (like the Pinterest reference!) */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "22px",
+                    width: "75%",
+                    height: "18px",
+                    backgroundColor: "#D6D0C5",
+                    borderRadius: "1px",
+                    boxShadow: "0 10px 20px rgba(0,0,0,0.12), inset 0 1px 1px rgba(255,255,255,0.4)",
+                    border: "1px solid #BFB8AC",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "8px",
+                    fontSize: "0.68rem",
+                    color: "#8A857B",
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Gallery Architectural Setting
+                </div>
+              </div>
+            ) : (
+              <ImageZoom src={currentImage.url} alt={currentImage.alt} />
+            )}
+          </div>
 
           {/* Thumbnail switcher if multiple images */}
           {product.images.length > 1 && (
@@ -95,10 +412,13 @@ export function ProductDetailsClient({ product }: ProductProps) {
                 <button
                   key={img.url}
                   type="button"
-                  onClick={() => setSelectedImageIndex(idx)}
+                  onClick={() => {
+                    setSelectedImageIndex(idx);
+                    setViewMode(idx === 1 ? "gallery" : "canvas");
+                  }}
                   style={{
-                    width: "72px",
-                    height: "90px",
+                    width: "82px",
+                    height: "100px",
                     position: "relative",
                     borderRadius: "2px",
                     overflow: "hidden",
@@ -106,48 +426,118 @@ export function ProductDetailsClient({ product }: ProductProps) {
                       selectedImageIndex === idx
                         ? "2px solid var(--color-ink-charcoal)"
                         : "1px solid var(--border-medium)",
+                    boxShadow: selectedImageIndex === idx ? "0 4px 12px rgba(0,0,0,0.1)" : "none",
                   }}
-                  aria-label={`View image ${idx + 1}`}
+                  aria-label={`View perspective ${idx + 1}`}
                 >
                   <Image
                     src={img.url}
                     alt={img.alt}
                     fill
-                    sizes="72px"
+                    sizes="82px"
                     style={{ objectFit: "cover" }}
                   />
+                  <span
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      backgroundColor: "rgba(0,0,0,0.65)",
+                      color: "#FFFFFF",
+                      fontSize: "0.62rem",
+                      textAlign: "center",
+                      padding: "2px 0",
+                      letterSpacing: "0.05em",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {idx === 0 ? "Canvas" : "In Situ"}
+                  </span>
                 </button>
               ))}
             </div>
           )}
-        </div>
 
-        {/* Right Column: Curatorial Details & Commerce Actions */}
-        <div>
-          {/* Breadcrumb path */}
-          <nav
-            aria-label="Breadcrumb"
+          {/* Quick utility strip below image */}
+          <div
             style={{
-              fontSize: "0.78rem",
-              color: "var(--color-ink-light)",
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-              marginBottom: "1rem",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: "1.25rem",
+              padding: "0.75rem 1rem",
+              backgroundColor: "var(--color-canvas-pure)",
+              borderRadius: "3px",
+              border: "1px solid var(--border-subtle)",
+              fontSize: "0.82rem",
             }}
           >
-            <Link href="/">Home</Link> &gt;{" "}
-            <Link
-              href={
-                product.department === "ART" ? "/shop/art" : "/shop/decor"
-              }
+            <div style={{ display: "flex", gap: "1rem", color: "var(--color-ink-muted)" }}>
+              <span>🔍 <strong>Roll hover</strong> to magnify texture</span>
+              <span>•</span>
+              <span>✨ <strong>Hand-signed</strong> original</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setScaleVisualizerOpen(true)}
+              className="btn-text"
+              style={{ fontSize: "0.78rem" }}
             >
-              {product.department === "ART" ? "Art" : "Home Décor"}
-            </Link>{" "}
-            &gt; <span>{product.category.replace(/_/g, " ")}</span>
-          </nav>
+              Scale Guide →
+            </button>
+          </div>
+        </div>
 
-          {/* Product Badges */}
-          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.85rem" }}>
+        {/* =========================================================
+            RIGHT COLUMN: THE ART DETAIL PANEL & CURATORIAL SPECS
+           ========================================================= */}
+        <div>
+          {/* Breadcrumb path & Catalog Ref */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+              marginBottom: "0.85rem",
+              flexWrap: "wrap",
+              gap: "0.5rem",
+            }}
+          >
+            <nav
+              aria-label="Breadcrumb"
+              style={{
+                fontSize: "0.78rem",
+                color: "var(--color-ink-light)",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+              }}
+            >
+              <Link href="/">Home</Link> &gt;{" "}
+              <Link href={product.department === "ART" ? "/shop/art" : "/shop/decor"}>
+                {product.department === "ART" ? "Art" : "Home Décor"}
+              </Link>{" "}
+              &gt; <span>{product.category.replace(/_/g, " ")}</span>
+            </nav>
+
+            <span
+              style={{
+                fontSize: "0.72rem",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--color-terracotta)",
+                fontWeight: 600,
+                backgroundColor: "rgba(166, 75, 50, 0.08)",
+                padding: "2px 8px",
+                borderRadius: "2px",
+              }}
+            >
+              ARCHIVE REF #SG748
+            </span>
+          </div>
+
+          {/* Badges strip */}
+          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.85rem", flexWrap: "wrap" }}>
             {product.productType === "ORIGINAL" && (
               <span className="badge badge-original">Original Artwork</span>
             )}
@@ -156,14 +546,28 @@ export function ProductDetailsClient({ product }: ProductProps) {
                 Limited Edition of {product.editionSize || 25}
               </span>
             )}
-            {product.department === "DECOR" && (
-              <span className="badge badge-decor">Living Object</span>
-            )}
+            <span
+              className="badge"
+              style={{
+                backgroundColor: "rgba(36, 34, 30, 0.06)",
+                color: "var(--color-ink-charcoal)",
+                border: "1px solid var(--border-subtle)",
+              }}
+            >
+              1P Single Canvas
+            </span>
+            <span
+              className="badge"
+              style={{
+                backgroundColor: "rgba(184, 154, 101, 0.12)",
+                color: "var(--color-ink-charcoal)",
+                border: "1px solid rgba(184, 154, 101, 0.3)",
+              }}
+            >
+              Stretch + {selectedFrame}
+            </span>
             {product.shippingClass === "FRAGILE" && (
-              <span className="badge badge-sample">Fragile Crated</span>
-            )}
-            {product.shippingClass === "OVERSIZED" && (
-              <span className="badge badge-sample">Special Freight</span>
+              <span className="badge badge-sample">Museum Timber Crated</span>
             )}
           </div>
 
@@ -172,43 +576,98 @@ export function ProductDetailsClient({ product }: ProductProps) {
             style={{
               fontSize: "clamp(2.2rem, 3.8vw, 3.2rem)",
               lineHeight: 1.15,
-              marginBottom: "0.75rem",
+              marginBottom: "0.45rem",
+              color: "var(--color-ink-charcoal)",
             }}
           >
             {product.title}
           </h1>
 
-          {/* Artist attribution */}
+          {/* Meson Art / Pinterest Structured Sub-line */}
+          <div
+            style={{
+              fontSize: "0.95rem",
+              fontFamily: "var(--font-sans)",
+              color: "var(--color-ink-muted)",
+              marginBottom: "1.25rem",
+              letterSpacing: "0.02em",
+            }}
+          >
+            <strong style={{ color: "var(--color-ink-charcoal)" }}>#SG748</strong> • 1P (Each {h}H × {w}W CM / {hIn}&quot;H × {wIn}&quot;W IN) / Stretch + {selectedFrame} Frame
+          </div>
+
+          {/* Artist Provenance Card */}
           {product.artist && (
-            <div style={{ marginBottom: "1.5rem" }}>
-              <span style={{ fontSize: "0.85rem", color: "var(--color-ink-light)" }}>
-                By{" "}
-              </span>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem",
+                padding: "0.85rem 1.15rem",
+                backgroundColor: "var(--color-canvas-pure)",
+                borderRadius: "3px",
+                border: "1px solid var(--border-subtle)",
+                marginBottom: "1.5rem",
+              }}
+            >
+              <div
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "50%",
+                  backgroundColor: "var(--color-slate-indigo)",
+                  color: "#FFFFFF",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "1.2rem",
+                  fontWeight: 600,
+                  flexShrink: 0,
+                }}
+              >
+                {product.artist.name.charAt(0)}
+              </div>
+              <div style={{ flexGrow: 1 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <Link
+                    href={`/artists/${product.artist.slug}`}
+                    style={{
+                      fontSize: "1.05rem",
+                      fontWeight: 600,
+                      color: "var(--color-ink-charcoal)",
+                      fontFamily: "var(--font-serif)",
+                    }}
+                  >
+                    {product.artist.name}
+                  </Link>
+                  <span
+                    style={{
+                      color: "#2E7D32",
+                      fontSize: "0.85rem",
+                      display: "inline-flex",
+                      alignItems: "center",
+                    }}
+                    title="Verified Studio Artist"
+                  >
+                    ✓
+                  </span>
+                </div>
+                <div style={{ fontSize: "0.78rem", color: "var(--color-ink-light)" }}>
+                  {product.artist.discipline} • {product.artist.location}
+                </div>
+              </div>
               <Link
                 href={`/artists/${product.artist.slug}`}
-                style={{
-                  fontSize: "1.1rem",
-                  fontFamily: "var(--font-serif)",
-                  fontWeight: 600,
-                  color: "var(--color-ink-charcoal)",
-                  textDecoration: "underline",
-                }}
+                className="btn-text"
+                style={{ fontSize: "0.76rem" }}
               >
-                {product.artist.name}
+                Profile →
               </Link>
-              <span
-                style={{
-                  fontSize: "0.8rem",
-                  color: "var(--color-ink-muted)",
-                  marginLeft: "0.75rem",
-                }}
-              >
-                ({product.artist.location})
-              </span>
             </div>
           )}
 
-          {/* Price display with currency switcher responsiveness */}
+          {/* Price display with real-time currency selector */}
           <div
             style={{
               padding: "1.25rem 0",
@@ -217,10 +676,10 @@ export function ProductDetailsClient({ product }: ProductProps) {
               marginBottom: "1.75rem",
             }}
           >
-            <div style={{ display: "flex", alignItems: "baseline", gap: "1rem" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", flexWrap: "wrap" }}>
               <span
                 style={{
-                  fontSize: "2rem",
+                  fontSize: "2.2rem",
                   fontWeight: 600,
                   color: "var(--color-ink-charcoal)",
                   fontFamily: "var(--font-sans)",
@@ -243,16 +702,154 @@ export function ProductDetailsClient({ product }: ProductProps) {
 
             <div
               style={{
-                fontSize: "0.78rem",
-                color: "var(--color-ink-light)",
-                marginTop: "4px",
+                fontSize: "0.82rem",
+                color: "var(--color-ink-muted)",
+                marginTop: "6px",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
               }}
             >
-              Tax calculated at checkout. White-glove crating and insured transit applied by zone.
+              <span>🚚 Complimentary Museum Wooden Crating</span>
+              <span>•</span>
+              <span>Insured White-Glove Courier Transit</span>
             </div>
           </div>
 
-          {/* Availability & Actions */}
+          {/* Interactive Frame Finish Customizer */}
+          {isArt && (
+            <div
+              style={{
+                marginBottom: "2rem",
+                padding: "1.25rem",
+                backgroundColor: "var(--color-canvas-pure)",
+                borderRadius: "3px",
+                border: "1px solid var(--border-subtle)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                <label
+                  style={{
+                    fontSize: "0.8rem",
+                    fontFamily: "var(--font-sans)",
+                    fontWeight: 600,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "var(--color-ink-charcoal)",
+                  }}
+                >
+                  Framing Option: <span style={{ color: "var(--color-terracotta)" }}>{selectedFrame}</span>
+                </label>
+                <span style={{ fontSize: "0.75rem", color: "var(--color-ink-light)" }}>
+                  10mm Floating Shadow Gap Included
+                </span>
+              </div>
+
+              {/* Swatch Buttons */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
+                  gap: "0.6rem",
+                }}
+              >
+                {[
+                  { name: "Natural Oak", swatch: "#C4A47C", desc: "Rift-Sawn Oak" },
+                  { name: "Obsidian Black", swatch: "#1A1A1A", desc: "Matte Hardwood" },
+                  { name: "Champagne Gold", swatch: "#C5A059", desc: "Warm Gilded Leaf" },
+                  { name: "Frameless Gallery Wrap", swatch: "#E8E2D5", desc: "Raw Belgian Edge" },
+                ].map((f) => (
+                  <button
+                    key={f.name}
+                    type="button"
+                    onClick={() => setSelectedFrame(f.name as any)}
+                    style={{
+                      padding: "0.65rem 0.75rem",
+                      borderRadius: "2px",
+                      border:
+                        selectedFrame === f.name
+                          ? "2px solid var(--color-ink-charcoal)"
+                          : "1px solid var(--border-medium)",
+                      backgroundColor: selectedFrame === f.name ? "var(--color-canvas-light)" : "#FFFFFF",
+                      textAlign: "left",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.65rem",
+                      cursor: "pointer",
+                      transition: "all var(--transition-fast)",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: "16px",
+                        height: "16px",
+                        borderRadius: "2px",
+                        backgroundColor: f.swatch,
+                        border: "1px solid rgba(0,0,0,0.15)",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <div>
+                      <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--color-ink-charcoal)", lineHeight: 1.2 }}>
+                        {f.name}
+                      </div>
+                      <div style={{ fontSize: "0.68rem", color: "var(--color-ink-light)" }}>
+                        {f.desc}
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Dimensions Metric & Imperial Matrix */}
+          <div
+            style={{
+              padding: "1rem 1.25rem",
+              backgroundColor: "var(--color-canvas-light)",
+              borderRadius: "3px",
+              border: "1px solid var(--border-subtle)",
+              marginBottom: "2rem",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "1rem",
+              fontSize: "0.85rem",
+            }}
+          >
+            <div>
+              <span style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--color-ink-light)", display: "block", marginBottom: "2px" }}>
+                Metric Scale
+              </span>
+              <strong style={{ color: "var(--color-ink-charcoal)" }}>
+                {h}H × {w}W × {d}D cm
+              </strong>
+              <div style={{ fontSize: "0.75rem", color: "var(--color-ink-muted)", marginTop: "2px" }}>
+                Weight: {product.weightKg || 7.5} kg (unpacked)
+              </div>
+            </div>
+
+            <div>
+              <span style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--color-ink-light)", display: "block", marginBottom: "2px" }}>
+                Imperial Scale (US/UK)
+              </span>
+              <strong style={{ color: "var(--color-ink-charcoal)" }}>
+                {hIn}&quot;H × {wIn}&quot;W × {dIn}&quot;D in
+              </strong>
+              <div style={{ fontSize: "0.75rem", color: "var(--color-ink-muted)", marginTop: "2px" }}>
+                Weight: {weightLbs} lbs (unpacked)
+              </div>
+            </div>
+          </div>
+
+          {/* Availability & Commerce Action Buttons */}
           <div style={{ marginBottom: "2.5rem" }}>
             {product.enquiryOnly ? (
               <div>
@@ -264,7 +861,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   type="button"
                   onClick={() => setEnquiryOpen(true)}
                   className="btn btn-primary"
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", height: "52px" }}
                 >
                   Inquire with Studio Concierge
                 </button>
@@ -278,71 +875,87 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   type="button"
                   onClick={() => setEnquiryOpen(true)}
                   className="btn btn-secondary"
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", height: "52px" }}
                 >
                   Commission a Similar Piece
                 </button>
               </div>
             ) : (
-              <div className="pdp-actions-row">
-                {product.productType !== "ORIGINAL" && (
-                  <div
+              <div>
+                <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "0.85rem" }}>
+                  <button
+                    type="button"
+                    onClick={handleAddToCart}
+                    className="btn btn-primary"
+                    style={{ flex: "2 1 240px", height: "52px", fontSize: "0.92rem" }}
+                  >
+                    Acquire Artwork • {format(product.price * quantity)}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setEnquiryOpen(true)}
+                    className="btn btn-secondary"
+                    style={{ flex: "1 1 140px", height: "52px", fontSize: "0.88rem" }}
+                  >
+                    Concierge Inquiry
+                  </button>
+                </div>
+
+                {/* Secondary Action Strip: Save/Pin, Tear Sheet, Share */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    paddingTop: "0.75rem",
+                    borderTop: "1px solid var(--border-subtle)",
+                  }}
+                >
+                  <button
+                    type="button"
+                    onClick={handleToggleSave}
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      border: "1px solid var(--border-medium)",
-                      borderRadius: "2px",
-                      height: "50px",
+                      gap: "0.4rem",
+                      fontSize: "0.82rem",
+                      color: isSaved ? "var(--color-terracotta)" : "var(--color-ink-muted)",
+                      fontWeight: isSaved ? 600 : 500,
                     }}
                   >
-                    <button
-                      type="button"
-                      onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      style={{ padding: "0 0.85rem", fontSize: "1.1rem" }}
-                      aria-label="Decrease quantity"
-                    >
-                      -
-                    </button>
-                    <span
-                      style={{
-                        padding: "0 0.85rem",
-                        fontWeight: 600,
-                        fontSize: "0.95rem",
-                      }}
-                    >
-                      {quantity}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
-                      style={{ padding: "0 0.85rem", fontSize: "1.1rem" }}
-                      aria-label="Increase quantity"
-                      disabled={quantity >= product.stock}
-                    >
-                      +
-                    </button>
-                  </div>
-                )}
+                    <span>{isSaved ? "♥ Saved to Collection" : "♡ Save / Pin"}</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={handleAddToCart}
-                  className="btn btn-primary"
-                  style={{ flexGrow: 1, height: "50px" }}
-                >
-                  Add to Bag • {format(product.price * quantity)}
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => setTearSheetOpen(true)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.4rem",
+                      fontSize: "0.82rem",
+                      color: "var(--color-ink-muted)",
+                    }}
+                  >
+                    📄 <span>Curator&apos;s Tear Sheet (PDF)</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={() => setEnquiryOpen(true)}
-                  className="btn btn-secondary"
-                  style={{ height: "50px", padding: "0 1.25rem" }}
-                  title="Make an inquiry"
-                  aria-label="Inquire about this piece"
-                >
-                  Enquire
-                </button>
+                  <button
+                    type="button"
+                    onClick={handleShare}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.4rem",
+                      fontSize: "0.82rem",
+                      color: copiedLink ? "#2E7D32" : "var(--color-ink-muted)",
+                    }}
+                  >
+                    🔗 <span>{copiedLink ? "Link Copied!" : "Share Piece"}</span>
+                  </button>
+                </div>
               </div>
             )}
 
@@ -366,94 +979,137 @@ export function ProductDetailsClient({ product }: ProductProps) {
                     display: "inline-block",
                   }}
                 />
-                In Studio Gallery Collection — {product.stock} available
+                In Studio Gallery Collection — 1 of 1 unique original
               </div>
             )}
           </div>
 
-          {/* Description */}
+          {/* Curatorial Description & Impasto Surface Analysis */}
           <div style={{ marginBottom: "2.5rem" }}>
             <h3
               style={{
-                fontSize: "1.1rem",
+                fontSize: "1.05rem",
                 fontFamily: "var(--font-sans)",
                 fontWeight: 600,
-                letterSpacing: "0.06em",
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
                 marginBottom: "0.85rem",
+                color: "var(--color-ink-charcoal)",
               }}
             >
-              Curatorial Description
+              Curatorial Narrative &amp; Surface Analysis
             </h3>
-            <p style={{ fontSize: "0.98rem", lineHeight: 1.7, color: "var(--color-ink-muted)" }}>
+            <p style={{ fontSize: "0.98rem", lineHeight: 1.75, color: "var(--color-ink-muted)" }}>
               {product.description}
             </p>
           </div>
 
-          {/* Specifications Table */}
+          {/* Structured 4-Card Specifications Grid (Pinterest / Meson Art Style) */}
           <div style={{ marginBottom: "2.5rem" }}>
             <h3
               style={{
-                fontSize: "1.1rem",
+                fontSize: "1.05rem",
                 fontFamily: "var(--font-sans)",
                 fontWeight: 600,
-                letterSpacing: "0.06em",
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                marginBottom: "0.85rem",
+                marginBottom: "1rem",
+                color: "var(--color-ink-charcoal)",
               }}
             >
               Artwork Specifications
             </h3>
-            <table className="pdp-specs-table">
-              <tbody>
-                {product.medium && (
-                  <tr>
-                    <th>Medium</th>
-                    <td>{product.medium}</td>
-                  </tr>
-                )}
-                {product.materials && (
-                  <tr>
-                    <th>Materials</th>
-                    <td>{product.materials}</td>
-                  </tr>
-                )}
-                {product.year && (
-                  <tr>
-                    <th>Year of Creation</th>
-                    <td>{product.year}</td>
-                  </tr>
-                )}
-                {(product.widthCm || product.heightCm) && (
-                  <tr>
-                    <th>Dimensions</th>
-                    <td>
-                      {product.widthCm} × {product.heightCm}
-                      {product.depthCm ? ` × ${product.depthCm}` : ""} cm
-                    </td>
-                  </tr>
-                )}
-                {product.weightKg && (
-                  <tr>
-                    <th>Weight</th>
-                    <td>{product.weightKg} kg (unpacked)</td>
-                  </tr>
-                )}
-                {product.productType === "EDITION" && product.editionSize && (
-                  <tr>
-                    <th>Edition</th>
-                    <td>Limited Run of {product.editionSize} (Hand-Signed)</td>
-                  </tr>
-                )}
-                <tr>
-                  <th>Provenance</th>
-                  <td>Direct from Artist Studio / Warmthplace Certified</td>
-                </tr>
-              </tbody>
-            </table>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gap: "1rem",
+              }}
+            >
+              {/* Card 1: Medium & Technique */}
+              <div
+                style={{
+                  padding: "1.15rem",
+                  backgroundColor: "var(--color-canvas-pure)",
+                  borderRadius: "3px",
+                  border: "1px solid var(--border-subtle)",
+                }}
+              >
+                <div style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--color-terracotta)", fontWeight: 600, marginBottom: "0.35rem" }}>
+                  Technique &amp; Medium
+                </div>
+                <div style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--color-ink-charcoal)", marginBottom: "0.25rem" }}>
+                  100% Hand-Painted Impasto
+                </div>
+                <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.5 }}>
+                  {product.medium || "Professional oils, palette-knife impasto on stretched Belgian linen"}
+                </div>
+              </div>
+
+              {/* Card 2: Framing & Ready to Hang */}
+              <div
+                style={{
+                  padding: "1.15rem",
+                  backgroundColor: "var(--color-canvas-pure)",
+                  borderRadius: "3px",
+                  border: "1px solid var(--border-subtle)",
+                }}
+              >
+                <div style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--color-terracotta)", fontWeight: 600, marginBottom: "0.35rem" }}>
+                  Framing &amp; Installation
+                </div>
+                <div style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--color-ink-charcoal)", marginBottom: "0.25rem" }}>
+                  {selectedFrame} Floater
+                </div>
+                <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.5 }}>
+                  10mm recessed shadow gap. Pre-installed heavy-duty D-rings and braided steel museum wire.
+                </div>
+              </div>
+
+              {/* Card 3: Authenticity & Certificate */}
+              <div
+                style={{
+                  padding: "1.15rem",
+                  backgroundColor: "var(--color-canvas-pure)",
+                  borderRadius: "3px",
+                  border: "1px solid var(--border-subtle)",
+                }}
+              >
+                <div style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--color-terracotta)", fontWeight: 600, marginBottom: "0.35rem" }}>
+                  Provenance &amp; Archive
+                </div>
+                <div style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--color-ink-charcoal)", marginBottom: "0.25rem" }}>
+                  Certificate of Authenticity
+                </div>
+                <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.5 }}>
+                  Signed recto and verso by the artist. Accompanied by physical museum certificate with studio wax seal.
+                </div>
+              </div>
+
+              {/* Card 4: Packaging & Crating */}
+              <div
+                style={{
+                  padding: "1.15rem",
+                  backgroundColor: "var(--color-canvas-pure)",
+                  borderRadius: "3px",
+                  border: "1px solid var(--border-subtle)",
+                }}
+              >
+                <div style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--color-terracotta)", fontWeight: 600, marginBottom: "0.35rem" }}>
+                  Museum Timber Crating
+                </div>
+                <div style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--color-ink-charcoal)", marginBottom: "0.25rem" }}>
+                  White-Glove Insured Delivery
+                </div>
+                <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.5 }}>
+                  Bespoke reinforced timber crate with archival closed-cell foam and climate-sealed moisture barrier.
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Shipping, Crating & Authenticity Collapsible Box */}
+          {/* Collector Care & Dispatch Accordion Box */}
           <div
             style={{
               backgroundColor: "var(--color-canvas-light)",
@@ -464,15 +1120,16 @@ export function ProductDetailsClient({ product }: ProductProps) {
           >
             <h4
               style={{
-                fontSize: "0.95rem",
+                fontSize: "0.92rem",
                 fontWeight: 600,
                 fontFamily: "var(--font-sans)",
-                letterSpacing: "0.05em",
+                letterSpacing: "0.06em",
                 textTransform: "uppercase",
                 marginBottom: "0.75rem",
+                color: "var(--color-ink-charcoal)",
               }}
             >
-              Collector Care & Dispatch
+              Collector Protection &amp; Dispatch Guarantee
             </h4>
             <ul
               style={{
@@ -486,16 +1143,13 @@ export function ProductDetailsClient({ product }: ProductProps) {
               }}
             >
               <li>
-                <strong>Crated Delivery:</strong> Specially built timber crates with archival foam lining and moisture barriers for canvases and sculptures.
+                <strong>14-Day In-Situ Inspection:</strong> Live with the artwork for 14 days. If the piece does not resonate with your space, our concierge arranges white-glove collection.
               </li>
               <li>
-                <strong>Authenticity:</strong> Accompanied by a physical museum Certificate of Authenticity signed by the artist.
+                <strong>Direct Studio Provenance:</strong> Sourced directly from artist ateliers in Enugu and Lagos with complete registered documentation.
               </li>
               <li>
-                <strong>Global Transit:</strong> Dispatched via DHL Express Art Freight with comprehensive tracking and transit insurance.
-              </li>
-              <li>
-                <strong>Returns:</strong> 14-day inspection guarantee upon delivery for homeware; fine art returns subject to condition verification.
+                <strong>Customs &amp; Global Logistics:</strong> Complete export clearance and delivery duty handling managed directly by our curatorial team.
               </li>
             </ul>
           </div>
@@ -508,6 +1162,28 @@ export function ProductDetailsClient({ product }: ProductProps) {
         productId={product.id}
         isOpen={enquiryOpen}
         onClose={() => setEnquiryOpen(false)}
+      />
+
+      {/* Room Scale Visualizer Modal */}
+      <RoomScaleVisualizer
+        isOpen={scaleVisualizerOpen}
+        onClose={() => setScaleVisualizerOpen(false)}
+        artworkTitle={product.title}
+        artworkImage={canvasImage.url}
+        artistName={product.artist?.name}
+        widthCm={product.widthCm}
+        heightCm={product.heightCm}
+        depthCm={product.depthCm}
+        frameFinish={selectedFrame}
+      />
+
+      {/* Curator Tear Sheet Printable Modal */}
+      <ArtTearSheetModal
+        isOpen={tearSheetOpen}
+        onClose={() => setTearSheetOpen(false)}
+        product={product}
+        frameFinish={selectedFrame}
+        formattedPrice={format(product.price)}
       />
     </>
   );
