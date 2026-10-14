@@ -162,6 +162,7 @@ export default async function JournalArticlePage({ params }: Props) {
               src={article.coverImage}
               alt={article.coverAlt || article.title}
               fill
+              sizes="(max-width: 1024px) 100vw, 840px"
               style={{ objectFit: "cover" }}
               priority
             />

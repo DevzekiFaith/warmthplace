@@ -113,6 +113,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                     src={img.url}
                     alt={img.alt}
                     fill
+                    sizes="72px"
                     style={{ objectFit: "cover" }}
                   />
                 </button>

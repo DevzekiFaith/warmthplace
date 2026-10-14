@@ -118,6 +118,21 @@ async function main() {
     },
   });
 
+  const nkem = await prisma.artist.create({
+    data: {
+      slug: "nkem-agbo",
+      name: "Nkem Agbo",
+      discipline: "Contemporary Painter & Mixed-Media Impasto Colorist",
+      location: "Enugu & Lagos, Nigeria",
+      shortBio: "Master of monumental textured impasto, elemental coastal mythologies, and luminous mineral pigments on canvas.",
+      bio: "Nkem Agbo is an acclaimed contemporary Nigerian visual artist whose monumental canvas works explore physical texture, obsidian topographies, and luminous coastal mythologies. Working with heavy-body acrylics, palette-knife impasto, and natural pigment slips, Agbo builds sculpted relief surfaces that capture West Africa's vibrant architectural and natural landscapes.",
+      portraitImage: "/images/catalogue/indigo-tide.jpg",
+      coverImage: "/images/catalogue/indigo-tide.jpg",
+      position: 2,
+      isSample: true,
+    },
+  });
+
   const tariq = await prisma.artist.create({
     data: {
       slug: "tariq-osei",
@@ -126,9 +141,9 @@ async function main() {
       location: "Accra, Ghana & London",
       shortBio: "Explores maritime coastal mythologies, natural indigo dye baths, and the meditative quietude of Atlantic borderlands.",
       bio: "Tariq Osei works across natural resist-dyed textiles, works on handmade cotton rag paper, and mixed-media assemblages. His practice is deeply informed by coastal West African fishing communities and the spiritual symbolism of water spirits. By combining indigo chemistry with sumi ink and ceramic clay slips, Osei crafts works that feel both ancient and startlingly contemporary.",
-      portraitImage: "/images/catalogue/indigo-tide.jpg",
-      coverImage: "/images/catalogue/indigo-tide.jpg",
-      position: 2,
+      portraitImage: "/images/catalogue/quiet-lagoon.jpg",
+      coverImage: "/images/catalogue/quiet-lagoon.jpg",
+      position: 3,
       isSample: true,
     },
   });
@@ -301,13 +316,13 @@ async function main() {
       shippingClass: "FRAGILE",
       featured: true,
       isSample: true,
-      artistId: tariq.id,
+      artistId: nkem.id,
       collections: { connect: [{ id: colCoastal.id }] },
       images: {
         create: [
           {
             url: "/images/catalogue/indigo-tide.jpg",
-            alt: "Indigo Tide & The Evening Lantern mixed-media canvas by Tariq Osei",
+            alt: "Indigo Tide & The Evening Lantern mixed-media canvas by Nkem Agbo",
             position: 0,
           },
         ],
@@ -820,13 +835,13 @@ async function main() {
       shippingClass: "FRAGILE",
       featured: true,
       isSample: true,
-      artistId: tariq.id,
+      artistId: nkem.id,
       collections: { connect: [{ id: colHeirloom.id }] },
       images: {
         create: [
           {
             url: "/images/hero/artwork-abstract-canvas.jpg",
-            alt: "Chromatic Field impasto abstract canvas by Tariq Osei",
+            alt: "Chromatic Field impasto abstract canvas by Nkem Agbo",
             position: 0,
           },
           {

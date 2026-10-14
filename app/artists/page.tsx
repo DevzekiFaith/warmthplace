@@ -60,6 +60,7 @@ export default async function ArtistsIndexPage() {
                 src={artist.portraitImage || "/images/catalogue/harmattan-procession.jpg"}
                 alt={artist.name}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 style={{ objectFit: "cover" }}
               />
             </div>

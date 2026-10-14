@@ -118,6 +118,7 @@ export default function CartPage() {
                       src={item.imageUrl}
                       alt={item.title}
                       fill
+                      sizes="100px"
                       style={{ objectFit: "cover" }}
                     />
                   </div>

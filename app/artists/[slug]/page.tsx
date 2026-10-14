@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/db";
@@ -13,10 +13,11 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const heroArtist = getHeroArtist(slug);
+  const lookupSlug = slug === "tariq-osei" ? "nkem-agbo" : slug;
+  const heroArtist = getHeroArtist(lookupSlug);
   try {
     const artist = await prisma.artist.findUnique({
-      where: { slug },
+      where: { slug: lookupSlug },
     });
 
     if (!artist) {
@@ -42,8 +43,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 async function getArtist(slug: string) {
   try {
+    const lookupSlug = slug === "tariq-osei" ? "nkem-agbo" : slug;
     const dbArtist = await prisma.artist.findUnique({
-      where: { slug },
+      where: { slug: lookupSlug },
       include: {
         products: {
           where: { status: "PUBLISHED" },
@@ -54,7 +56,7 @@ async function getArtist(slug: string) {
         },
       },
     });
-    return dbArtist ?? getHeroArtist(slug) ?? null;
+    return dbArtist ?? getHeroArtist(lookupSlug) ?? null;
   } catch (err) {
     console.warn("[ArtistProfilePage] Database query notice:", err);
     return getHeroArtist(slug) ?? null;
@@ -63,6 +65,12 @@ async function getArtist(slug: string) {
 
 export default async function ArtistProfilePage({ params }: Props) {
   const { slug } = await params;
+
+  // Seamless alias: direct visits to tariq-osei route forward to Nkem Agbo profile
+  if (slug === "tariq-osei") {
+    redirect("/artists/nkem-agbo");
+  }
+
   const artist = await getArtist(slug);
 
   if (!artist) {
@@ -93,6 +101,7 @@ export default async function ArtistProfilePage({ params }: Props) {
             src={artist.portraitImage || "/images/catalogue/harmattan-procession.jpg"}
             alt={artist.name}
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             style={{ objectFit: "cover" }}
             priority
           />

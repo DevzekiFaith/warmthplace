@@ -77,7 +77,7 @@ export const HERO_SLIDES: HeroSlideData[] = [
     rightStrip: {
       src: "/images/catalogue/indigo-tide.jpg",
       alt: "Indigo Tide & The Evening Lantern",
-      title: "Indigo Tide & The Evening Lantern — Tariq Osei",
+      title: "Indigo Tide & The Evening Lantern — Nkem Agbo",
       href: "/products/indigo-tide-evening-lantern",
     },
   },

@@ -40,6 +40,7 @@ export default function AboutPage() {
             src="/images/catalogue/harmattan-procession.jpg"
             alt="Warmthplace curatorial gallery canvas"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             style={{ objectFit: "cover" }}
           />
         </div>
@@ -101,6 +102,7 @@ export default function AboutPage() {
             src="/images/catalogue/incised-terracotta-vessel.jpg"
             alt="Handcrafted ceramic vessel detail"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             style={{ objectFit: "cover" }}
           />
         </div>

@@ -262,7 +262,7 @@ export function HeroArtworkCollage() {
               <div className="triptych-strip-right">
                 <Image
                   src="/images/catalogue/indigo-tide.jpg"
-                  alt="Indigo Tide & The Evening Lantern by Tariq Osei"
+                  alt="Indigo Tide & The Evening Lantern by Nkem Agbo"
                   fill
                   sizes="(max-width: 768px) 120px, 180px"
                   style={{ objectFit: "cover" }}

@@ -548,7 +548,7 @@ export default function CheckoutPage() {
               {items.map((item) => (
                 <div key={item.id} style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
                   <div style={{ width: "54px", height: "54px", position: "relative", flexShrink: 0, backgroundColor: "#EEEAE1", borderRadius: "2px", overflow: "hidden" }}>
-                    <Image src={item.imageUrl} alt={item.title} fill style={{ objectFit: "cover" }} />
+                    <Image src={item.imageUrl} alt={item.title} fill sizes="54px" style={{ objectFit: "cover" }} />
                   </div>
                   <div style={{ flexGrow: 1, minWidth: 0 }}>
                     <h4 style={{ fontSize: "0.9rem", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>

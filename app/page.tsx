@@ -182,6 +182,7 @@ export default async function HomePage() {
                   src="/images/catalogue/harmattan-procession.jpg"
                   alt="African fine art showcase"
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   style={{ objectFit: "cover" }}
                 />
               </div>
@@ -204,6 +205,7 @@ export default async function HomePage() {
                   src="/images/catalogue/incised-terracotta-vessel.jpg"
                   alt="Handcrafted African home decor"
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   style={{ objectFit: "cover" }}
                 />
               </div>
@@ -226,6 +228,7 @@ export default async function HomePage() {
                   src="/images/catalogue/indigo-tide.jpg"
                   alt="Curated contemporary African collections"
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   style={{ objectFit: "cover" }}
                 />
               </div>
@@ -295,6 +298,7 @@ export default async function HomePage() {
                   src={col.coverImage || "/images/catalogue/indigo-tide.jpg"}
                   alt={col.coverAlt || col.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="collection-card-bg"
                 />
                 <div className="collection-card-overlay" />
@@ -398,6 +402,7 @@ export default async function HomePage() {
                     src={artist.portraitImage || "/images/catalogue/harmattan-procession.jpg"}
                     alt={artist.name}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     style={{ objectFit: "cover" }}
                   />
                 </div>

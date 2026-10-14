@@ -63,6 +63,7 @@ export default async function CollectionsIndexPage() {
                   src={col.coverImage || "/images/catalogue/indigo-tide.jpg"}
                   alt={col.coverAlt || col.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   style={{ objectFit: "cover" }}
                 />
               </div>
