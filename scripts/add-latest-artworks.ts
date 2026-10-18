@@ -19,8 +19,8 @@ async function main() {
         shortBio:
           "Master of monumental textured impasto, elemental coastal mythologies, and luminous mineral pigments on canvas.",
         bio: "Nkem Agbo is an acclaimed contemporary Nigerian visual artist whose monumental canvas works explore physical texture, obsidian topographies, and luminous coastal mythologies. Working with heavy-body acrylics, palette-knife impasto, and natural pigment slips, Agbo builds sculpted relief surfaces that capture West Africa's vibrant architectural and natural landscapes.",
-        portraitImage: "/images/catalogue/indigo-tide.jpg",
-        coverImage: "/images/catalogue/indigo-tide.jpg",
+        portraitImage: "/images/catalogue/solar-vortex.jpg",
+        coverImage: "/images/catalogue/solar-vortex.jpg",
         position: 2,
         published: true,
         isSample: true,

@@ -56,7 +56,27 @@ async function getArtist(slug: string) {
         },
       },
     });
-    return dbArtist ?? getHeroArtist(lookupSlug) ?? null;
+
+    const result = dbArtist ?? getHeroArtist(lookupSlug) ?? null;
+
+    if (result && lookupSlug === "nkem-agbo") {
+      // Prioritize the user-uploaded Solar Vortex artwork for Nkem Agbo
+      const solarVortexImg = "/images/catalogue/solar-vortex.jpg";
+      if (!result.portraitImage || result.portraitImage.includes("harmattan") || result.portraitImage.includes("indigo-tide")) {
+        result.portraitImage = solarVortexImg;
+      }
+
+      // Sort ochre-silhouette (Solar Vortex) to the very top of works
+      if (Array.isArray(result.products)) {
+        result.products.sort((a, b) => {
+          if (a.slug === "ochre-silhouette") return -1;
+          if (b.slug === "ochre-silhouette") return 1;
+          return 0;
+        });
+      }
+    }
+
+    return result;
   } catch (err) {
     console.warn("[ArtistProfilePage] Database query notice:", err);
     return getHeroArtist(slug) ?? null;

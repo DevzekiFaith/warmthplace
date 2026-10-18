@@ -485,9 +485,25 @@ export const HERO_ARTISTS: HeroArtist[] = [
     shortBio:
       "Master of monumental textured impasto, elemental coastal mythologies, and luminous mineral pigments on canvas.",
     bio: "Nkem Agbo is an acclaimed contemporary Nigerian visual artist whose monumental canvas works explore physical texture, obsidian topographies, and luminous coastal mythologies. Working with heavy-body acrylics, palette-knife impasto, and natural pigment slips, Agbo builds sculpted relief surfaces that capture West Africa's vibrant architectural and natural landscapes.",
-    portraitImage: "/images/catalogue/indigo-tide.jpg",
-    coverImage: "/images/catalogue/indigo-tide.jpg",
+    portraitImage: "/images/catalogue/solar-vortex.jpg",
+    coverImage: "/images/catalogue/solar-vortex.jpg",
     products: [
+      {
+        id: "hero-ochre-silhouette",
+        slug: "ochre-silhouette",
+        title: "Solar Vortex: The Obsidian Rhythms",
+        department: "ART",
+        category: "ORIGINAL_PAINTING",
+        productType: "ORIGINAL",
+        price: 110000000,
+        currency: "NGN",
+        stock: 1,
+        shippingClass: "FRAGILE",
+        artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
+        images: [
+          { url: "/images/catalogue/solar-vortex.jpg", alt: "Solar Vortex: The Obsidian Rhythms by Nkem Agbo", position: 0 },
+        ],
+      },
       {
         id: "hero-obsidian-storm",
         slug: "obsidian-storm",
@@ -614,22 +630,6 @@ export const HERO_ARTISTS: HeroArtist[] = [
         artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
         images: [
           { url: "/images/catalogue/kinetic-drummers.jpg", alt: "Kinetic Drummers of the Red Earth by Nkem Agbo", position: 0 },
-        ],
-      },
-      {
-        id: "hero-ochre-silhouette",
-        slug: "ochre-silhouette",
-        title: "Solar Vortex: The Obsidian Rhythms",
-        department: "ART",
-        category: "ORIGINAL_PAINTING",
-        productType: "ORIGINAL",
-        price: 110000000,
-        currency: "NGN",
-        stock: 1,
-        shippingClass: "FRAGILE",
-        artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
-        images: [
-          { url: "/images/catalogue/solar-vortex.jpg", alt: "Solar Vortex: The Obsidian Rhythms by Nkem Agbo", position: 0 },
         ],
       },
     ],

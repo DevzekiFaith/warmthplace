@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/components/CartContext";
 import { useCurrency } from "@/components/CurrencyContext";
 import { ImageZoom } from "@/components/ImageZoom";
@@ -120,26 +121,26 @@ export function ProductDetailsClient({ product }: ProductProps) {
     setIsSaved(!isSaved);
   };
 
-  // Realistic floater frame styling with 10mm recessed shadow gap
+  // Ultra-slim minimalist museum floater frame styling
   const getFramePreviewStyle = () => {
     switch (selectedFrame) {
       case "Obsidian Black":
         return {
-          frameMoulding: "16px solid #161514",
+          frameMoulding: "2.5px solid #161514",
           gapBg: "#0C0B0A",
-          gapPadding: "10px",
-          gapShadow: "inset 0 0 12px rgba(0,0,0,0.95)",
-          canvasShadow: "0 8px 24px rgba(0,0,0,0.85), 0 0 4px rgba(0,0,0,0.95)",
-          outerShadow: "0 20px 48px rgba(0,0,0,0.42), 0 6px 14px rgba(0,0,0,0.22)",
+          gapPadding: "3px",
+          gapShadow: "inset 0 0 4px rgba(0,0,0,0.9)",
+          canvasShadow: "0 4px 12px rgba(0,0,0,0.4), 0 0 1px rgba(0,0,0,0.8)",
+          outerShadow: "0 10px 24px rgba(0,0,0,0.28)",
         };
       case "Champagne Gold":
         return {
-          frameMoulding: "16px solid #C5A059",
+          frameMoulding: "2.5px solid #C5A059",
           gapBg: "#14110A",
-          gapPadding: "10px",
-          gapShadow: "inset 0 0 12px rgba(0,0,0,0.9)",
-          canvasShadow: "0 8px 24px rgba(0,0,0,0.85), 0 0 4px rgba(0,0,0,0.95)",
-          outerShadow: "0 20px 48px rgba(0,0,0,0.32), 0 0 16px rgba(197, 160, 89, 0.3)",
+          gapPadding: "3px",
+          gapShadow: "inset 0 0 4px rgba(0,0,0,0.8)",
+          canvasShadow: "0 4px 12px rgba(0,0,0,0.4), 0 0 1px rgba(0,0,0,0.8)",
+          outerShadow: "0 10px 24px rgba(0,0,0,0.2), 0 0 8px rgba(197, 160, 89, 0.18)",
         };
       case "Frameless Gallery Wrap":
         return {
@@ -147,18 +148,18 @@ export function ProductDetailsClient({ product }: ProductProps) {
           gapBg: "transparent",
           gapPadding: "0px",
           gapShadow: "none",
-          canvasShadow: "0 18px 40px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.12)",
-          outerShadow: "0 16px 36px rgba(0,0,0,0.24)",
+          canvasShadow: "0 10px 24px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.08)",
+          outerShadow: "0 8px 20px rgba(0,0,0,0.14)",
         };
       case "Natural Oak":
       default:
         return {
-          frameMoulding: "16px solid #BA9868",
+          frameMoulding: "2.5px solid #BA9868",
           gapBg: "#16130F",
-          gapPadding: "10px",
-          gapShadow: "inset 0 0 12px rgba(0,0,0,0.9)",
-          canvasShadow: "0 8px 24px rgba(0,0,0,0.85), 0 0 4px rgba(0,0,0,0.95)",
-          outerShadow: "0 20px 48px rgba(0,0,0,0.32), 0 6px 14px rgba(0,0,0,0.18)",
+          gapPadding: "3px",
+          gapShadow: "inset 0 0 4px rgba(0,0,0,0.8)",
+          canvasShadow: "0 4px 12px rgba(0,0,0,0.4), 0 0 1px rgba(0,0,0,0.8)",
+          outerShadow: "0 10px 24px rgba(0,0,0,0.22)",
         };
     }
   };
@@ -725,63 +726,133 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   marginBottom: "1.75rem",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.85rem", flexWrap: "wrap" }}>
-                  {hasStrikethrough && (
-                    <span
-                      style={{
-                        fontSize: "1.35rem",
-                        color: "var(--color-ink-light)",
-                        textDecoration: "line-through",
-                        textDecorationColor: "var(--color-terracotta)",
-                        fontFamily: "var(--font-sans)",
-                        fontWeight: 400,
-                      }}
-                      title="Original Valuation"
-                    >
-                      {format(originalPrice)}
-                    </span>
-                  )}
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.85rem", flexWrap: "wrap" }}>
+                    {hasStrikethrough && (
+                      <span
+                        style={{
+                          fontSize: "1.35rem",
+                          color: "var(--color-ink-light)",
+                          textDecoration: "line-through",
+                          textDecorationColor: "var(--color-terracotta)",
+                          fontFamily: "var(--font-sans)",
+                          fontWeight: 400,
+                        }}
+                        title="Original Valuation"
+                      >
+                        {format(originalPrice)}
+                      </span>
+                    )}
 
-                  <span
+                    <AnimatePresence mode="wait">
+                      <motion.span
+                        key={currency}
+                        initial={{ opacity: 0, y: -4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 4 }}
+                        transition={{ duration: 0.16 }}
+                        style={{
+                          fontSize: "2.3rem",
+                          fontWeight: 700,
+                          color: "var(--color-ink-charcoal)",
+                          fontFamily: "var(--font-sans)",
+                          letterSpacing: "-0.02em",
+                        }}
+                      >
+                        {format(product.price)}
+                      </motion.span>
+                    </AnimatePresence>
+
+                    {hasStrikethrough && (
+                      <span
+                        style={{
+                          fontSize: "0.72rem",
+                          fontWeight: 700,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.08em",
+                          padding: "3px 8px",
+                          backgroundColor: "rgba(166, 75, 50, 0.12)",
+                          color: "var(--color-terracotta)",
+                          borderRadius: "2px",
+                          border: "1px solid rgba(166, 75, 50, 0.25)",
+                        }}
+                      >
+                        Save 71% • Studio Release
+                      </span>
+                    )}
+
+                    {currency !== BASE_CURRENCY && !hasStrikethrough && (
+                      <span
+                        style={{
+                          fontSize: "0.85rem",
+                          color: "var(--color-ink-light)",
+                        }}
+                      >
+                        (Store Base: {formatPrice(product.price, BASE_CURRENCY)})
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Framer Motion Smart Currency Toggle */}
+                  <div
                     style={{
-                      fontSize: "2.3rem",
-                      fontWeight: 700,
-                      color: "var(--color-ink-charcoal)",
-                      fontFamily: "var(--font-sans)",
-                      letterSpacing: "-0.02em",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      backgroundColor: "var(--color-canvas-pure)",
+                      padding: "3px",
+                      borderRadius: "24px",
+                      position: "relative",
+                      border: "1px solid var(--border-medium)",
+                      boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
                     }}
                   >
-                    {format(product.price)}
-                  </span>
-
-                  {hasStrikethrough && (
-                    <span
-                      style={{
-                        fontSize: "0.72rem",
-                        fontWeight: 700,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.08em",
-                        padding: "3px 8px",
-                        backgroundColor: "rgba(166, 75, 50, 0.12)",
-                        color: "var(--color-terracotta)",
-                        borderRadius: "2px",
-                        border: "1px solid rgba(166, 75, 50, 0.25)",
-                      }}
-                    >
-                      Save 71% • Studio Release
-                    </span>
-                  )}
-
-                  {currency !== BASE_CURRENCY && !hasStrikethrough && (
-                    <span
-                      style={{
-                        fontSize: "0.85rem",
-                        color: "var(--color-ink-light)",
-                      }}
-                    >
-                      (Store Base: {formatPrice(product.price, BASE_CURRENCY)})
-                    </span>
-                  )}
+                    {[
+                      { code: "NGN", label: "₦ NGN", flag: "🇳🇬" },
+                      { code: "USD", label: "$ USD", flag: "🇺🇸" },
+                    ].map((opt) => {
+                      const isSelected = currency === opt.code;
+                      return (
+                        <button
+                          key={opt.code}
+                          type="button"
+                          onClick={() => setCurrency(opt.code)}
+                          style={{
+                            position: "relative",
+                            zIndex: 2,
+                            padding: "5px 13px",
+                            fontSize: "0.76rem",
+                            fontWeight: 600,
+                            border: "none",
+                            background: "transparent",
+                            color: isSelected ? "#FFFFFF" : "var(--color-ink-muted)",
+                            cursor: "pointer",
+                            borderRadius: "20px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "5px",
+                            transition: "color 0.2s ease",
+                          }}
+                        >
+                          <span>{opt.flag}</span>
+                          <span>{opt.label}</span>
+                          {isSelected && (
+                            <motion.div
+                              layoutId="smart-currency-pill"
+                              transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                              style={{
+                                position: "absolute",
+                                inset: 0,
+                                backgroundColor: "var(--color-ink-charcoal)",
+                                borderRadius: "20px",
+                                zIndex: -1,
+                                boxShadow: "0 2px 8px rgba(0,0,0,0.18)",
+                              }}
+                            />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 <div
@@ -835,7 +906,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                 </label>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
                   <span style={{ fontSize: "0.75rem", color: "var(--color-ink-light)" }}>
-                    10mm Floating Shadow Gap Included
+                    Slimline Floating Shadow Gap Included
                   </span>
                   <span
                     style={{
