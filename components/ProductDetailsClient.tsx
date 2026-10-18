@@ -61,7 +61,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
   const [copiedLink, setCopiedLink] = useState(false);
 
   const { addItem } = useCart();
-  const { format, currency } = useCurrency();
+  const { format, currency, setCurrency } = useCurrency();
 
   const isArt = product.department === "ART";
 
@@ -475,7 +475,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
             }}
           >
             <div style={{ display: "flex", gap: "1rem", color: "var(--color-ink-muted)" }}>
-              <span>🔍 <strong>Roll hover</strong> to magnify texture</span>
+              <span>🔍 <strong>High-Definition</strong> Texture</span>
               <span>•</span>
               <span>✨ <strong>Hand-signed</strong> original</span>
             </div>
@@ -668,54 +668,195 @@ export function ProductDetailsClient({ product }: ProductProps) {
             </div>
           )}
 
-          {/* Price display with real-time currency selector */}
-          <div
-            style={{
-              padding: "1.25rem 0",
-              borderTop: "1px solid var(--border-subtle)",
-              borderBottom: "1px solid var(--border-subtle)",
-              marginBottom: "1.75rem",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", flexWrap: "wrap" }}>
-              <span
+          {/* Price display with strikethrough high amount & currency interchange */}
+          {(() => {
+            const hasStrikethrough = product.slug === "ochre-silhouette" || product.price === 110000000;
+            const originalPrice = 375000000; // ₦3,750,000 (~$2,500 USD)
+
+            return (
+              <div
                 style={{
-                  fontSize: "2.2rem",
-                  fontWeight: 600,
-                  color: "var(--color-ink-charcoal)",
-                  fontFamily: "var(--font-sans)",
+                  padding: "1.25rem 0",
+                  borderTop: "1px solid var(--border-subtle)",
+                  borderBottom: "1px solid var(--border-subtle)",
+                  marginBottom: "1.75rem",
                 }}
               >
-                {format(product.price)}
-              </span>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.85rem", flexWrap: "wrap" }}>
+                  {hasStrikethrough && (
+                    <span
+                      style={{
+                        fontSize: "1.35rem",
+                        color: "var(--color-ink-light)",
+                        textDecoration: "line-through",
+                        textDecorationColor: "var(--color-terracotta)",
+                        fontFamily: "var(--font-sans)",
+                        fontWeight: 400,
+                      }}
+                      title="Original Valuation"
+                    >
+                      {format(originalPrice)}
+                    </span>
+                  )}
 
-              {currency !== BASE_CURRENCY && (
-                <span
+                  <span
+                    style={{
+                      fontSize: "2.3rem",
+                      fontWeight: 700,
+                      color: "var(--color-ink-charcoal)",
+                      fontFamily: "var(--font-sans)",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    {format(product.price)}
+                  </span>
+
+                  {hasStrikethrough && (
+                    <span
+                      style={{
+                        fontSize: "0.72rem",
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                        padding: "3px 8px",
+                        backgroundColor: "rgba(166, 75, 50, 0.12)",
+                        color: "var(--color-terracotta)",
+                        borderRadius: "2px",
+                        border: "1px solid rgba(166, 75, 50, 0.25)",
+                      }}
+                    >
+                      Save 71% • Studio Release
+                    </span>
+                  )}
+
+                  {currency !== BASE_CURRENCY && !hasStrikethrough && (
+                    <span
+                      style={{
+                        fontSize: "0.85rem",
+                        color: "var(--color-ink-light)",
+                      }}
+                    >
+                      (Store Base: {formatPrice(product.price, BASE_CURRENCY)})
+                    </span>
+                  )}
+                </div>
+
+                {/* Currency Interchange Switcher */}
+                <div
                   style={{
-                    fontSize: "0.85rem",
-                    color: "var(--color-ink-light)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    marginTop: "0.85rem",
+                    flexWrap: "wrap",
                   }}
                 >
-                  (Store Base: {formatPrice(product.price, BASE_CURRENCY)})
-                </span>
-              )}
-            </div>
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      backgroundColor: "var(--color-canvas-pure)",
+                      border: "1px solid var(--border-medium)",
+                      borderRadius: "20px",
+                      padding: "2px",
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setCurrency("NGN")}
+                      style={{
+                        padding: "4px 12px",
+                        fontSize: "0.76rem",
+                        fontWeight: 600,
+                        borderRadius: "16px",
+                        border: "none",
+                        backgroundColor: currency === "NGN" ? "var(--color-ink-charcoal)" : "transparent",
+                        color: currency === "NGN" ? "#FFFFFF" : "var(--color-ink-muted)",
+                        cursor: "pointer",
+                        transition: "all 0.2s ease",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "4px",
+                      }}
+                      title="Display in Nigerian Naira"
+                    >
+                      <span>🇳🇬</span> NGN (₦)
+                    </button>
 
-            <div
-              style={{
-                fontSize: "0.82rem",
-                color: "var(--color-ink-muted)",
-                marginTop: "6px",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-              }}
-            >
-              <span>🚚 Complimentary Museum Wooden Crating</span>
-              <span>•</span>
-              <span>Insured White-Glove Courier Transit</span>
-            </div>
-          </div>
+                    <button
+                      type="button"
+                      onClick={() => setCurrency("USD")}
+                      style={{
+                        padding: "4px 12px",
+                        fontSize: "0.76rem",
+                        fontWeight: 600,
+                        borderRadius: "16px",
+                        border: "none",
+                        backgroundColor: currency === "USD" ? "var(--color-ink-charcoal)" : "transparent",
+                        color: currency === "USD" ? "#FFFFFF" : "var(--color-ink-muted)",
+                        cursor: "pointer",
+                        transition: "all 0.2s ease",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "4px",
+                      }}
+                      title="Interchange to US Dollars"
+                    >
+                      <span>🇺🇸</span> USD ($)
+                    </button>
+                  </div>
+
+                  {/* Interchange Rate Info Text */}
+                  <span
+                    style={{
+                      fontSize: "0.82rem",
+                      color: "var(--color-ink-muted)",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.35rem",
+                    }}
+                  >
+                    <span style={{ color: "var(--color-terracotta)", fontWeight: 700 }}>⇄</span>
+                    {currency === "NGN" ? (
+                      <span>
+                        Dollar Interchange: <strong>{formatPrice(product.price, "USD")}</strong>
+                        {hasStrikethrough && (
+                          <>
+                            {" "}(was <del style={{ color: "var(--color-ink-light)" }}>{formatPrice(originalPrice, "USD")}</del>)
+                          </>
+                        )}
+                        {" "}• @ $1 = ₦1,500
+                      </span>
+                    ) : (
+                      <span>
+                        Naira Base: <strong>{formatPrice(product.price, "NGN")}</strong>
+                        {hasStrikethrough && (
+                          <>
+                            {" "}(was <del style={{ color: "var(--color-ink-light)" }}>{formatPrice(originalPrice, "NGN")}</del>)
+                          </>
+                        )}
+                      </span>
+                    )}
+                  </span>
+                </div>
+
+                <div
+                  style={{
+                    fontSize: "0.82rem",
+                    color: "var(--color-ink-muted)",
+                    marginTop: "0.75rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <span>🚚 Complimentary Museum Wooden Crating</span>
+                  <span>•</span>
+                  <span>Insured White-Glove Courier Transit</span>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Interactive Frame Finish Customizer */}
           {isArt && (

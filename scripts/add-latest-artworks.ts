@@ -228,24 +228,24 @@ async function main() {
     },
   });
 
-  // 5. Ochre Silhouette: The Royal Coiffure
+  // 5. Solar Vortex: The Obsidian Rhythms
   await upsertProduct("ochre-silhouette", {
     slug: "ochre-silhouette",
-    title: "Ochre Silhouette: The Royal Coiffure",
+    title: "Solar Vortex: The Obsidian Rhythms",
     department: "ART",
     category: "ORIGINAL_PAINTING",
     productType: "ORIGINAL",
     description:
-      "A striking profile portrait of a regal African woman in deep charcoal-black silhouette, adorned with an ornate geometric Ankara headwrap in black, orange, and white patterns, a gilded hoop earring, and an off-shoulder batik gown. The painting is set against a hypnotic burnt-orange amber ochre field textured with fine wax-resist crackles reminiscent of ancient terracotta glazes and Yoruba dye-bath traditions. Evokes effortless poise, timeless dignity, and sovereign heritage.",
-    medium: "Batik wax-resist crackle ground, oil paint, and gilded metallic hoop on stretched linen",
-    materials: "Belgian linen, wax resist, oil paint, mineral ochre, timber stretcher",
+      "A monumental tactile relief masterpiece dominated by hypnotic concentric vortex grooves sculpted into a deep obsidian impasto ground. Sweeping radial striations generate a powerful centrifugal rhythm across the surface, electrified by spontaneous gestural cascades of golden amber, warm sunlit ochre, emerald viridian, and vermilion accents. Merging sacred African geometric motifs with raw, tactile abstract expressionism, the work vibrates with kinetic energy and contemplative depth. Signed recto and verso, delivered with an embossed studio certificate of provenance.",
+    medium: "Textured impasto relief, combed bitumen ground, natural mineral ochre, oil, and gestural enamel splatter on reinforced wooden panel",
+    materials: "Hardwood gallery panel, heavy impasto paste, raw mineral ochre, artist oil & gloss enamel, UV protective varnish",
     year: 2026,
-    widthCm: 80,
-    heightCm: 120,
-    depthCm: 4.5,
-    weightKg: 6.0,
-    orientation: "PORTRAIT",
-    price: 375000000, // ₦3,750,000 (~$2,500 USD)
+    widthCm: 100,
+    heightCm: 100,
+    depthCm: 5.0,
+    weightKg: 8.5,
+    orientation: "SQUARE",
+    price: 110000000, // ₦1,100,000 (~$733 USD)
     currency: "NGN",
     stock: 1,
     status: "PUBLISHED",
@@ -254,17 +254,17 @@ async function main() {
     featured: true,
     isSample: true,
     artistId: nkem.id,
-    collections: colEarth ? { connect: [{ id: colEarth.id }] } : undefined,
+    collections: colAncestral ? { connect: [{ id: colAncestral.id }] } : undefined,
     images: {
       create: [
         {
-          url: "/images/catalogue/ochre-silhouette.jpg",
-          alt: "Ochre Silhouette: The Royal Coiffure by Nkem Agbo",
+          url: "/images/catalogue/solar-vortex.jpg",
+          alt: "Solar Vortex: The Obsidian Rhythms tactile relief painting by Nkem Agbo",
           position: 0,
         },
         {
-          url: "/images/catalogue/ochre-silhouette-room.jpg",
-          alt: "Ochre Silhouette canvas displayed above minimalist sofa",
+          url: "/images/catalogue/solar-vortex-room.jpg",
+          alt: "Solar Vortex displayed in contemporary minimalist living room interior",
           position: 1,
         },
       ],
