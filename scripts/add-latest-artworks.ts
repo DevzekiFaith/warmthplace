@@ -185,23 +185,23 @@ async function main() {
     },
   });
 
-  // 4. Kinetic Drummers of the Red Earth
+  // 4. Tree of Life: Sacred Ochre Canopy
   await upsertProduct("kinetic-drummers", {
     slug: "kinetic-drummers",
-    title: "Kinetic Drummers of the Red Earth",
+    title: "Tree of Life: Sacred Ochre Canopy",
     department: "ART",
     category: "ORIGINAL_PAINTING",
     productType: "ORIGINAL",
     description:
-      "Four ceremonial percussionists depicted in mid-dance, their bodies articulated in bold, kinetic geometric forms of crimson red, saffron yellow, pure white, and cobalt blue against an earthy textured burnt-sienna background. Upward-thrusting emerald grass blades anchor the lower edge, giving the impression of an open-air savannah festival at dusk. Each angular brushmark vibrates with musical syncopation and ancestral energy.",
-    medium: "Mineral terracotta ground, palette-knife acrylic, and raw pigment on stretched canvas",
-    materials: "Cotton canvas, mineral pigment, heavy acrylic, timber float frame",
+      "A monumental vertical tactile relief masterpiece celebrating the Tree of Life. Sculptural, hand-modelled impasto leaves in vibrant scarlet red, radiant cadmium yellow, verdant emerald green, and deep roasted umber branch outward in lush radial symmetry from a textured dark trunk. Rendered against a luminous amber-ochre mineral ground, the painting embodies ancestral vitality, spiritual groundedness, and perpetual renewal. Delivered stretched with a handcrafted Natural Oak floater frame and an embossed studio certificate of provenance.",
+    medium: "Tactile impasto relief, modelling paste, mineral ochre wash, heavy-body acrylic, and gloss enamel on stretched canvas",
+    materials: "Stretched cotton canvas, sculptural impasto polymer, raw mineral pigment, natural oak floater frame",
     year: 2026,
-    widthCm: 140,
-    heightCm: 80,
+    widthCm: 80,
+    heightCm: 140,
     depthCm: 4.5,
     weightKg: 7.2,
-    orientation: "LANDSCAPE",
+    orientation: "PORTRAIT",
     price: 410000000, // ₦4,100,000 (~$2,733 USD)
     currency: "NGN",
     stock: 1,
@@ -215,13 +215,13 @@ async function main() {
     images: {
       create: [
         {
-          url: "/images/catalogue/kinetic-drummers.jpg",
-          alt: "Kinetic Drummers of the Red Earth original painting by Nkem Agbo",
+          url: "/images/catalogue/tree-of-life-ochre.jpg",
+          alt: "Tree of Life: Sacred Ochre Canopy tactile relief painting by Nkem Agbo",
           position: 0,
         },
         {
-          url: "/images/catalogue/kinetic-drummers-room.jpg",
-          alt: "Kinetic Drummers of the Red Earth in modern gallery lounge",
+          url: "/images/catalogue/tree-of-life-ochre-room.jpg",
+          alt: "Tree of Life displayed in contemporary living room interior",
           position: 1,
         },
       ],
