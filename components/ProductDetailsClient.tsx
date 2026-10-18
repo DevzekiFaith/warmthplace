@@ -744,19 +744,21 @@ export function ProductDetailsClient({ product }: ProductProps) {
                       </span>
                     )}
 
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence mode="wait" initial={false}>
                       <motion.span
                         key={currency}
                         initial={{ opacity: 0, y: -4 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 4 }}
-                        transition={{ duration: 0.16 }}
+                        transition={{ duration: 0.15 }}
                         style={{
                           fontSize: "2.3rem",
                           fontWeight: 700,
                           color: "var(--color-ink-charcoal)",
                           fontFamily: "var(--font-sans)",
                           letterSpacing: "-0.02em",
+                          display: "inline-block",
+                          lineHeight: 1.1,
                         }}
                       >
                         {format(product.price)}
@@ -780,17 +782,6 @@ export function ProductDetailsClient({ product }: ProductProps) {
                         Save 71% • Studio Release
                       </span>
                     )}
-
-                    {currency !== BASE_CURRENCY && !hasStrikethrough && (
-                      <span
-                        style={{
-                          fontSize: "0.85rem",
-                          color: "var(--color-ink-light)",
-                        }}
-                      >
-                        (Store Base: {formatPrice(product.price, BASE_CURRENCY)})
-                      </span>
-                    )}
                   </div>
 
                   {/* Framer Motion Smart Currency Toggle */}
@@ -799,11 +790,12 @@ export function ProductDetailsClient({ product }: ProductProps) {
                       display: "inline-flex",
                       alignItems: "center",
                       backgroundColor: "var(--color-canvas-pure)",
-                      padding: "3px",
+                      padding: "4px",
                       borderRadius: "24px",
                       position: "relative",
                       border: "1px solid var(--border-medium)",
                       boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                      flexShrink: 0,
                     }}
                   >
                     {[
@@ -819,8 +811,8 @@ export function ProductDetailsClient({ product }: ProductProps) {
                           style={{
                             position: "relative",
                             zIndex: 2,
-                            padding: "5px 13px",
-                            fontSize: "0.76rem",
+                            padding: "6px 14px",
+                            fontSize: "0.78rem",
                             fontWeight: 600,
                             border: "none",
                             background: "transparent",
@@ -829,8 +821,9 @@ export function ProductDetailsClient({ product }: ProductProps) {
                             borderRadius: "20px",
                             display: "flex",
                             alignItems: "center",
-                            gap: "5px",
-                            transition: "color 0.2s ease",
+                            gap: "6px",
+                            transition: "color 0.18s ease",
+                            userSelect: "none",
                           }}
                         >
                           <span>{opt.flag}</span>
@@ -838,7 +831,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                           {isSelected && (
                             <motion.div
                               layoutId="smart-currency-pill"
-                              transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                              transition={{ type: "spring", stiffness: 450, damping: 32 }}
                               style={{
                                 position: "absolute",
                                 inset: 0,
