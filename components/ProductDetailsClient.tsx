@@ -90,9 +90,9 @@ export function ProductDetailsClient({ product }: ProductProps) {
   const handleAddToCart = () => {
     addItem(
       {
-        id: product.id,
+        id: `${product.id}-${selectedFrame.toLowerCase().replace(/\s+/g, "-")}`,
         slug: product.slug,
-        title: product.title,
+        title: isArt ? `${product.title} (${selectedFrame})` : product.title,
         artistName: product.artist?.name || null,
         department: product.department,
         category: product.category,
@@ -120,30 +120,45 @@ export function ProductDetailsClient({ product }: ProductProps) {
     setIsSaved(!isSaved);
   };
 
-  // Frame preview style
+  // Realistic floater frame styling with 10mm recessed shadow gap
   const getFramePreviewStyle = () => {
-    if (viewMode === "gallery") return {};
     switch (selectedFrame) {
       case "Obsidian Black":
         return {
-          border: "10px solid #1A1A1A",
-          boxShadow: "0 18px 40px rgba(0,0,0,0.28), inset 0 0 0 2px rgba(255,255,255,0.08)",
+          frameMoulding: "16px solid #161514",
+          gapBg: "#0C0B0A",
+          gapPadding: "10px",
+          gapShadow: "inset 0 0 12px rgba(0,0,0,0.95)",
+          canvasShadow: "0 8px 24px rgba(0,0,0,0.85), 0 0 4px rgba(0,0,0,0.95)",
+          outerShadow: "0 20px 48px rgba(0,0,0,0.42), 0 6px 14px rgba(0,0,0,0.22)",
         };
       case "Champagne Gold":
         return {
-          border: "10px solid #C5A059",
-          boxShadow: "0 18px 40px rgba(0,0,0,0.22), 0 0 12px rgba(197, 160, 89, 0.25)",
+          frameMoulding: "16px solid #C5A059",
+          gapBg: "#14110A",
+          gapPadding: "10px",
+          gapShadow: "inset 0 0 12px rgba(0,0,0,0.9)",
+          canvasShadow: "0 8px 24px rgba(0,0,0,0.85), 0 0 4px rgba(0,0,0,0.95)",
+          outerShadow: "0 20px 48px rgba(0,0,0,0.32), 0 0 16px rgba(197, 160, 89, 0.3)",
         };
       case "Frameless Gallery Wrap":
         return {
-          border: "none",
-          boxShadow: "0 16px 36px rgba(0,0,0,0.24)",
+          frameMoulding: "none",
+          gapBg: "transparent",
+          gapPadding: "0px",
+          gapShadow: "none",
+          canvasShadow: "0 18px 40px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.12)",
+          outerShadow: "0 16px 36px rgba(0,0,0,0.24)",
         };
       case "Natural Oak":
       default:
         return {
-          border: "10px solid #C4A47C",
-          boxShadow: "0 18px 40px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.12)",
+          frameMoulding: "16px solid #BA9868",
+          gapBg: "#16130F",
+          gapPadding: "10px",
+          gapShadow: "inset 0 0 12px rgba(0,0,0,0.9)",
+          canvasShadow: "0 8px 24px rgba(0,0,0,0.85), 0 0 4px rgba(0,0,0,0.95)",
+          outerShadow: "0 20px 48px rgba(0,0,0,0.32), 0 6px 14px rgba(0,0,0,0.18)",
         };
     }
   };
@@ -233,69 +248,95 @@ export function ProductDetailsClient({ product }: ProductProps) {
           )}
 
           {/* Interactive Image Frame with Badges */}
-          <div
-            style={{
-              position: "relative",
-              borderRadius: "3px",
-              overflow: "hidden",
-              transition: "all 0.3s ease",
-              ...getFramePreviewStyle(),
-            }}
-          >
-            {/* Top Badge Overlay */}
-            <div
-              style={{
-                position: "absolute",
-                top: "1rem",
-                left: "1rem",
-                zIndex: 4,
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.4rem",
-                pointerEvents: "none",
-              }}
-            >
-              {viewMode === "gallery" ? (
-                <span
+          {(() => {
+            const frameStyle = getFramePreviewStyle();
+            return (
+              <div
+                style={{
+                  position: "relative",
+                  borderRadius: "4px",
+                  overflow: "hidden",
+                  transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+                  border: viewMode === "canvas" ? frameStyle.frameMoulding : "none",
+                  backgroundColor: viewMode === "canvas" ? frameStyle.gapBg : "transparent",
+                  padding: viewMode === "canvas" ? frameStyle.gapPadding : 0,
+                  boxShadow: viewMode === "canvas" ? frameStyle.outerShadow : undefined,
+                }}
+              >
+                {/* Top Badge Overlay */}
+                <div
                   style={{
-                    backgroundColor: "rgba(36, 34, 30, 0.88)",
-                    backdropFilter: "blur(6px)",
-                    color: "#FFFFFF",
-                    fontSize: "0.72rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.14em",
-                    textTransform: "uppercase",
-                    padding: "0.35rem 0.75rem",
-                    borderRadius: "2px",
-                    display: "inline-flex",
-                    alignItems: "center",
+                    position: "absolute",
+                    top: "1rem",
+                    left: "1rem",
+                    zIndex: 4,
+                    display: "flex",
+                    flexDirection: "column",
                     gap: "0.4rem",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                    pointerEvents: "none",
                   }}
                 >
-                  <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#C5A059" }} />
-                  Gallery Display
-                </span>
-              ) : (
-                <span
-                  style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.92)",
-                    backdropFilter: "blur(6px)",
-                    color: "var(--color-ink-charcoal)",
-                    fontSize: "0.72rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase",
-                    padding: "0.35rem 0.75rem",
-                    borderRadius: "2px",
-                    border: "1px solid var(--border-subtle)",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-                  }}
-                >
-                  Original Canvas • Impasto
-                </span>
-              )}
-            </div>
+                  {viewMode === "gallery" ? (
+                    <span
+                      style={{
+                        backgroundColor: "rgba(36, 34, 30, 0.88)",
+                        backdropFilter: "blur(6px)",
+                        color: "#FFFFFF",
+                        fontSize: "0.72rem",
+                        fontWeight: 600,
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                        padding: "0.35rem 0.75rem",
+                        borderRadius: "2px",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.4rem",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                      }}
+                    >
+                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#C5A059" }} />
+                      Gallery Display • In Situ
+                    </span>
+                  ) : (
+                    <span
+                      style={{
+                        backgroundColor: "rgba(255, 255, 255, 0.95)",
+                        backdropFilter: "blur(6px)",
+                        color: "var(--color-ink-charcoal)",
+                        fontSize: "0.72rem",
+                        fontWeight: 600,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        padding: "0.35rem 0.75rem",
+                        borderRadius: "2px",
+                        border: "1px solid var(--border-subtle)",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.45rem",
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: "8px",
+                          height: "8px",
+                          borderRadius: "1px",
+                          backgroundColor:
+                            selectedFrame === "Obsidian Black"
+                              ? "#161514"
+                              : selectedFrame === "Champagne Gold"
+                              ? "#C5A059"
+                              : selectedFrame === "Frameless Gallery Wrap"
+                              ? "#E8E2D5"
+                              : "#BA9868",
+                        }}
+                      />
+                      {selectedFrame === "Frameless Gallery Wrap"
+                        ? "Frameless Gallery Wrap"
+                        : `Floater Frame: ${selectedFrame}`}
+                    </span>
+                  )}
+                </div>
 
             {/* Quick Pin / Save Button overlay */}
             <button
@@ -404,7 +445,9 @@ export function ProductDetailsClient({ product }: ProductProps) {
             ) : (
               <ImageZoom src={currentImage.url} alt={currentImage.alt} />
             )}
-          </div>
+              </div>
+            );
+          })()}
 
           {/* Thumbnail switcher if multiple images */}
           {product.images.length > 1 && (
@@ -477,7 +520,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
             <div style={{ display: "flex", gap: "1rem", color: "var(--color-ink-muted)" }}>
               <span>🔍 <strong>High-Definition</strong> Texture</span>
               <span>•</span>
-              <span>✨ <strong>Hand-signed</strong> original</span>
+              <span>🖋️ <strong>Hand-signed</strong> original</span>
             </div>
             <button
               type="button"
@@ -741,105 +784,6 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   )}
                 </div>
 
-                {/* Currency Interchange Switcher */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.75rem",
-                    marginTop: "0.85rem",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      backgroundColor: "var(--color-canvas-pure)",
-                      border: "1px solid var(--border-medium)",
-                      borderRadius: "20px",
-                      padding: "2px",
-                    }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setCurrency("NGN")}
-                      style={{
-                        padding: "4px 12px",
-                        fontSize: "0.76rem",
-                        fontWeight: 600,
-                        borderRadius: "16px",
-                        border: "none",
-                        backgroundColor: currency === "NGN" ? "var(--color-ink-charcoal)" : "transparent",
-                        color: currency === "NGN" ? "#FFFFFF" : "var(--color-ink-muted)",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "4px",
-                      }}
-                      title="Display in Nigerian Naira"
-                    >
-                      <span>🇳🇬</span> NGN (₦)
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setCurrency("USD")}
-                      style={{
-                        padding: "4px 12px",
-                        fontSize: "0.76rem",
-                        fontWeight: 600,
-                        borderRadius: "16px",
-                        border: "none",
-                        backgroundColor: currency === "USD" ? "var(--color-ink-charcoal)" : "transparent",
-                        color: currency === "USD" ? "#FFFFFF" : "var(--color-ink-muted)",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "4px",
-                      }}
-                      title="Interchange to US Dollars"
-                    >
-                      <span>🇺🇸</span> USD ($)
-                    </button>
-                  </div>
-
-                  {/* Interchange Rate Info Text */}
-                  <span
-                    style={{
-                      fontSize: "0.82rem",
-                      color: "var(--color-ink-muted)",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.35rem",
-                    }}
-                  >
-                    <span style={{ color: "var(--color-terracotta)", fontWeight: 700 }}>⇄</span>
-                    {currency === "NGN" ? (
-                      <span>
-                        Dollar Interchange: <strong>{formatPrice(product.price, "USD")}</strong>
-                        {hasStrikethrough && (
-                          <>
-                            {" "}(was <del style={{ color: "var(--color-ink-light)" }}>{formatPrice(originalPrice, "USD")}</del>)
-                          </>
-                        )}
-                        {" "}• @ $1 = ₦1,500
-                      </span>
-                    ) : (
-                      <span>
-                        Naira Base: <strong>{formatPrice(product.price, "NGN")}</strong>
-                        {hasStrikethrough && (
-                          <>
-                            {" "}(was <del style={{ color: "var(--color-ink-light)" }}>{formatPrice(originalPrice, "NGN")}</del>)
-                          </>
-                        )}
-                      </span>
-                    )}
-                  </span>
-                </div>
-
                 <div
                   style={{
                     fontSize: "0.82rem",
@@ -889,9 +833,23 @@ export function ProductDetailsClient({ product }: ProductProps) {
                 >
                   Framing Option: <span style={{ color: "var(--color-terracotta)" }}>{selectedFrame}</span>
                 </label>
-                <span style={{ fontSize: "0.75rem", color: "var(--color-ink-light)" }}>
-                  10mm Floating Shadow Gap Included
-                </span>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <span style={{ fontSize: "0.75rem", color: "var(--color-ink-light)" }}>
+                    10mm Floating Shadow Gap Included
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "0.68rem",
+                      fontWeight: 600,
+                      color: "#2E7D32",
+                      backgroundColor: "rgba(46, 125, 50, 0.1)",
+                      padding: "2px 6px",
+                      borderRadius: "2px",
+                    }}
+                  >
+                    ● Live Preview
+                  </span>
+                </div>
               </div>
 
               {/* Swatch Buttons */}
@@ -903,15 +861,20 @@ export function ProductDetailsClient({ product }: ProductProps) {
                 }}
               >
                 {[
-                  { name: "Natural Oak", swatch: "#C4A47C", desc: "Rift-Sawn Oak" },
-                  { name: "Obsidian Black", swatch: "#1A1A1A", desc: "Matte Hardwood" },
+                  { name: "Natural Oak", swatch: "#BA9868", desc: "Rift-Sawn Oak" },
+                  { name: "Obsidian Black", swatch: "#161514", desc: "Matte Hardwood" },
                   { name: "Champagne Gold", swatch: "#C5A059", desc: "Warm Gilded Leaf" },
                   { name: "Frameless Gallery Wrap", swatch: "#E8E2D5", desc: "Raw Belgian Edge" },
                 ].map((f) => (
                   <button
                     key={f.name}
                     type="button"
-                    onClick={() => setSelectedFrame(f.name as any)}
+                    onClick={() => {
+                      setSelectedFrame(f.name as any);
+                      if (viewMode === "gallery") {
+                        setViewMode("canvas");
+                      }
+                    }}
                     style={{
                       padding: "0.65rem 0.75rem",
                       borderRadius: "2px",
