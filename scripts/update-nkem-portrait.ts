@@ -8,11 +8,11 @@ async function main() {
       slug: { in: ["nkem-agbo", "tariq-osei"] },
     },
     data: {
-      portraitImage: "/images/catalogue/solar-vortex.jpg",
-      coverImage: "/images/catalogue/solar-vortex.jpg",
+      portraitImage: "/images/catalogue/tree-of-life-ochre.jpg",
+      coverImage: "/images/catalogue/tree-of-life-ochre.jpg",
     },
   });
-  console.log(`Updated ${updated.count} artist records to use /images/catalogue/solar-vortex.jpg`);
+  console.log(`Updated ${updated.count} artist records to use /images/catalogue/tree-of-life-ochre.jpg`);
 
   const artists = await prisma.artist.findMany({
     where: { slug: { in: ["nkem-agbo", "tariq-osei"] } },

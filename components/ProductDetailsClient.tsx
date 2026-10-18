@@ -657,21 +657,28 @@ export function ProductDetailsClient({ product }: ProductProps) {
             >
               <div
                 style={{
-                  width: "44px",
-                  height: "44px",
+                  width: "46px",
+                  height: "46px",
                   borderRadius: "50%",
+                  overflow: "hidden",
+                  position: "relative",
                   backgroundColor: "var(--color-slate-indigo)",
-                  color: "#FFFFFF",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "1.2rem",
-                  fontWeight: 600,
+                  border: "1.5px solid var(--border-medium)",
+                  boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
                   flexShrink: 0,
                 }}
               >
-                {product.artist.name.charAt(0)}
+                <Image
+                  src={
+                    product.artist.slug === "nkem-agbo"
+                      ? "/images/catalogue/tree-of-life-ochre.jpg"
+                      : product.images[0]?.url || "/images/catalogue/solar-vortex.jpg"
+                  }
+                  alt={product.artist.name}
+                  fill
+                  sizes="46px"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
               <div style={{ flexGrow: 1 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>

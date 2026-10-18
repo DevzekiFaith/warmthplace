@@ -60,15 +60,15 @@ async function getArtist(slug: string) {
     const result = dbArtist ?? getHeroArtist(lookupSlug) ?? null;
 
     if (result && lookupSlug === "nkem-agbo") {
-      // Prioritize the user-uploaded Solar Vortex artwork for Nkem Agbo
-      const solarVortexImg = "/images/catalogue/solar-vortex.jpg";
-      if (!result.portraitImage || result.portraitImage.includes("harmattan") || result.portraitImage.includes("indigo-tide")) {
-        result.portraitImage = solarVortexImg;
-      }
+      // User requested Tree of Life: Sacred Ochre Canopy for Nkem Agbo's profile
+      result.portraitImage = "/images/catalogue/tree-of-life-ochre.jpg";
+      result.coverImage = "/images/catalogue/tree-of-life-ochre.jpg";
 
-      // Sort ochre-silhouette (Solar Vortex) to the very top of works
+      // Prioritize Tree of Life and Solar Vortex at the top of available works
       if (Array.isArray(result.products)) {
         result.products.sort((a, b) => {
+          if (a.slug === "kinetic-drummers") return -1;
+          if (b.slug === "kinetic-drummers") return 1;
           if (a.slug === "ochre-silhouette") return -1;
           if (b.slug === "ochre-silhouette") return 1;
           return 0;
