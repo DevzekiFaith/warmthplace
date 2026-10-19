@@ -77,8 +77,8 @@ export default async function HomePage() {
     {
       id: "scene-item-1",
       slug: "indigo-tide-evening-lantern",
-      title: "Indigo Tide (Evening Lantern)",
-      price: 450000,
+      title: "Ceremonial Rhythm: The Emerald Drummer",
+      price: 280000000,
       imageUrl: "/images/catalogue/indigo-tide.jpg",
       category: "ORIGINAL_CANVAS",
       stock: 1,

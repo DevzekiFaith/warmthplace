@@ -271,6 +271,49 @@ async function main() {
     },
   });
 
+  // 6. Ceremonial Rhythm: The Emerald Drummer
+  await upsertProduct("indigo-tide-evening-lantern", {
+    slug: "indigo-tide-evening-lantern",
+    title: "Ceremonial Rhythm: The Emerald Drummer",
+    department: "ART",
+    category: "ORIGINAL_PAINTING",
+    productType: "ORIGINAL",
+    description:
+      "A captivating figurative masterpiece celebrating ancestral rhythm, sacred drumming, and spiritual radiance. Rendered against a luminous, electric emerald-green ground, a ceremonial West African drummer wearing a feather crown, vivid ritual face paint, and intricately patterned batik attire plays a hand-carved talking drum with infectious vitality. Built with rich impasto textures and brilliant mineral pigments, the canvas pulses with celebratory sound, kinetic movement, and communal joy. Signed recto and verso, delivered with an embossed studio certificate of provenance.",
+    medium: "Acrylic, oil impasto, natural mineral pigments, and textured ground on vertical stretched canvas",
+    materials: "Heavy cotton canvas, artist acrylics & oil impasto, mineral pigments, solid wood stretcher",
+    year: 2026,
+    widthCm: 70,
+    heightCm: 135,
+    depthCm: 4.5,
+    weightKg: 6.8,
+    orientation: "PORTRAIT",
+    price: 280000000, // ₦2,800,000 (~$1,867 USD)
+    currency: "NGN",
+    stock: 1,
+    status: "PUBLISHED",
+    enquiryOnly: false,
+    shippingClass: "FRAGILE",
+    featured: true,
+    isSample: true,
+    artistId: nkem.id,
+    collections: colCoastal ? { connect: [{ id: colCoastal.id }] } : undefined,
+    images: {
+      create: [
+        {
+          url: "/images/catalogue/indigo-tide.jpg",
+          alt: "Indigo Tide & The Evening Lantern mixed-media canvas by Nkem Agbo",
+          position: 0,
+        },
+        {
+          url: "/images/catalogue/indigo-tide-room.jpg",
+          alt: "Indigo Tide & The Evening Lantern displayed in modern gallery interior",
+          position: 1,
+        },
+      ],
+    },
+  });
+
   // Sync DB files
   const prismaDb = path.resolve(process.cwd(), "prisma/dev.db");
   const rootDb = path.resolve(process.cwd(), "dev.db");

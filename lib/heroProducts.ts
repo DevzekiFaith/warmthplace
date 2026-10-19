@@ -413,10 +413,45 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       { url: "/images/catalogue/solar-vortex-room.jpg", alt: "Solar Vortex displayed in contemporary minimalist living room interior", position: 1 },
     ],
   },
+  {
+    id: "hero-indigo-tide-evening-lantern",
+    slug: "indigo-tide-evening-lantern",
+    title: "Ceremonial Rhythm: The Emerald Drummer",
+    department: "ART",
+    category: "ORIGINAL_PAINTING",
+    productType: "ORIGINAL",
+    editionSize: null,
+    description:
+      "A captivating figurative masterpiece celebrating ancestral rhythm, sacred drumming, and spiritual radiance. Rendered against a luminous, electric emerald-green ground, a ceremonial West African drummer wearing a feather crown, vivid ritual face paint, and intricately patterned batik attire plays a hand-carved talking drum with infectious vitality. Built with rich impasto textures and brilliant mineral pigments, the canvas pulses with celebratory sound, kinetic movement, and communal joy. Signed recto and verso, delivered with an embossed studio certificate of provenance.",
+    medium: "Acrylic, oil impasto, natural mineral pigments, and textured ground on vertical stretched canvas",
+    materials: "Heavy cotton canvas, artist acrylics & oil impasto, mineral pigments, solid wood stretcher",
+    year: 2026,
+    widthCm: 70,
+    heightCm: 135,
+    depthCm: 4.5,
+    weightKg: 6.8,
+    orientation: "PORTRAIT",
+    price: 280000000,
+    currency: "NGN",
+    stock: 1,
+    status: "PUBLISHED",
+    enquiryOnly: false,
+    shippingClass: "FRAGILE",
+    artist: {
+      name: "Nkem Agbo",
+      slug: "nkem-agbo",
+      discipline: "Contemporary Painter & Mixed-Media Impasto Colorist",
+      location: "Enugu & Lagos, Nigeria",
+    },
+    images: [
+      { url: "/images/catalogue/indigo-tide.jpg", alt: "Indigo Tide & The Evening Lantern mixed-media canvas by Nkem Agbo", position: 0 },
+      { url: "/images/catalogue/indigo-tide-room.jpg", alt: "Indigo Tide & The Evening Lantern displayed in modern interior", position: 1 },
+    ],
+  },
 ];
 
 export function getHeroProduct(slug: string): HeroProduct | undefined {
-  return HERO_PRODUCTS.find((p) => p.slug === slug);
+  return HERO_PRODUCTS.find((p) => p.slug === slug || (slug === "indigo-tide" && p.slug === "indigo-tide-evening-lantern"));
 }
 
 export interface HeroArtist {
@@ -630,6 +665,22 @@ export const HERO_ARTISTS: HeroArtist[] = [
         artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
         images: [
           { url: "/images/catalogue/tree-of-life-ochre.jpg", alt: "Tree of Life: Sacred Ochre Canopy by Nkem Agbo", position: 0 },
+        ],
+      },
+      {
+        id: "hero-indigo-tide-evening-lantern",
+        slug: "indigo-tide-evening-lantern",
+        title: "Ceremonial Rhythm: The Emerald Drummer",
+        department: "ART",
+        category: "ORIGINAL_PAINTING",
+        productType: "ORIGINAL",
+        price: 280000000,
+        currency: "NGN",
+        stock: 1,
+        shippingClass: "FRAGILE",
+        artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
+        images: [
+          { url: "/images/catalogue/indigo-tide.jpg", alt: "Indigo Tide & The Evening Lantern by Nkem Agbo", position: 0 },
         ],
       },
     ],

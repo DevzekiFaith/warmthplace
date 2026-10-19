@@ -258,22 +258,23 @@ export function HeroArtworkCollage() {
                 </div>
               </div>
 
-              {/* Strip 3: Right tall slate-indigo strip (Indigo Tide & Evening Lantern) */}
+              {/* Strip 3: Right tall emerald strip (Ceremonial Rhythm: The Emerald Drummer) */}
               <div className="triptych-strip-right">
                 <Image
                   src="/images/catalogue/indigo-tide.jpg"
-                  alt="Indigo Tide & The Evening Lantern by Nkem Agbo"
+                  alt="Ceremonial Rhythm: The Emerald Drummer by Nkem Agbo"
                   fill
                   sizes="(max-width: 768px) 120px, 180px"
                   style={{ objectFit: "cover" }}
                   priority
+                  loading="eager"
                 />
                 <Link
                   href="/products/indigo-tide-evening-lantern"
                   className="triptych-link-overlay"
-                  title="View Indigo Tide & The Evening Lantern"
+                  title="View Ceremonial Rhythm: The Emerald Drummer"
                 >
-                  Indigo Tide
+                  Emerald Drummer
                 </Link>
               </div>
 

@@ -24,6 +24,7 @@ export function ImageZoom({
         fill
         sizes="(max-width: 1024px) 100vw, 650px"
         priority
+        loading="eager"
         style={{
           objectFit: "cover",
         }}

@@ -413,6 +413,8 @@ export function ProductDetailsClient({ product }: ProductProps) {
                     src={canvasImage.url}
                     alt={canvasImage.alt}
                     fill
+                    priority
+                    loading="eager"
                     style={{ objectFit: "cover" }}
                   />
                 </div>
@@ -677,6 +679,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   alt={product.artist.name}
                   fill
                   sizes="46px"
+                  loading="eager"
                   style={{ objectFit: "cover" }}
                 />
               </div>

@@ -76,8 +76,8 @@ export const HERO_SLIDES: HeroSlideData[] = [
     },
     rightStrip: {
       src: "/images/catalogue/indigo-tide.jpg",
-      alt: "Indigo Tide & The Evening Lantern",
-      title: "Indigo Tide & The Evening Lantern — Nkem Agbo",
+      alt: "Ceremonial Rhythm: The Emerald Drummer",
+      title: "Ceremonial Rhythm: The Emerald Drummer — Nkem Agbo",
       href: "/products/indigo-tide-evening-lantern",
     },
   },
