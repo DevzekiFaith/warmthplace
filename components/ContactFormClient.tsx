@@ -247,7 +247,7 @@ export function ContactFormClient() {
           type="text"
           value={formData.artworkInterest}
           onChange={(e) => setFormData({ ...formData, artworkInterest: e.target.value })}
-          placeholder="e.g. Harmattan Procession, The Jazz Trio, or Chinwe Okoli bronzes"
+          placeholder="e.g. Harmattan Procession, The Jazz Trio, or Nkem Agbo bronzes"
           style={{
             width: "100%",
             padding: "0.85rem 1rem",

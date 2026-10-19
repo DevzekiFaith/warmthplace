@@ -106,11 +106,11 @@ async function main() {
   const amina = await prisma.artist.create({
     data: {
       slug: "amina-adeleke",
-      name: "Amina E. Adeleke",
+      name: "Nkem Agbo",
       discipline: "Contemporary Painter & Figurative Colorist",
       location: "Lagos, Nigeria",
       shortBio: "Known for rhythmically layered palettes, sacred textile geometries, and celebratory depictions of West African communal life.",
-      bio: "Amina E. Adeleke is a Lagos-based visual artist whose vibrant canvases bridge indigenous Yoruba iconography, Adinkra glyphs, and high-modernist figurative abstraction. Adeleke builds dense, luminous surfaces with acrylic, natural pigments, and archival linen. Her figures move with ceremonial dignity, wrapped in intricately coded textiles that speak to matrilineal memory, marketplace governance, and quiet everyday transcendence.",
+      bio: "Nkem Agbo is an acclaimed visual artist whose vibrant canvases bridge indigenous Yoruba iconography, Adinkra glyphs, and high-modernist figurative abstraction. Agbo builds dense, luminous surfaces with acrylic, natural pigments, and archival linen. Figures move with ceremonial dignity, wrapped in intricately coded textiles that speak to matrilineal memory, marketplace governance, and quiet everyday transcendence.",
       portraitImage: "/images/catalogue/harmattan-procession.jpg",
       coverImage: "/images/catalogue/harmattan-procession.jpg",
       position: 1,
@@ -137,11 +137,11 @@ async function main() {
   const chinwe = await prisma.artist.create({
     data: {
       slug: "chinwe-okoli",
-      name: "Chinwe Okoli",
+      name: "Nkem Agbo",
       discipline: "Sculptor & Ceramic Artist",
       location: "Enugu, Nigeria",
       shortBio: "Reclaims traditional burnishing and pit-firing traditions, producing sculptural vessels and bronze heads of exquisite restraint.",
-      bio: "Chinwe Okoli began her apprenticeship under veteran potters in eastern Nigeria before studying fine art sculpture. Her work investigates the dialogue between functional earthenware and contemplative sacred forms. Using local earthenware clay burnished with river stones and treated with botanical smoke, Okoli's tactile vessels celebrate the organic geometry of African domestic heritage.",
+      bio: "Nkem Agbo began apprenticeship under veteran potters in eastern Nigeria before studying fine art sculpture. Her work investigates the dialogue between functional earthenware and contemplative sacred forms. Using local earthenware clay burnished with river stones and treated with botanical smoke, Agbo's tactile vessels celebrate the organic geometry of African domestic heritage.",
       portraitImage: "/images/catalogue/incised-terracotta-vessel.jpg",
       coverImage: "/images/catalogue/the-listener.jpg",
       position: 3,
@@ -152,11 +152,11 @@ async function main() {
   const kofi = await prisma.artist.create({
     data: {
       slug: "kofi-mensah",
-      name: "Kofi Mensah",
+      name: "Nkem Agbo",
       discipline: "Master Weaver & Graphic Artist",
       location: "Kumasi, Ghana",
       shortBio: "Transposes historic Asante and Kuba strip-weaving architectures into collectible limited-edition serigraphs and handwoven textiles.",
-      bio: "Kofi Mensah is a third-generation weaver whose studio experiments with architectural abstraction. Mensah treats the loom as an instrument of mathematical precision, weaving hand-spun cotton and plant-dyed linen into heirloom throws and tapestries. His graphic screenprints distill these interlocking rhythms into timeless geometric editions.",
+      bio: "Nkem Agbo is an artist whose studio experiments with architectural abstraction. Agbo treats the loom as an instrument of mathematical precision, weaving hand-spun cotton and plant-dyed linen into heirloom throws and tapestries. Graphic screenprints distill these interlocking rhythms into timeless geometric editions.",
       portraitImage: "/images/catalogue/ancestral-geometry.jpg",
       coverImage: "/images/catalogue/strip-woven-throw.jpg",
       position: 4,
@@ -168,11 +168,11 @@ async function main() {
   const zainab = await prisma.artist.create({
     data: {
       slug: "zainab-chinedu",
-      name: "Zainab Chinedu",
+      name: "Nkem Agbo",
       discipline: "Figurative Painter & Ceremonial Colorist",
       location: "Abuja, Nigeria",
       shortBio: "Explores communal ritual, sacred dance, and kinetic rhythms with warm mineral ochres and raw pigments.",
-      bio: "Zainab Chinedu crafts monumental figurative works centered on community cohesion and ceremonial celebration. Her layered surfaces evoke sun-baked earth, ritual attire, and ancestral resonance.",
+      bio: "Nkem Agbo crafts monumental figurative works centered on community cohesion and ceremonial celebration. Her layered surfaces evoke sun-baked earth, ritual attire, and ancestral resonance.",
       portraitImage: "/images/hero/artwork-african-drummers.jpg",
       coverImage: "/images/hero/hero-african-drummers.jpg",
       position: 6,
@@ -214,7 +214,7 @@ async function main() {
       slug: "ancestral-rhythms",
       title: "Ancestral Rhythms",
       subtitle: "Vibrant celebratory figurative canvases and limited-edition prints",
-      description: "Bold compositions celebrating communion, marketplace vitality, and ceremonial poise. Featuring major works by Amina E. Adeleke and Kofi Mensah.",
+      description: "Bold compositions celebrating communion, marketplace vitality, and ceremonial poise. Featuring major works by Nkem Agbo.",
       coverImage: "/images/catalogue/harmattan-procession.jpg",
       coverAlt: "Procession of figures wrapped in patterned cloth with sacred motifs",
       featured: true,
@@ -821,7 +821,7 @@ For decades, the standard gallery doctrine insisted on sterile, hyper-white plas
 Today’s most discerning collectors are pairing the vibrant chromatic energy of West African figurative painting with natural limewashed walls, fluted oak joinery, natural woven throws, and patinated bronze objects.
 
 ### 1. Anchor with Generous Scale
-Rather than assembling crowded salon walls, choose a single monumental painting—such as Amina E. Adeleke’s *Harmattan Procession*—to anchor the primary sightline of the living or dining room. The surrounding negative space allows the intricate textile patterns to reverberate throughout the room.
+Rather than assembling crowded salon walls, choose a single monumental painting—such as Nkem Agbo’s *Harmattan Procession*—to anchor the primary sightline of the living or dining room. The surrounding negative space allows the intricate textile patterns to reverberate throughout the room.
 
 ### 2. Echo Tones Through Earthy Objects
 Allow the palette of the canvas to subtly inform the surrounding décor. A deep indigo adire cushion on an oat linen sofa or an incised terracotta vessel on a low coffee table establishes an effortless dialogue between high art and everyday living.
@@ -838,15 +838,15 @@ Original African contemporary art possesses deep physical texture: cold wax, pum
       },
       {
         slug: "from-clay-to-continuity",
-        title: "From Clay to Continuity: Chinwe Okoli on Revitalising Ancient Burnishing Techniques",
+        title: "From Clay to Continuity: Nkem Agbo on Revitalising Ancient Burnishing Techniques",
         category: "Studio Interviews",
-        excerpt: "Inside the Enugu studio of sculptor Chinwe Okoli, where river-bed earthenware is burnished with smooth quartz pebbles and pit-fired with botanical leaves.",
+        excerpt: "Inside the studio of sculptor and ceramic artist Nkem Agbo, where river-bed earthenware is burnished with smooth quartz pebbles and pit-fired with botanical leaves.",
         body: `
-# In the Studio with Chinwe Okoli
+# In the Studio with Nkem Agbo
 
-Tucked beneath the mahogany trees on the outskirts of Enugu, Chinwe Okoli's studio smells of wet loam, dry grass, and woodsmoke.
+Tucked beneath the mahogany trees on the outskirts of Enugu, Nkem Agbo's studio smells of wet loam, dry grass, and woodsmoke.
 
-"People often assume fine ceramic finishes require high-tech gas kilns and imported glazes," Okoli remarks as she rotates a bulbous water vessel in her lap. "In reality, the women potters of southeastern Nigeria achieved a mirror-like finish for centuries using nothing more than river-washed quartz stones and patience."
+"People often assume fine ceramic finishes require high-tech gas kilns and imported glazes," Agbo remarks as she rotates a bulbous water vessel in her lap. "In reality, the women potters of southeastern Nigeria achieved a mirror-like finish for centuries using nothing more than river-washed quartz stones and patience."
 
 Burnishing is done when the earthenware has reached the "leather-hard" stage. Over hours of rhythmic circular motion, the rounded stone compresses the clay's fine surface platelets, sealing the pores and creating a soft, tactile sheen that artificial glazes cannot replicate.
 
@@ -855,7 +855,7 @@ Following burnishing, the vessels are pit-fired in an open trench covered with p
 Each vessel available through Warmthplace Art Studio carries this direct lineage: ancient material wisdom translated into contemporary architectural form.
         `.trim(),
         coverImage: "/images/catalogue/incised-terracotta-vessel.jpg",
-        coverAlt: "Chinwe Okoli burnished terracotta vessel",
+        coverAlt: "Nkem Agbo burnished terracotta vessel",
         authorName: "Editorial Staff",
         published: true,
         publishedAt: new Date("2026-09-28T14:15:00Z"),
