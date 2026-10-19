@@ -59,19 +59,19 @@ export const HERO_SLIDES: HeroSlideData[] = [
     leftStrip: {
       src: "/images/catalogue/harmattan-procession.jpg",
       alt: "Harmattan Procession",
-      title: "Harmattan Procession — Amina E. Adeleke",
+      title: "Harmattan Procession — Nkem Agbo",
       href: "/products/harmattan-procession",
     },
     centerArch: {
       src: "/images/catalogue/ancestral-geometry.jpg",
       alt: "Ancestral Geometry",
-      title: "Ancestral Geometry — Kofi Mensah",
+      title: "Ancestral Geometry — Nkem Agbo",
       href: "/products/ancestral-geometry-i",
     },
     centerBottom: {
       src: "/images/catalogue/market-women-at-dusk.jpg",
       alt: "Market Women at Dusk",
-      title: "Market Women at Dusk — Amina E. Adeleke",
+      title: "Market Women at Dusk — Nkem Agbo",
       href: "/products/market-women-at-dusk",
     },
     rightStrip: {

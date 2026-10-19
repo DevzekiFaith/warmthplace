@@ -57,10 +57,10 @@ export const HERO_PRODUCTS: HeroProduct[] = [
     enquiryOnly: false,
     shippingClass: "FRAGILE",
     artist: {
-      name: "Zainab Chinedu",
-      slug: "zainab-chinedu",
-      discipline: "Figurative Painter",
-      location: "Abuja, Nigeria",
+      name: "Nkem Agbo",
+      slug: "nkem-agbo",
+      discipline: "Contemporary Painter & Mixed-Media Impasto Colorist",
+      location: "Enugu & Lagos, Nigeria",
     },
     images: [
       { url: "/images/hero/artwork-african-drummers.jpg", alt: "Ceremonial African Drummers and Dancers canvas", position: 0 },
@@ -486,36 +486,6 @@ export interface HeroArtist {
 }
 
 export const HERO_ARTISTS: HeroArtist[] = [
-
-  {
-    id: "hero-artist-zainab-chinedu",
-    slug: "zainab-chinedu",
-    name: "Zainab Chinedu",
-    discipline: "Figurative Painter & Ceremonial Colorist",
-    location: "Abuja, Nigeria",
-    shortBio: "Explores communal ritual, sacred dance, and kinetic rhythms with warm mineral ochres and raw pigments.",
-    bio: "Zainab Chinedu crafts monumental figurative works centered on community cohesion and ceremonial celebration. Her layered surfaces evoke sun-baked earth, ritual attire, and ancestral resonance across contemporary domestic spaces.",
-    portraitImage: "/images/hero/artwork-african-drummers.jpg",
-    coverImage: "/images/hero/hero-african-drummers.jpg",
-    products: [
-      {
-        id: "hero-ceremonial-african-drummers",
-        slug: "ceremonial-african-drummers",
-        title: "Ceremonial African Drummers & Dancers",
-        department: "ART",
-        category: "ORIGINAL_PAINTING",
-        productType: "ORIGINAL",
-        price: 420000000,
-        currency: "NGN",
-        stock: 1,
-        shippingClass: "FRAGILE",
-        artist: { name: "Zainab Chinedu", slug: "zainab-chinedu" },
-        images: [
-          { url: "/images/hero/artwork-african-drummers.jpg", alt: "Ceremonial African Drummers and Dancers canvas", position: 0 },
-        ],
-      },
-    ],
-  },
   {
     id: "hero-artist-nkem-agbo",
     slug: "nkem-agbo",
@@ -528,6 +498,22 @@ export const HERO_ARTISTS: HeroArtist[] = [
     portraitImage: "/images/catalogue/tree-of-life-ochre.jpg",
     coverImage: "/images/catalogue/tree-of-life-ochre.jpg",
     products: [
+      {
+        id: "hero-ceremonial-african-drummers",
+        slug: "ceremonial-african-drummers",
+        title: "Ceremonial African Drummers & Dancers",
+        department: "ART",
+        category: "ORIGINAL_PAINTING",
+        productType: "ORIGINAL",
+        price: 420000000,
+        currency: "NGN",
+        stock: 1,
+        shippingClass: "FRAGILE",
+        artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
+        images: [
+          { url: "/images/hero/artwork-african-drummers.jpg", alt: "Ceremonial African Drummers and Dancers canvas by Nkem Agbo", position: 0 },
+        ],
+      },
       {
         id: "hero-ochre-silhouette",
         slug: "ochre-silhouette",
@@ -693,9 +679,10 @@ export const HERO_ARTISTS: HeroArtist[] = [
 ];
 
 export function getHeroArtist(slug: string): HeroArtist | undefined {
-  if (slug === "tariq-osei" || slug === "adebayo-olufemi") {
-    return HERO_ARTISTS.find((a) => a.slug === "nkem-agbo") || HERO_ARTISTS.find((a) => a.slug === slug);
-  }
-  return HERO_ARTISTS.find((a) => a.slug === slug);
+  return (
+    HERO_ARTISTS.find((a) => a.slug === slug) ||
+    HERO_ARTISTS.find((a) => a.slug === "nkem-agbo") ||
+    HERO_ARTISTS[0]
+  );
 }
 

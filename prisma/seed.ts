@@ -249,13 +249,13 @@ async function main() {
       shippingClass: "FRAGILE",
       featured: true,
       isSample: true,
-      artistId: amina.id,
+      artistId: nkem.id,
       collections: { connect: [{ id: colHeirloom.id }] },
       images: {
         create: [
           {
             url: "/images/catalogue/harmattan-procession.jpg",
-            alt: "Harmattan Procession original painting by Amina E. Adeleke",
+            alt: "Harmattan Procession original painting by Nkem Agbo",
             position: 0,
           },
         ],
@@ -332,13 +332,13 @@ async function main() {
       shippingClass: "FRAGILE",
       featured: true,
       isSample: true,
-      artistId: amina.id,
+      artistId: nkem.id,
       collections: { connect: [{ id: colHeirloom.id }] },
       images: {
         create: [
           {
             url: "/images/catalogue/market-women-at-dusk.jpg",
-            alt: "Market Women at Dusk by Amina E. Adeleke",
+            alt: "Market Women at Dusk by Nkem Agbo",
             position: 0,
           },
         ],
@@ -372,13 +372,13 @@ async function main() {
       shippingClass: "OVERSIZED",
       featured: true,
       isSample: true,
-      artistId: chinwe.id,
+      artistId: nkem.id,
       collections: { connect: [{ id: colEarth.id }] },
       images: {
         create: [
           {
             url: "/images/catalogue/the-listener.jpg",
-            alt: "The Silent Listener cast bronze sculpture on limestone plinth by Chinwe Okoli",
+            alt: "The Silent Listener cast bronze sculpture on limestone plinth by Nkem Agbo",
             position: 0,
           },
         ],
@@ -451,13 +451,13 @@ async function main() {
       shippingClass: "STANDARD",
       featured: true,
       isSample: true,
-      artistId: kofi.id,
+      artistId: nkem.id,
       collections: { connect: [{ id: colHeirloom.id }] },
       images: {
         create: [
           {
             url: "/images/catalogue/ancestral-geometry.jpg",
-            alt: "Ancestral Geometry I limited edition print by Kofi Mensah",
+            alt: "Ancestral Geometry I limited edition print by Nkem Agbo",
             position: 0,
           },
         ],
@@ -491,7 +491,7 @@ async function main() {
       shippingClass: "STANDARD",
       featured: false,
       isSample: true,
-      artistId: null,
+      artistId: nkem.id,
       images: {
         create: [
           {
@@ -724,13 +724,13 @@ async function main() {
       shippingClass: "FRAGILE",
       featured: true,
       isSample: true,
-      artistId: zainab.id,
+      artistId: nkem.id,
       collections: { connect: [{ id: colHeirloom.id }] },
       images: {
         create: [
           {
             url: "/images/hero/artwork-african-drummers.jpg",
-            alt: "Ceremonial African Drummers and Dancers canvas by Zainab Chinedu",
+            alt: "Ceremonial African Drummers and Dancers canvas by Nkem Agbo",
             position: 0,
           },
           {

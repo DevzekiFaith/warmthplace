@@ -202,7 +202,7 @@ export function HeroArtworkCollage() {
               <div className="triptych-strip-left">
                 <Image
                   src="/images/catalogue/harmattan-procession.jpg"
-                  alt="Harmattan Procession by Amina E. Adeleke"
+                  alt="Harmattan Procession by Nkem Agbo"
                   fill
                   sizes="(max-width: 768px) 60px, 80px"
                   style={{ objectFit: "cover" }}
@@ -224,7 +224,7 @@ export function HeroArtworkCollage() {
                 <div className="triptych-arch-top">
                   <Image
                     src="/images/catalogue/ancestral-geometry.jpg"
-                    alt="Ancestral Geometry by Kofi Mensah"
+                    alt="Ancestral Geometry by Nkem Agbo"
                     fill
                     sizes="(max-width: 768px) 100px, 140px"
                     style={{ objectFit: "cover" }}
@@ -244,7 +244,7 @@ export function HeroArtworkCollage() {
                 <div className="triptych-strip-center">
                   <Image
                     src="/images/catalogue/market-women-at-dusk.jpg"
-                    alt="Market Women at Dusk by Amina E. Adeleke"
+                    alt="Market Women at Dusk by Nkem Agbo"
                     fill
                     sizes="(max-width: 768px) 120px, 160px"
                     style={{ objectFit: "cover" }}
