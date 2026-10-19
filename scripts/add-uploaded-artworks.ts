@@ -5,24 +5,6 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("Adding 5 new uploaded artworks to database...");
 
-  // Get or create artists
-  let adebayo = await prisma.artist.findUnique({ where: { slug: "adebayo-olufemi" } });
-  if (!adebayo) {
-    adebayo = await prisma.artist.create({
-      data: {
-        slug: "adebayo-olufemi",
-        name: "Adebayo Olufemi",
-        discipline: "Contemporary Painter & Figurative Colorist",
-        location: "Lagos, Nigeria",
-        shortBio: "Captures the syncopated energy and nocturnal vibrancy of Lagos musical and cultural gatherings.",
-        bio: "Adebayo Olufemi is a celebrated contemporary painter whose high-contrast impasto works document West Africa's vibrant live music scenes.",
-        portraitImage: "/images/catalogue/jazz-trio-session.jpg",
-        coverImage: "/images/catalogue/jazz-trio-session.jpg",
-        position: 10,
-        isSample: true,
-      },
-    });
-  }
 
   let nkem = await prisma.artist.findUnique({ where: { slug: "nkem-agbo" } });
   if (!nkem) {

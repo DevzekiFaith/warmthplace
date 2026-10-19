@@ -164,20 +164,6 @@ async function main() {
     },
   });
 
-  const adebayo = await prisma.artist.create({
-    data: {
-      slug: "adebayo-olufemi",
-      name: "Adebayo Olufemi",
-      discipline: "Contemporary Painter & Figurative Colorist",
-      location: "Lagos, Nigeria",
-      shortBio: "Captures the syncopated energy and nocturnal vibrancy of Lagos musical and cultural gatherings.",
-      bio: "Adebayo Olufemi is a celebrated contemporary painter whose high-contrast impasto works document West Africa's vibrant live music scenes. Working primarily with heavy oil pigments and palette-knife techniques, Olufemi translates musical syncopation into rich visual rhythms.",
-      portraitImage: "/images/hero/artwork-jazz-trio.jpg",
-      coverImage: "/images/hero/hero-jazz-trio.jpg",
-      position: 5,
-      isSample: true,
-    },
-  });
 
   const zainab = await prisma.artist.create({
     data: {

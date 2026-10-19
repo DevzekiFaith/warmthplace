@@ -13,7 +13,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const lookupSlug = slug === "tariq-osei" ? "nkem-agbo" : slug;
+  const lookupSlug = slug === "tariq-osei" || slug === "adebayo-olufemi" ? "nkem-agbo" : slug;
   const heroArtist = getHeroArtist(lookupSlug);
   try {
     const artist = await prisma.artist.findUnique({
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 async function getArtist(slug: string) {
   try {
-    const lookupSlug = slug === "tariq-osei" ? "nkem-agbo" : slug;
+    const lookupSlug = slug === "tariq-osei" || slug === "adebayo-olufemi" ? "nkem-agbo" : slug;
     const dbArtist = await prisma.artist.findUnique({
       where: { slug: lookupSlug },
       include: {
@@ -86,8 +86,8 @@ async function getArtist(slug: string) {
 export default async function ArtistProfilePage({ params }: Props) {
   const { slug } = await params;
 
-  // Seamless alias: direct visits to tariq-osei route forward to Nkem Agbo profile
-  if (slug === "tariq-osei") {
+  // Seamless alias: direct visits to removed artists route forward to Nkem Agbo profile
+  if (slug === "tariq-osei" || slug === "adebayo-olufemi") {
     redirect("/artists/nkem-agbo");
   }
 

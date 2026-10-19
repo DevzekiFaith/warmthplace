@@ -693,7 +693,7 @@ export const HERO_ARTISTS: HeroArtist[] = [
 ];
 
 export function getHeroArtist(slug: string): HeroArtist | undefined {
-  if (slug === "tariq-osei") {
+  if (slug === "tariq-osei" || slug === "adebayo-olufemi") {
     return HERO_ARTISTS.find((a) => a.slug === "nkem-agbo") || HERO_ARTISTS.find((a) => a.slug === slug);
   }
   return HERO_ARTISTS.find((a) => a.slug === slug);
