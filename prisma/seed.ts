@@ -801,14 +801,9 @@ async function main() {
       images: {
         create: [
           {
-            url: "/images/catalogue/white-stags-twilight.jpg",
+            url: "/images/catalogue/white-stags-twilight-room.jpg",
             alt: "Canopy & Grace: White Stags at Twilight canvas by Nkem Agbo",
             position: 0,
-          },
-          {
-            url: "/images/catalogue/white-stags-twilight-room.jpg",
-            alt: "Canopy & Grace displayed in contemporary living room interior",
-            position: 1,
           },
         ],
       },

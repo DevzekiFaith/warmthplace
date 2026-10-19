@@ -482,6 +482,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                     alt={img.alt}
                     fill
                     sizes="82px"
+                    loading="eager"
                     style={{ objectFit: "cover" }}
                   />
                   <span

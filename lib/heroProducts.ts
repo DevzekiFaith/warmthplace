@@ -98,8 +98,7 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/catalogue/white-stags-twilight.jpg", alt: "Canopy & Grace: White Stags at Twilight by Nkem Agbo", position: 0 },
-      { url: "/images/catalogue/white-stags-twilight-room.jpg", alt: "Canopy & Grace displayed in contemporary living room interior", position: 1 },
+      { url: "/images/catalogue/white-stags-twilight-room.jpg", alt: "Canopy & Grace: White Stags at Twilight canvas by Nkem Agbo", position: 0 },
     ],
   },
   {
@@ -396,7 +395,7 @@ export const HERO_PRODUCTS: HeroProduct[] = [
     depthCm: 5.0,
     weightKg: 8.5,
     orientation: "SQUARE",
-    price: 110000000,
+    price: 50000000, // ₦500,000 (~$333 USD)
     currency: "NGN",
     stock: 1,
     status: "PUBLISHED",
@@ -536,7 +535,7 @@ export const HERO_ARTISTS: HeroArtist[] = [
         department: "ART",
         category: "ORIGINAL_PAINTING",
         productType: "ORIGINAL",
-        price: 110000000,
+        price: 50000000,
         currency: "NGN",
         stock: 1,
         shippingClass: "FRAGILE",
@@ -654,7 +653,7 @@ export const HERO_ARTISTS: HeroArtist[] = [
         shippingClass: "FRAGILE",
         artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
         images: [
-          { url: "/images/catalogue/white-stags-twilight.jpg", alt: "Canopy & Grace: White Stags at Twilight by Nkem Agbo", position: 0 },
+          { url: "/images/catalogue/white-stags-twilight-room.jpg", alt: "Canopy & Grace: White Stags at Twilight canvas by Nkem Agbo", position: 0 },
         ],
       },
       {

@@ -54,6 +54,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
   const isLcpCandidate =
     priority ||
     primaryImage.url.includes("white-stags-twilight") ||
+    primaryImage.url.includes("solar-vortex") ||
     primaryImage.url.includes("indigo-tide") ||
     primaryImage.url.includes("tree-of-life-ochre");
 

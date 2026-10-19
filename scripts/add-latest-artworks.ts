@@ -245,7 +245,7 @@ async function main() {
     depthCm: 5.0,
     weightKg: 8.5,
     orientation: "SQUARE",
-    price: 110000000, // ₦1,100,000 (~$733 USD)
+    price: 50000000, // ₦500,000 (~$333 USD)
     currency: "NGN",
     stock: 1,
     status: "PUBLISHED",
@@ -343,14 +343,9 @@ async function main() {
     images: {
       create: [
         {
-          url: "/images/catalogue/white-stags-twilight.jpg",
+          url: "/images/catalogue/white-stags-twilight-room.jpg",
           alt: "Canopy & Grace: White Stags at Twilight canvas by Nkem Agbo",
           position: 0,
-        },
-        {
-          url: "/images/catalogue/white-stags-twilight-room.jpg",
-          alt: "Canopy & Grace displayed in contemporary living room interior",
-          position: 1,
         },
       ],
     },
