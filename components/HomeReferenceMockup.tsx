@@ -542,6 +542,7 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
                       sizes="90px"
                       style={{ objectFit: "cover" }}
                       priority
+                      loading="eager"
                       className="mockup-slide-img"
                     />
                     <div className="strip-hover-curtain">
@@ -565,6 +566,7 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
                         sizes="140px"
                         style={{ objectFit: "cover" }}
                         priority
+                        loading="eager"
                         className="mockup-slide-img"
                       />
                       <div className="strip-hover-curtain">
@@ -586,6 +588,7 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
                         sizes="140px"
                         style={{ objectFit: "cover" }}
                         priority
+                        loading="eager"
                         className="mockup-slide-img"
                       />
                       <div className="strip-hover-curtain">
@@ -611,6 +614,7 @@ export function HomeReferenceMockup({ onScrollToCatalogue }: HomeReferenceMockup
                       sizes="160px"
                       style={{ objectFit: "cover" }}
                       priority
+                      loading="eager"
                       className="mockup-slide-img"
                     />
                     <div className="strip-hover-curtain">

@@ -260,8 +260,8 @@ export default async function HomePage() {
           </div>
 
           <div className="product-grid">
-            {featuredArt.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {featuredArt.map((product, idx) => (
+              <ProductCard key={product.id} product={product} priority={idx < 4} />
             ))}
           </div>
         </div>

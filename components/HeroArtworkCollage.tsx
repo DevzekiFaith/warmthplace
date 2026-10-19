@@ -207,6 +207,7 @@ export function HeroArtworkCollage() {
                   sizes="(max-width: 768px) 60px, 80px"
                   style={{ objectFit: "cover" }}
                   priority
+                  loading="eager"
                 />
                 <Link
                   href="/products/harmattan-procession"
@@ -228,6 +229,7 @@ export function HeroArtworkCollage() {
                     sizes="(max-width: 768px) 100px, 140px"
                     style={{ objectFit: "cover" }}
                     priority
+                    loading="eager"
                   />
                   <Link
                     href="/products/ancestral-geometry-i"
@@ -247,6 +249,7 @@ export function HeroArtworkCollage() {
                     sizes="(max-width: 768px) 120px, 160px"
                     style={{ objectFit: "cover" }}
                     priority
+                    loading="eager"
                   />
                   <Link
                     href="/products/market-women-at-dusk"

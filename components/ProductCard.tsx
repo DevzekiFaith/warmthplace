@@ -37,9 +37,10 @@ export interface ProductCardProps {
       alt: string;
     }[];
   };
+  priority?: boolean;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, priority = false }: ProductCardProps) {
   const router = useRouter();
   const { addItem } = useCart();
   const { currency, format } = useCurrency();
@@ -49,6 +50,12 @@ export function ProductCard({ product }: ProductCardProps) {
     url: "/images/catalogue/harmattan-procession.jpg",
     alt: product.title,
   };
+
+  const isLcpCandidate =
+    priority ||
+    primaryImage.url.includes("white-stags-twilight") ||
+    primaryImage.url.includes("indigo-tide") ||
+    primaryImage.url.includes("tree-of-life-ochre");
 
   const secondaryImage = product.images.length > 1 ? product.images[1] : null;
 
@@ -107,7 +114,8 @@ export function ProductCard({ product }: ProductCardProps) {
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
           className={`product-image-primary ${secondaryImage ? "has-secondary" : ""}`}
-          loading="lazy"
+          priority={isLcpCandidate}
+          loading={isLcpCandidate ? "eager" : "lazy"}
         />
 
         {/* Secondary In-Situ Room View on Hover (Pure CSS, 100% hydration-safe) */}
