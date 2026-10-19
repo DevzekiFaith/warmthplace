@@ -121,20 +121,61 @@ export default function ContactPage() {
               style={{
                 border: "1px solid var(--border-subtle)",
                 padding: "1.75rem",
-                borderRadius: "2px",
+                borderRadius: "3px",
                 backgroundColor: "#FFFFFF",
+                boxShadow: "0 2px 10px rgba(0,0,0,0.02)",
               }}
             >
-              <h3 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>
-                Museum-Grade White-Glove Crated Transit
-              </h3>
-              <p style={{ fontSize: "0.9rem", color: "var(--color-ink-light)", lineHeight: 1.6, margin: 0 }}>
-                Every artwork ships insured up to full declared value with official certificates of
-                authenticity and timber crating. Complimentary transit on orders over ₦2,000,000.
+              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.5rem" }}>
+                <span style={{ fontSize: "1.2rem" }}>🚚</span>
+                <h3 style={{ fontSize: "1.2rem", margin: 0, fontWeight: 600 }}>
+                  Museum-Grade White-Glove Crated Transit
+                </h3>
+              </div>
+              <p style={{ fontSize: "0.9rem", color: "var(--color-ink-muted)", lineHeight: 1.6, marginBottom: "1rem" }}>
+                Every artwork ships 100% insured up to its full declared value in custom ISPM-15 reinforced timber crates, accompanied by official Certificates of Authenticity and studio provenance documentation.
               </p>
-              <div style={{ marginTop: "0.75rem" }}>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.85rem",
+                  padding: "1rem 1.15rem",
+                  backgroundColor: "var(--color-gallery-ivory)",
+                  borderRadius: "2px",
+                  border: "1px solid var(--border-subtle)",
+                  marginBottom: "1rem",
+                }}
+              >
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", marginBottom: "0.3rem" }}>
+                    <span style={{ fontSize: "1rem" }}>🇳🇬</span>
+                    <strong style={{ fontSize: "0.85rem", color: "var(--color-ink-charcoal)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                      For Collectors in Nigeria
+                    </strong>
+                  </div>
+                  <p style={{ fontSize: "0.84rem", color: "var(--color-ink-light)", lineHeight: 1.5, margin: 0 }}>
+                    Dedicated white-glove courier across Lagos Metropolitan areas and insured interstate logistics nationwide. <strong>Complimentary crated delivery on domestic orders over ₦2,000,000.</strong>
+                  </p>
+                </div>
+
+                <div style={{ borderTop: "1px solid var(--border-subtle)", paddingTop: "0.75rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", marginBottom: "0.3rem" }}>
+                    <span style={{ fontSize: "1rem" }}>🌍</span>
+                    <strong style={{ fontSize: "0.85rem", color: "var(--color-ink-charcoal)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                      For International &amp; Diaspora Buyers (UK, US, Europe &amp; Global)
+                    </strong>
+                  </div>
+                  <p style={{ fontSize: "0.84rem", color: "var(--color-ink-light)", lineHeight: 1.5, margin: 0 }}>
+                    Priority door-to-door express air freight via DHL Express and specialized international fine art handlers. Every parcel includes official National Commission for Museums &amp; Monuments (NCMM) export clearance and customs transit support.
+                  </p>
+                </div>
+              </div>
+
+              <div>
                 <Link href="/shipping-returns" className="btn-text" style={{ fontSize: "0.82rem" }}>
-                  Read Shipping & Crating Protocols →
+                  Read Full Shipping &amp; Crating Protocols →
                 </Link>
               </div>
             </div>
