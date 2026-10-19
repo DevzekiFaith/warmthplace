@@ -133,20 +133,6 @@ async function main() {
     },
   });
 
-  const tariq = await prisma.artist.create({
-    data: {
-      slug: "tariq-osei",
-      name: "Tariq Osei",
-      discipline: "Mixed-Media Painter & Printmaker",
-      location: "Accra, Ghana & London",
-      shortBio: "Explores maritime coastal mythologies, natural indigo dye baths, and the meditative quietude of Atlantic borderlands.",
-      bio: "Tariq Osei works across natural resist-dyed textiles, works on handmade cotton rag paper, and mixed-media assemblages. His practice is deeply informed by coastal West African fishing communities and the spiritual symbolism of water spirits. By combining indigo chemistry with sumi ink and ceramic clay slips, Osei crafts works that feel both ancient and startlingly contemporary.",
-      portraitImage: "/images/catalogue/quiet-lagoon.jpg",
-      coverImage: "/images/catalogue/quiet-lagoon.jpg",
-      position: 3,
-      isSample: true,
-    },
-  });
 
   const chinwe = await prisma.artist.create({
     data: {
@@ -439,13 +425,13 @@ async function main() {
       shippingClass: "STANDARD",
       featured: false,
       isSample: true,
-      artistId: tariq.id,
+      artistId: nkem.id,
       collections: { connect: [{ id: colCoastal.id }] },
       images: {
         create: [
           {
             url: "/images/catalogue/quiet-lagoon.jpg",
-            alt: "Quiet Lagoon with Canoe original work on paper by Tariq Osei",
+            alt: "Quiet Lagoon with Canoe original work on paper by Nkem Agbo",
             position: 0,
           },
         ],
@@ -827,7 +813,7 @@ Artisans in historic dye centres like Abeokuta, Osogbo, and Kano tend to these c
 
 > "When you submerge cotton into an active indigo pit, it emerges bright green. It is only as the cloth encounters open oxygen in the courtyard air that it breathes itself into indigo. You are watching chemistry dance with atmospheric memory."
 
-At Warmthplace, our textile collections partner directly with multi-generational master dyers. Every piece, from our hand-dyed adire cushions to Tariq Osei's mixed-media canvas grounds, is steeped in this chemical alchemy.
+At Warmthplace, our textile collections partner directly with multi-generational master dyers. Every piece, from our hand-dyed adire cushions to Nkem Agbo's mixed-media canvas grounds, is steeped in this chemical alchemy.
         `.trim(),
         coverImage: "/images/catalogue/adire-indigo-cushion.jpg",
         coverAlt: "Adire resist dyed textiles in natural indigo",
