@@ -110,9 +110,9 @@ export const HERO_SLIDES: HeroSlideData[] = [
       href: "/products/golden-harvest-matriarchs",
     },
     rightStrip: {
-      src: "/images/hero/artwork-african-drummers.jpg",
-      alt: "Ceremonial African Drummers & Dancers",
-      title: "Ceremonial Drummers — Rhythm on Warm Ochre",
+      src: "/images/hero/hero-african-drummers.jpg",
+      alt: "Ceremonial African Drummers & Dancers in-situ room interior",
+      title: "Ceremonial Drummers — In-Situ Room Setting",
       href: "/products/ceremonial-african-drummers",
     },
   },

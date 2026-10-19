@@ -63,8 +63,7 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/hero/artwork-african-drummers.jpg", alt: "Ceremonial African Drummers and Dancers canvas", position: 0 },
-      { url: "/images/hero/hero-african-drummers.jpg", alt: "Ceremonial Drummers canvas in a sunlit living room", position: 1 },
+      { url: "/images/hero/hero-african-drummers.jpg", alt: "Ceremonial African Drummers & Dancers canvas by Nkem Agbo", position: 0 },
     ],
   },
   {
@@ -511,7 +510,7 @@ export const HERO_ARTISTS: HeroArtist[] = [
         shippingClass: "FRAGILE",
         artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
         images: [
-          { url: "/images/hero/artwork-african-drummers.jpg", alt: "Ceremonial African Drummers and Dancers canvas by Nkem Agbo", position: 0 },
+          { url: "/images/hero/hero-african-drummers.jpg", alt: "Ceremonial African Drummers & Dancers canvas by Nkem Agbo", position: 0 },
         ],
       },
       {
