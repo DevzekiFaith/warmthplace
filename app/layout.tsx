@@ -27,8 +27,16 @@ export const metadata: Metadata = {
     "fine art prints Africa",
   ],
   icons: {
-    icon: "/images/brand/warmthplace-emblem-circle.png",
-    apple: "/images/brand/warmthplace-emblem-circle.png",
+    icon: [
+      { url: "/icon.png", sizes: "512x512", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/icon.png",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   authors: [{ name: "Warmthplace Art Studio Curatorial Team" }],
   openGraph: {
@@ -66,6 +74,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/icon.png" type="image/png" sizes="512x512" />
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+      </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col">
         <CurrencyProvider>
           <CartProvider>
