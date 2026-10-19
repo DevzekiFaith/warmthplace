@@ -50,7 +50,7 @@ export const HERO_PRODUCTS: HeroProduct[] = [
     depthCm: 4,
     weightKg: 6.1,
     orientation: "PORTRAIT",
-    price: 420000000,
+    price: 50000000, // ₦500,000 NGN
     currency: "NGN",
     stock: 1,
     status: "PUBLISHED",
@@ -504,7 +504,7 @@ export const HERO_ARTISTS: HeroArtist[] = [
         department: "ART",
         category: "ORIGINAL_PAINTING",
         productType: "ORIGINAL",
-        price: 420000000,
+        price: 50000000, // ₦500,000 NGN
         currency: "NGN",
         stock: 1,
         shippingClass: "FRAGILE",
