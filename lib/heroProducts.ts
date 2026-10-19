@@ -70,22 +70,22 @@ export const HERO_PRODUCTS: HeroProduct[] = [
   {
     id: "hero-chromatic-field-impasto",
     slug: "chromatic-field-impasto",
-    title: "Chromatic Field: Contemporary Impasto Canvas",
+    title: "Canopy & Grace: White Stags at Twilight",
     department: "ART",
     category: "ORIGINAL_PAINTING",
     productType: "ORIGINAL",
     editionSize: null,
     description:
-      "A monumental abstract built from thick, sculpted ribbons of colour. Chromatic Field rewards close looking with ridges, scrapes and layered pigment, while from across the room it reads as a luminous field of harmony. Ideal as a statement piece in minimalist interiors.",
-    medium: "Heavy-body acrylic impasto on stretched canvas",
-    materials: "Cotton canvas, heavy-body acrylic, modelling paste",
+      "A monumental landscape masterpiece capturing two ethereal white stags bathed in twilight serenity. Set against a deep atmospheric expanse with delicate weeping willow branches, dripping golden-yellow blossoms, and a radiant full moon reflecting upon still waters, the composition evokes primordial grace, silence, and sacred nature. Rendered in rich textural impasto with radiant emerald greens, cadmium yellows, and luminescent white figures. Hand-signed recto and verso, delivered with an embossed studio certificate of provenance.",
+    medium: "Heavy-body acrylic, textural impasto, and mineral pigments on stretched Belgian linen, obsidian floating frame",
+    materials: "Belgian linen canvas, artist acrylics & gloss enamel, timber stretcher, matte black float frame",
     year: 2026,
-    widthCm: 120,
-    heightCm: 120,
+    widthCm: 150,
+    heightCm: 100,
     depthCm: 5,
-    weightKg: 8.2,
-    orientation: "SQUARE",
-    price: 315000000,
+    weightKg: 8.5,
+    orientation: "LANDSCAPE",
+    price: 480000000,
     currency: "NGN",
     stock: 1,
     status: "PUBLISHED",
@@ -98,8 +98,8 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/hero/artwork-abstract-canvas.jpg", alt: "Chromatic Field impasto abstract canvas", position: 0 },
-      { url: "/images/hero/hero-abstract-canvas.jpg", alt: "Chromatic Field abstract canvas in a sunlit room", position: 1 },
+      { url: "/images/catalogue/white-stags-twilight.jpg", alt: "Canopy & Grace: White Stags at Twilight by Nkem Agbo", position: 0 },
+      { url: "/images/catalogue/white-stags-twilight-room.jpg", alt: "Canopy & Grace displayed in contemporary living room interior", position: 1 },
     ],
   },
   {
@@ -311,15 +311,15 @@ export const HERO_PRODUCTS: HeroProduct[] = [
   {
     id: "hero-canopy-and-grace",
     slug: "canopy-and-grace",
-    title: "Canopy & Grace: White Gazelles at Twilight",
+    title: "Canopy & Grace: White Stags at Twilight",
     department: "ART",
     category: "ORIGINAL_PAINTING",
     productType: "ORIGINAL",
     editionSize: null,
     description:
-      "Set against a void of pure obsidian black, a colossal tropical rainforest leaf rendered in vivid botanical greens with bold white bone-like venation anchors the left canvas. To the right, delicate weeping vines with chartreuse buds cascade downward over four pristine white gazelles grazing serenely among dandelions and wild grasses. Built with contrasting high-gloss and matte impasto textures, this monumental landscape evokes primeval peace and botanical majesty.",
-    medium: "High-gloss enamel, heavy acrylic, and mineral pigments on stretched canvas, black floating frame",
-    materials: "Canvas, gloss enamel, acrylic polymer, dark aluminum-wood composite float frame",
+      "A monumental landscape masterpiece capturing two ethereal white stags bathed in twilight serenity. Set against a deep atmospheric expanse with delicate weeping willow branches, dripping golden-yellow blossoms, and a radiant full moon reflecting upon still waters, the composition evokes primordial grace, silence, and sacred nature. Rendered in rich textural impasto with radiant emerald greens, cadmium yellows, and luminescent white figures. Hand-signed recto and verso, delivered with an embossed studio certificate of provenance.",
+    medium: "Heavy-body acrylic, textural impasto, and mineral pigments on stretched Belgian linen, obsidian floating frame",
+    materials: "Belgian linen canvas, artist acrylics & gloss enamel, timber stretcher, matte black float frame",
     year: 2026,
     widthCm: 150,
     heightCm: 100,
@@ -339,8 +339,8 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/catalogue/canopy-and-grace.jpg", alt: "Canopy & Grace: White Gazelles at Twilight by Nkem Agbo", position: 0 },
-      { url: "/images/catalogue/canopy-and-grace-room.jpg", alt: "Canopy & Grace displayed above a contemporary linen sofa", position: 1 },
+      { url: "/images/catalogue/white-stags-twilight.jpg", alt: "Canopy & Grace: White Stags at Twilight by Nkem Agbo", position: 0 },
+      { url: "/images/catalogue/white-stags-twilight-room.jpg", alt: "Canopy & Grace displayed in contemporary living room interior", position: 1 },
     ],
   },
   {
@@ -451,7 +451,13 @@ export const HERO_PRODUCTS: HeroProduct[] = [
 ];
 
 export function getHeroProduct(slug: string): HeroProduct | undefined {
-  return HERO_PRODUCTS.find((p) => p.slug === slug || (slug === "indigo-tide" && p.slug === "indigo-tide-evening-lantern"));
+  return HERO_PRODUCTS.find(
+    (p) =>
+      p.slug === slug ||
+      (slug === "indigo-tide" && p.slug === "indigo-tide-evening-lantern") ||
+      (slug === "canopy-and-grace" && (p.slug === "canopy-and-grace" || p.slug === "chromatic-field-impasto")) ||
+      (slug === "chromatic-field-impasto" && p.slug === "chromatic-field-impasto")
+  );
 }
 
 export interface HeroArtist {
@@ -638,7 +644,7 @@ export const HERO_ARTISTS: HeroArtist[] = [
       {
         id: "hero-canopy-and-grace",
         slug: "canopy-and-grace",
-        title: "Canopy & Grace: White Gazelles at Twilight",
+        title: "Canopy & Grace: White Stags at Twilight",
         department: "ART",
         category: "ORIGINAL_PAINTING",
         productType: "ORIGINAL",
@@ -648,7 +654,7 @@ export const HERO_ARTISTS: HeroArtist[] = [
         shippingClass: "FRAGILE",
         artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
         images: [
-          { url: "/images/catalogue/canopy-and-grace.jpg", alt: "Canopy & Grace by Nkem Agbo", position: 0 },
+          { url: "/images/catalogue/white-stags-twilight.jpg", alt: "Canopy & Grace: White Stags at Twilight by Nkem Agbo", position: 0 },
         ],
       },
       {

@@ -93,8 +93,8 @@ export const HERO_SLIDES: HeroSlideData[] = [
     exploreHref: "/shop/art",
     leftStrip: {
       src: "/images/hero/artwork-abstract-canvas.jpg",
-      alt: "Chromatic Field Impasto Canvas",
-      title: "Chromatic Field — Contemporary African Impasto",
+      alt: "Canopy & Grace: White Stags at Twilight",
+      title: "Canopy & Grace: White Stags at Twilight — Nkem Agbo",
       href: "/products/chromatic-field-impasto",
     },
     centerArch: {
@@ -140,14 +140,14 @@ export const HERO_SLIDES: HeroSlideData[] = [
     },
     centerBottom: {
       src: "/images/hero/artwork-abstract-canvas.jpg",
-      alt: "Textured Chromatic Impasto",
-      title: "Textured Abstract Harmony on Canvas",
+      alt: "Canopy & Grace: White Stags at Twilight",
+      title: "Canopy & Grace: White Stags at Twilight — Nkem Agbo",
       href: "/products/chromatic-field-impasto",
     },
     rightStrip: {
       src: "/images/hero/hero-abstract-canvas.jpg",
-      alt: "Abstract Canvas in Sunlit Room",
-      title: "Monumental Abstract in Minimalist Gallery Room",
+      alt: "Canopy & Grace in Contemporary Living Space",
+      title: "Canopy & Grace: White Stags at Twilight in Curated Interior",
       href: "/products/chromatic-field-impasto",
     },
   },

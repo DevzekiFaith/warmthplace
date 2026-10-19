@@ -314,13 +314,65 @@ async function main() {
     },
   });
 
+  // 7. Canopy & Grace: White Stags at Twilight (Replaces Chromatic Field: Contemporary Impasto Canvas)
+  const canopyData = {
+    title: "Canopy & Grace: White Stags at Twilight",
+    department: "ART" as const,
+    category: "ORIGINAL_PAINTING" as const,
+    productType: "ORIGINAL" as const,
+    description:
+      "A monumental landscape masterpiece capturing two ethereal white stags bathed in twilight serenity. Set against a deep atmospheric expanse with delicate weeping willow branches, dripping golden-yellow blossoms, and a radiant full moon reflecting upon still waters, the composition evokes primordial grace, silence, and sacred nature. Rendered in rich textural impasto with radiant emerald greens, cadmium yellows, and luminescent white figures. Hand-signed recto and verso, delivered with an embossed studio certificate of provenance.",
+    medium: "Heavy-body acrylic, textural impasto, and mineral pigments on stretched Belgian linen, obsidian floating frame",
+    materials: "Belgian linen canvas, artist acrylics & gloss enamel, timber stretcher, matte black float frame",
+    year: 2026,
+    widthCm: 150,
+    heightCm: 100,
+    depthCm: 5.0,
+    weightKg: 8.5,
+    orientation: "LANDSCAPE" as const,
+    price: 480000000, // ₦4,800,000 (~$3,200 USD)
+    currency: "NGN",
+    stock: 1,
+    status: "PUBLISHED" as const,
+    enquiryOnly: false,
+    shippingClass: "FRAGILE" as const,
+    featured: true,
+    isSample: true,
+    artistId: nkem.id,
+    collections: colAncestral ? { connect: [{ id: colAncestral.id }] } : undefined,
+    images: {
+      create: [
+        {
+          url: "/images/catalogue/white-stags-twilight.jpg",
+          alt: "Canopy & Grace: White Stags at Twilight canvas by Nkem Agbo",
+          position: 0,
+        },
+        {
+          url: "/images/catalogue/white-stags-twilight-room.jpg",
+          alt: "Canopy & Grace displayed in contemporary living room interior",
+          position: 1,
+        },
+      ],
+    },
+  };
+
+  await upsertProduct("chromatic-field-impasto", {
+    ...canopyData,
+    slug: "chromatic-field-impasto",
+  });
+
+  await upsertProduct("canopy-and-grace", {
+    ...canopyData,
+    slug: "canopy-and-grace",
+  });
+
   // Sync DB files
   const prismaDb = path.resolve(process.cwd(), "prisma/dev.db");
   const rootDb = path.resolve(process.cwd(), "dev.db");
   if (fs.existsSync(prismaDb)) {
     fs.copyFileSync(prismaDb, rootDb);
   }
-  console.log("All 5 artworks successfully added and databases synchronized.");
+  console.log("All artworks successfully updated and databases synchronized.");
 }
 
 main()

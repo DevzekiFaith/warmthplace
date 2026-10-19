@@ -771,24 +771,24 @@ async function main() {
     },
   });
 
-  // 15 - Chromatic Field: Contemporary Impasto Canvas (Hero Artwork & Interior In-Situ)
+  // 15 - Canopy & Grace: White Stags at Twilight (Hero Artwork & Interior In-Situ)
   await prisma.product.create({
     data: {
       slug: "chromatic-field-impasto",
-      title: "Chromatic Field: Contemporary Impasto Canvas",
+      title: "Canopy & Grace: White Stags at Twilight",
       department: "ART",
       category: "ORIGINAL_PAINTING",
       productType: "ORIGINAL",
-      description: "A monumental abstract built from thick, sculpted ribbons of colour. Chromatic Field rewards close looking with ridges, scrapes and layered pigment, while from across the room it reads as a luminous field of harmony. Ideal as a statement piece in minimalist interiors.",
-      medium: "Heavy-body acrylic impasto on stretched canvas",
-      materials: "Cotton canvas, heavy-body acrylic, modelling paste",
+      description: "A monumental landscape masterpiece capturing two ethereal white stags bathed in twilight serenity. Set against a deep atmospheric expanse with delicate weeping willow branches, dripping golden-yellow blossoms, and a radiant full moon reflecting upon still waters, the composition evokes primordial grace, silence, and sacred nature. Rendered in rich textural impasto with radiant emerald greens, cadmium yellows, and luminescent white figures. Hand-signed recto and verso, delivered with an embossed studio certificate of provenance.",
+      medium: "Heavy-body acrylic, textural impasto, and mineral pigments on stretched Belgian linen, obsidian floating frame",
+      materials: "Belgian linen canvas, artist acrylics & gloss enamel, timber stretcher, matte black float frame",
       year: 2026,
-      widthCm: 120,
-      heightCm: 120,
+      widthCm: 150,
+      heightCm: 100,
       depthCm: 5.0,
-      weightKg: 8.2,
-      orientation: "SQUARE",
-      price: 315000000, // ₦3,150,000 (~$2,100 USD)
+      weightKg: 8.5,
+      orientation: "LANDSCAPE",
+      price: 480000000, // ₦4,800,000 (~$3,200 USD)
       currency: "NGN",
       stock: 1,
       status: "PUBLISHED",
@@ -801,13 +801,13 @@ async function main() {
       images: {
         create: [
           {
-            url: "/images/hero/artwork-abstract-canvas.jpg",
-            alt: "Chromatic Field impasto abstract canvas by Nkem Agbo",
+            url: "/images/catalogue/white-stags-twilight.jpg",
+            alt: "Canopy & Grace: White Stags at Twilight canvas by Nkem Agbo",
             position: 0,
           },
           {
-            url: "/images/hero/hero-abstract-canvas.jpg",
-            alt: "Chromatic Field abstract canvas in a sunlit room",
+            url: "/images/catalogue/white-stags-twilight-room.jpg",
+            alt: "Canopy & Grace displayed in contemporary living room interior",
             position: 1,
           },
         ],
