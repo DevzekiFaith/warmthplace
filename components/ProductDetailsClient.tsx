@@ -56,6 +56,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
   const [enquiryOpen, setEnquiryOpen] = useState(false);
   const [scaleVisualizerOpen, setScaleVisualizerOpen] = useState(false);
   const [tearSheetOpen, setTearSheetOpen] = useState(false);
+  const [selectedEdition, setSelectedEdition] = useState<"ORIGINAL" | "PRINT">("ORIGINAL");
   const [selectedFrame, setSelectedFrame] = useState<"Natural Oak" | "Obsidian Black" | "Champagne Gold" | "Frameless Gallery Wrap">("Natural Oak");
   const [viewMode, setViewMode] = useState<"canvas" | "gallery">("canvas");
   const [isSaved, setIsSaved] = useState(false);
@@ -65,6 +66,8 @@ export function ProductDetailsClient({ product }: ProductProps) {
   const { format, currency, setCurrency } = useCurrency();
 
   const isArt = product.department === "ART";
+  const printPriceKobo = 6500000; // ₦65,000 (~$45 USD) for Limited Archival Giclée Print
+  const activePrice = isArt && selectedEdition === "PRINT" ? printPriceKobo : product.price;
 
   // Dimensions math
   const w = product.widthCm || 120;
@@ -89,21 +92,29 @@ export function ProductDetailsClient({ product }: ProductProps) {
       : product.images[selectedImageIndex] || canvasImage;
 
   const handleAddToCart = () => {
+    const isPrint = isArt && selectedEdition === "PRINT";
+    const unitPrice = isPrint ? printPriceKobo : product.price;
+    const editionTag = isPrint ? "Archival Fine Art Print" : "Original 1/1 Canvas";
+    const frameSlug = selectedFrame.toLowerCase().replace(/\s+/g, "-");
+    const itemId = isArt
+      ? `${product.id}-${selectedEdition.toLowerCase()}-${frameSlug}`
+      : `${product.id}-${frameSlug}`;
+
     addItem(
       {
-        id: `${product.id}-${selectedFrame.toLowerCase().replace(/\s+/g, "-")}`,
+        id: itemId,
         slug: product.slug,
-        title: isArt ? `${product.title} (${selectedFrame})` : product.title,
+        title: isArt ? `${product.title} (${editionTag} • ${selectedFrame})` : product.title,
         artistName: product.artist?.name || null,
         department: product.department,
         category: product.category,
-        productType: product.productType,
-        price: product.price,
+        productType: isPrint ? "LIMITED_EDITION" : product.productType,
+        price: unitPrice,
         currency: product.currency,
         imageUrl: canvasImage.url,
         imageAlt: canvasImage.alt,
-        stock: product.stock,
-        shippingClass: product.shippingClass,
+        stock: isPrint ? 75 : product.stock,
+        shippingClass: isPrint ? "STANDARD" : product.shippingClass,
       },
       quantity
     );
@@ -586,10 +597,27 @@ export function ProductDetailsClient({ product }: ProductProps) {
 
           {/* Badges strip */}
           <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.85rem", flexWrap: "wrap" }}>
-            {product.productType === "ORIGINAL" && (
-              <span className="badge badge-original">Original Artwork</span>
+            {isArt ? (
+              selectedEdition === "ORIGINAL" ? (
+                <span className="badge badge-original">Original 1-of-1 Artwork</span>
+              ) : (
+                <span
+                  className="badge badge-edition"
+                  style={{
+                    backgroundColor: "rgba(184, 154, 101, 0.15)",
+                    color: "var(--color-ink-charcoal)",
+                    borderColor: "var(--color-gold-champagne)",
+                  }}
+                >
+                  Archival Giclée Print • Edition of 75
+                </span>
+              )
+            ) : (
+              product.productType === "ORIGINAL" && (
+                <span className="badge badge-original">Original Artwork</span>
+              )
             )}
-            {product.productType === "EDITION" && (
+            {product.productType === "EDITION" && !isArt && (
               <span className="badge badge-edition">
                 Limited Edition of {product.editionSize || 25}
               </span>
@@ -602,7 +630,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                 border: "1px solid var(--border-subtle)",
               }}
             >
-              1P Single Canvas
+              {selectedEdition === "ORIGINAL" ? "1P Single Canvas" : "Archival Cotton Rag"}
             </span>
             <span
               className="badge"
@@ -614,9 +642,9 @@ export function ProductDetailsClient({ product }: ProductProps) {
             >
               Stretch + {selectedFrame}
             </span>
-            {product.shippingClass === "FRAGILE" && (
-              <span className="badge badge-sample">Museum Timber Crated</span>
-            )}
+            <span className="badge badge-sample">
+              {selectedEdition === "ORIGINAL" ? "Museum Timber Crated" : "Archival Rigid Flat-Pack"}
+            </span>
           </div>
 
           {/* Title */}
@@ -641,7 +669,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
               letterSpacing: "0.02em",
             }}
           >
-            <strong style={{ color: "var(--color-ink-charcoal)" }}>#SG748</strong> • 1P (Each {h}H × {w}W CM / {hIn}&quot;H × {wIn}&quot;W IN) / Stretch + {selectedFrame} Frame
+            <strong style={{ color: "var(--color-ink-charcoal)" }}>#SG748</strong> • 1P ({selectedEdition === "ORIGINAL" ? `Each ${h}H × ${w}W CM / ${hIn}"H × ${wIn}"W IN` : `Fine Art 310gsm Rag / ${h}H × ${w}W CM`}) / Stretch + {selectedFrame} Frame
           </div>
 
           {/* Artist Provenance Card */}
@@ -723,9 +751,198 @@ export function ProductDetailsClient({ product }: ProductProps) {
             </div>
           )}
 
+          {/* =========================================================
+              2-OPTION ACQUISITION SELECTOR: ORIGINAL CANVAS VS ARCHIVAL PRINT
+             ========================================================= */}
+          {isArt && (
+            <div
+              style={{
+                marginBottom: "1.5rem",
+                padding: "1.15rem",
+                backgroundColor: "var(--color-canvas-pure)",
+                borderRadius: "4px",
+                border: "1px solid var(--border-subtle)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "0.85rem",
+                }}
+              >
+                <label
+                  style={{
+                    fontSize: "0.8rem",
+                    fontFamily: "var(--font-sans)",
+                    fontWeight: 700,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "var(--color-ink-charcoal)",
+                  }}
+                >
+                  Acquisition Tier:{" "}
+                  <span style={{ color: "var(--color-terracotta)" }}>
+                    {selectedEdition === "ORIGINAL" ? "1-of-1 Original Canvas" : "Limited Archival Fine Art Print"}
+                  </span>
+                </label>
+                <span
+                  style={{
+                    fontSize: "0.72rem",
+                    color: "var(--color-ink-light)",
+                    letterSpacing: "0.04em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Direct Studio Provenance
+                </span>
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "0.85rem",
+                }}
+              >
+                {/* Option 1: 1-of-1 Original Canvas */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedEdition("ORIGINAL")}
+                  style={{
+                    position: "relative",
+                    textAlign: "left",
+                    padding: "1.1rem 1.15rem",
+                    borderRadius: "3px",
+                    border:
+                      selectedEdition === "ORIGINAL"
+                        ? "2px solid var(--color-ink-charcoal)"
+                        : "1px solid var(--border-medium)",
+                    backgroundColor:
+                      selectedEdition === "ORIGINAL"
+                        ? "var(--color-canvas-light)"
+                        : "#FFFFFF",
+                    boxShadow:
+                      selectedEdition === "ORIGINAL"
+                        ? "0 4px 16px rgba(0,0,0,0.08)"
+                        : "none",
+                    cursor: "pointer",
+                    transition: "all var(--transition-fast)",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
+                    <span
+                      style={{
+                        fontSize: "0.68rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        padding: "2px 7px",
+                        borderRadius: "2px",
+                        backgroundColor:
+                          selectedEdition === "ORIGINAL"
+                            ? "var(--color-ink-charcoal)"
+                            : "rgba(36, 34, 30, 0.08)",
+                        color: selectedEdition === "ORIGINAL" ? "#FFFFFF" : "var(--color-ink-charcoal)",
+                      }}
+                    >
+                      1-of-1 Original
+                    </span>
+                    <span
+                      style={{
+                        fontSize: "1rem",
+                        fontWeight: 700,
+                        color: selectedEdition === "ORIGINAL" ? "var(--color-terracotta)" : "transparent",
+                      }}
+                    >
+                      ✓
+                    </span>
+                  </div>
+
+                  <div style={{ fontSize: "1.02rem", fontWeight: 700, color: "var(--color-ink-charcoal)", fontFamily: "var(--font-serif)", marginBottom: "0.3rem" }}>
+                    Original Canvas
+                  </div>
+                  <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.4, marginBottom: "0.65rem" }}>
+                    Hand-painted oil &amp; impasto on Belgian linen. Hand-signed with timber crated transit.
+                  </div>
+                  <div style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--color-ink-charcoal)", letterSpacing: "-0.01em" }}>
+                    {format(product.price)}
+                  </div>
+                </button>
+
+                {/* Option 2: Limited-Edition Archival Giclée Print */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedEdition("PRINT")}
+                  style={{
+                    position: "relative",
+                    textAlign: "left",
+                    padding: "1.1rem 1.15rem",
+                    borderRadius: "3px",
+                    border:
+                      selectedEdition === "PRINT"
+                        ? "2px solid var(--color-ink-charcoal)"
+                        : "1px solid var(--border-medium)",
+                    backgroundColor:
+                      selectedEdition === "PRINT"
+                        ? "var(--color-canvas-light)"
+                        : "#FFFFFF",
+                    boxShadow:
+                      selectedEdition === "PRINT"
+                        ? "0 4px 16px rgba(0,0,0,0.08)"
+                        : "none",
+                    cursor: "pointer",
+                    transition: "all var(--transition-fast)",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
+                    <span
+                      style={{
+                        fontSize: "0.68rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        padding: "2px 7px",
+                        borderRadius: "2px",
+                        backgroundColor:
+                          selectedEdition === "PRINT"
+                            ? "var(--color-terracotta)"
+                            : "rgba(166, 75, 50, 0.12)",
+                        color: selectedEdition === "PRINT" ? "#FFFFFF" : "var(--color-terracotta)",
+                      }}
+                    >
+                      Edition of 75
+                    </span>
+                    <span
+                      style={{
+                        fontSize: "1rem",
+                        fontWeight: 700,
+                        color: selectedEdition === "PRINT" ? "var(--color-terracotta)" : "transparent",
+                      }}
+                    >
+                      ✓
+                    </span>
+                  </div>
+
+                  <div style={{ fontSize: "1.02rem", fontWeight: 700, color: "var(--color-ink-charcoal)", fontFamily: "var(--font-serif)", marginBottom: "0.3rem" }}>
+                    Archival Giclée Print
+                  </div>
+                  <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.4, marginBottom: "0.65rem" }}>
+                    Museum-grade 310gsm German etching cotton rag with pigment inks. Numbered edition.
+                  </div>
+                  <div style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--color-ink-charcoal)", letterSpacing: "-0.01em" }}>
+                    {format(printPriceKobo)}
+                  </div>
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Price display with strikethrough high amount & currency interchange */}
           {(() => {
-            const hasStrikethrough = product.slug === "ochre-silhouette" || product.price === 110000000;
+            const isOriginal = selectedEdition === "ORIGINAL";
+            const hasStrikethrough = isOriginal && (product.slug === "ochre-silhouette" || product.price === 110000000);
             const originalPrice = 375000000; // ₦3,750,000 (~$2,500 USD)
 
             return (
@@ -757,7 +974,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
 
                     <AnimatePresence mode="wait" initial={false}>
                       <motion.span
-                        key={currency}
+                        key={`${currency}-${selectedEdition}`}
                         initial={{ opacity: 0, y: -4 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 4 }}
@@ -772,7 +989,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                           lineHeight: 1.1,
                         }}
                       >
-                        {format(product.price)}
+                        {format(activePrice)}
                       </motion.span>
                     </AnimatePresence>
 
@@ -791,6 +1008,24 @@ export function ProductDetailsClient({ product }: ProductProps) {
                         }}
                       >
                         Save 71% • Studio Release
+                      </span>
+                    )}
+
+                    {isArt && !isOriginal && (
+                      <span
+                        style={{
+                          fontSize: "0.72rem",
+                          fontWeight: 700,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.08em",
+                          padding: "3px 8px",
+                          backgroundColor: "rgba(184, 154, 101, 0.15)",
+                          color: "var(--color-ink-charcoal)",
+                          borderRadius: "2px",
+                          border: "1px solid rgba(184, 154, 101, 0.35)",
+                        }}
+                      >
+                        Archival Fine Art Print • Ed. of 75
                       </span>
                     )}
                   </div>
@@ -867,11 +1102,22 @@ export function ProductDetailsClient({ product }: ProductProps) {
                     display: "flex",
                     alignItems: "center",
                     gap: "0.5rem",
+                    flexWrap: "wrap",
                   }}
                 >
-                  <span>🚚 Complimentary Museum Wooden Crating</span>
-                  <span>•</span>
-                  <span>Insured White-Glove Courier Transit</span>
+                  {selectedEdition === "ORIGINAL" ? (
+                    <>
+                      <span>🚚 <strong>Museum-Grade White-Glove Crated Transit</strong></span>
+                      <span>•</span>
+                      <span>Every artwork ships insured up to full declared value with official certificates of authenticity and timber crating. Complimentary transit on orders over ₦2,000,000.</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>🚚 <strong>Flat-Pack Archival Rigid Casing</strong></span>
+                      <span>•</span>
+                      <span>Ships insured in 3–5 business days with serialized authenticity certificate.</span>
+                    </>
+                  )}
                 </div>
               </div>
             );
@@ -1075,7 +1321,11 @@ export function ProductDetailsClient({ product }: ProductProps) {
                     className="btn btn-primary"
                     style={{ flex: "2 1 240px", height: "52px", fontSize: "0.92rem" }}
                   >
-                    Acquire Artwork • {format(product.price * quantity)}
+                    {isArt
+                      ? selectedEdition === "ORIGINAL"
+                        ? "Acquire Original Masterpiece"
+                        : "Order Archival Print"
+                      : "Add to Bag"} • {format(activePrice * quantity)}
                   </button>
 
                   <button
@@ -1165,7 +1415,11 @@ export function ProductDetailsClient({ product }: ProductProps) {
                     display: "inline-block",
                   }}
                 />
-                In Studio Gallery Collection — 1 of 1 unique original
+                {isArt
+                  ? selectedEdition === "ORIGINAL"
+                    ? "In Studio Gallery Collection — 1 of 1 unique original"
+                    : "Fine Art Print Atelier — Limited to 75 numbered impressions"
+                  : `In Stock (${product.stock} units available)`}
               </div>
             )}
           </div>
@@ -1226,10 +1480,14 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   Technique &amp; Medium
                 </div>
                 <div style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--color-ink-charcoal)", marginBottom: "0.25rem" }}>
-                  100% Hand-Painted Impasto
+                  {isArt && selectedEdition === "PRINT"
+                    ? "Archival Fine Art Giclée"
+                    : "100% Hand-Painted Impasto"}
                 </div>
                 <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.5 }}>
-                  {product.medium || "Professional oils, palette-knife impasto on stretched Belgian linen"}
+                  {isArt && selectedEdition === "PRINT"
+                    ? "12-color archival pigment inks on 310gsm German etching 100% cotton rag paper"
+                    : product.medium || "Professional oils, palette-knife impasto on stretched Belgian linen"}
                 </div>
               </div>
 
@@ -1269,7 +1527,9 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   Certificate of Authenticity
                 </div>
                 <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.5 }}>
-                  Signed recto and verso by the artist. Accompanied by physical museum certificate with studio wax seal.
+                  {isArt && selectedEdition === "PRINT"
+                    ? "Hand-numbered edition certificate (X/75) with embossed studio seal and archival provenance record."
+                    : "Signed recto and verso by the artist. Accompanied by physical museum certificate with studio wax seal."}
                 </div>
               </div>
 
@@ -1283,13 +1543,19 @@ export function ProductDetailsClient({ product }: ProductProps) {
                 }}
               >
                 <div style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--color-terracotta)", fontWeight: 600, marginBottom: "0.35rem" }}>
-                  Museum Timber Crating
+                  {isArt && selectedEdition === "PRINT"
+                    ? "Archival Packaging"
+                    : "Museum Timber Crating"}
                 </div>
                 <div style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--color-ink-charcoal)", marginBottom: "0.25rem" }}>
-                  White-Glove Insured Delivery
+                  {isArt && selectedEdition === "PRINT"
+                    ? "Rigid Flat-Pack Transit"
+                    : "White-Glove Insured Delivery"}
                 </div>
                 <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.5 }}>
-                  Bespoke reinforced timber crate with archival closed-cell foam and climate-sealed moisture barrier.
+                  {isArt && selectedEdition === "PRINT"
+                    ? "Double-walled archival rigid portfolio casing with acid-free glassine interleaving."
+                    : "Bespoke reinforced timber crate with archival closed-cell foam and climate-sealed moisture barrier."}
                 </div>
               </div>
             </div>

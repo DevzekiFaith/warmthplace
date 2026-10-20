@@ -53,6 +53,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
   const isLcpCandidate =
     priority ||
+    primaryImage.url.includes("canopy-and-grace") ||
+    primaryImage.url.includes("royal-gazelles") ||
     primaryImage.url.includes("white-stags-twilight") ||
     primaryImage.url.includes("solar-vortex") ||
     primaryImage.url.includes("indigo-tide") ||
@@ -136,7 +138,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           {isArt && (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem", alignItems: "flex-start" }}>
               <span className="badge badge-original" style={{ fontSize: "0.68rem", padding: "0.25rem 0.6rem" }}>
-                Original Work
+                Original 1/1 • Prints Available
               </span>
               {secondaryImage && (
                 <span
@@ -285,7 +287,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
         {/* Line 4: Framing Specification Pill */}
         {isArt && (
-          <div style={{ marginBottom: "0.5rem" }}>
+          <div style={{ marginBottom: "0.5rem", display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
             <span
               style={{
                 display: "inline-block",
@@ -297,7 +299,21 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
                 border: "1px solid var(--border-subtle)",
               }}
             >
-              Framed in Hardwood Floater • Ready to Hang
+              Floater Frame Included
+            </span>
+            <span
+              style={{
+                display: "inline-block",
+                fontSize: "0.7rem",
+                color: "var(--color-terracotta)",
+                backgroundColor: "rgba(166, 75, 50, 0.08)",
+                padding: "2px 7px",
+                borderRadius: "2px",
+                border: "1px solid rgba(166, 75, 50, 0.2)",
+                fontWeight: 500,
+              }}
+            >
+              Archival Prints Avail.
             </span>
           </div>
         )}
@@ -317,11 +333,25 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           <span>Delivers in 5–7 business days • Insured Crate</span>
         </div>
 
-        {/* Line 6: Price Row with Currency Switcher Support */}
-        <div className="product-price-row">
-          <span className="product-price-primary">
-            {format(product.price)}
-          </span>
+        {/* Line 6: Price Row with Currency Switcher Support & Dual Print / Original Options */}
+        <div className="product-price-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "0.5rem" }}>
+          <div>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "0.45rem" }}>
+              <span className="product-price-primary">
+                {format(product.price)}
+              </span>
+              {isArt && (
+                <span style={{ fontSize: "0.7rem", color: "var(--color-ink-light)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 600 }}>
+                  Original
+                </span>
+              )}
+            </div>
+            {isArt && (
+              <div style={{ fontSize: "0.76rem", color: "var(--color-ink-muted)", marginTop: "2px" }}>
+                Prints from <strong style={{ color: "var(--color-ink-charcoal)" }}>{format(6500000)}</strong>
+              </div>
+            )}
+          </div>
 
           {currency !== BASE_CURRENCY ? (
             <span

@@ -93,8 +93,8 @@ export const HERO_SLIDES: HeroSlideData[] = [
     exploreHref: "/shop/art",
     leftStrip: {
       src: "/images/hero/artwork-abstract-canvas.jpg",
-      alt: "Canopy & Grace: White Stags at Twilight",
-      title: "Canopy & Grace: White Stags at Twilight — Nkem Agbo",
+      alt: "Canopy & Grace: Royal Gazelles at Twilight",
+      title: "Canopy & Grace: Royal Gazelles at Twilight — Nkem Agbo",
       href: "/products/chromatic-field-impasto",
     },
     centerArch: {
@@ -140,14 +140,14 @@ export const HERO_SLIDES: HeroSlideData[] = [
     },
     centerBottom: {
       src: "/images/hero/artwork-abstract-canvas.jpg",
-      alt: "Canopy & Grace: White Stags at Twilight",
-      title: "Canopy & Grace: White Stags at Twilight — Nkem Agbo",
+      alt: "Canopy & Grace: Royal Gazelles at Twilight",
+      title: "Canopy & Grace: Royal Gazelles at Twilight — Nkem Agbo",
       href: "/products/chromatic-field-impasto",
     },
     rightStrip: {
       src: "/images/hero/hero-abstract-canvas.jpg",
-      alt: "Canopy & Grace in Contemporary Living Space",
-      title: "Canopy & Grace: White Stags at Twilight in Curated Interior",
+      alt: "Canopy & Grace: Royal Gazelles at Twilight in Contemporary Living Space",
+      title: "Canopy & Grace: Royal Gazelles at Twilight in Curated Interior",
       href: "/products/chromatic-field-impasto",
     },
   },

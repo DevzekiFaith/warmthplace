@@ -69,13 +69,13 @@ export const HERO_PRODUCTS: HeroProduct[] = [
   {
     id: "hero-chromatic-field-impasto",
     slug: "chromatic-field-impasto",
-    title: "Canopy & Grace: White Stags at Twilight",
+    title: "Canopy & Grace: Royal Gazelles at Twilight",
     department: "ART",
     category: "ORIGINAL_PAINTING",
     productType: "ORIGINAL",
     editionSize: null,
     description:
-      "A monumental landscape masterpiece capturing two ethereal white stags bathed in twilight serenity. Set against a deep atmospheric expanse with delicate weeping willow branches, dripping golden-yellow blossoms, and a radiant full moon reflecting upon still waters, the composition evokes primordial grace, silence, and sacred nature. Rendered in rich textural impasto with radiant emerald greens, cadmium yellows, and luminescent white figures. Hand-signed recto and verso, delivered with an embossed studio certificate of provenance.",
+      "A monumental African wildlife and landscape masterpiece capturing two statuesque royal gazelles bathed in twilight serenity. Set beneath the grand spreading canopy of an ancient baobab tree with delicate hanging golden-yellow blossoms, a radiant full moon reflects across tranquil waters into the savannah distance. Rendered in rich sculptural palette-knife impasto with deep twilight indigo, radiant cadmium yellows, warm mineral ochre, and luminescent gazelle figures. Hand-signed recto and verso by Nkem Agbo, delivered with an embossed studio certificate of provenance.",
     medium: "Heavy-body acrylic, textural impasto, and mineral pigments on stretched Belgian linen, obsidian floating frame",
     materials: "Belgian linen canvas, artist acrylics & gloss enamel, timber stretcher, matte black float frame",
     year: 2026,
@@ -97,7 +97,8 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/catalogue/white-stags-twilight-room.jpg", alt: "Canopy & Grace: White Stags at Twilight canvas by Nkem Agbo", position: 0 },
+      { url: "/images/catalogue/canopy-and-grace-room.jpg", alt: "Canopy & Grace: Royal Gazelles at Twilight displayed in contemporary living room", position: 0 },
+      { url: "/images/catalogue/canopy-and-grace-canvas.jpg", alt: "Canopy & Grace: Royal Gazelles at Twilight original impasto canvas by Nkem Agbo", position: 1 },
     ],
   },
   {
@@ -309,13 +310,13 @@ export const HERO_PRODUCTS: HeroProduct[] = [
   {
     id: "hero-canopy-and-grace",
     slug: "canopy-and-grace",
-    title: "Canopy & Grace: White Stags at Twilight",
+    title: "Canopy & Grace: Royal Gazelles at Twilight",
     department: "ART",
     category: "ORIGINAL_PAINTING",
     productType: "ORIGINAL",
     editionSize: null,
     description:
-      "A monumental landscape masterpiece capturing two ethereal white stags bathed in twilight serenity. Set against a deep atmospheric expanse with delicate weeping willow branches, dripping golden-yellow blossoms, and a radiant full moon reflecting upon still waters, the composition evokes primordial grace, silence, and sacred nature. Rendered in rich textural impasto with radiant emerald greens, cadmium yellows, and luminescent white figures. Hand-signed recto and verso, delivered with an embossed studio certificate of provenance.",
+      "A monumental African wildlife and landscape masterpiece capturing two statuesque royal gazelles bathed in twilight serenity. Set beneath the grand spreading canopy of an ancient baobab tree with delicate hanging golden-yellow blossoms, a radiant full moon reflects across tranquil waters into the savannah distance. Rendered in rich sculptural palette-knife impasto with deep twilight indigo, radiant cadmium yellows, warm mineral ochre, and luminescent gazelle figures. Hand-signed recto and verso by Nkem Agbo, delivered with an embossed studio certificate of provenance.",
     medium: "Heavy-body acrylic, textural impasto, and mineral pigments on stretched Belgian linen, obsidian floating frame",
     materials: "Belgian linen canvas, artist acrylics & gloss enamel, timber stretcher, matte black float frame",
     year: 2026,
@@ -337,8 +338,8 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/catalogue/white-stags-twilight.jpg", alt: "Canopy & Grace: White Stags at Twilight by Nkem Agbo", position: 0 },
-      { url: "/images/catalogue/white-stags-twilight-room.jpg", alt: "Canopy & Grace displayed in contemporary living room interior", position: 1 },
+      { url: "/images/catalogue/canopy-and-grace-room.jpg", alt: "Canopy & Grace: Royal Gazelles at Twilight displayed in contemporary living room", position: 0 },
+      { url: "/images/catalogue/canopy-and-grace-canvas.jpg", alt: "Canopy & Grace: Royal Gazelles at Twilight original impasto canvas by Nkem Agbo", position: 1 },
     ],
   },
   {
@@ -628,7 +629,7 @@ export const HERO_ARTISTS: HeroArtist[] = [
       {
         id: "hero-canopy-and-grace",
         slug: "canopy-and-grace",
-        title: "Canopy & Grace: White Stags at Twilight",
+        title: "Canopy & Grace: Royal Gazelles at Twilight",
         department: "ART",
         category: "ORIGINAL_PAINTING",
         productType: "ORIGINAL",
@@ -638,7 +639,7 @@ export const HERO_ARTISTS: HeroArtist[] = [
         shippingClass: "FRAGILE",
         artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
         images: [
-          { url: "/images/catalogue/white-stags-twilight-room.jpg", alt: "Canopy & Grace: White Stags at Twilight canvas by Nkem Agbo", position: 0 },
+          { url: "/images/catalogue/canopy-and-grace-room.jpg", alt: "Canopy & Grace: Royal Gazelles at Twilight canvas by Nkem Agbo", position: 0 },
         ],
       },
       {
