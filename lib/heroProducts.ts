@@ -280,15 +280,15 @@ export const HERO_PRODUCTS: HeroProduct[] = [
   {
     id: "hero-emerald-solitude",
     slug: "emerald-solitude",
-    title: "Emerald Solitude: The Chartreuse Crown",
+    title: "Sovereign Grace: The Indigo Queen",
     department: "ART",
     category: "ORIGINAL_PAINTING",
     productType: "ORIGINAL",
     editionSize: null,
     description:
-      "A monumental vertical statement portrait featuring a statuesque African woman rendered in profile with a sculptural white coiffure and oversized circular hammered gold disc earrings. Her form is clothed in an electric, layered impasto of primary red, yellow, deep blue, and viridian green that cascades like sculpted gems down her spine. The composition is electrified by a bold horizon split: an acid-green chartreuse hill surging into a pitch-black cosmos. An unforgettable modern masterpiece for statement hallways, double-height entries, and contemporary living spaces.",
-    medium: "Heavy-body acrylic, palette-knife impasto, and mineral pigments on vertical stretched canvas",
-    materials: "Cotton canvas, heavy-body acrylic, 24k gold leaf powder, timber stretcher",
+      "A breathtaking museum-grade portrait celebrating regal African matriarchy, ancestral sovereignty, and sacred adornment. Rendered in exquisite profile, an African queen is adorned in an elaborate sculptural indigo-dyed adire headwrap interwoven with cowrie shells and delicate molten gold filigree. Her royal garments flow in layered cobalt, deep violet, and burnt sienna with thick, sculpted palette-knife impasto and shimmering gold leaf accents against an amber ground etched with ancient geometric glyphs. Hand-signed recto and verso by Nkem Agbo with studio provenance certificate.",
+    medium: "Oil, heavy-body impasto, natural mineral indigo, and 24k gold leaf on stretched Belgian linen, natural oak floating frame",
+    materials: "Belgian linen, artist oils & acrylics, 24k gold leaf foil, natural oak floater frame",
     year: 2026,
     widthCm: 75,
     heightCm: 140,
@@ -308,8 +308,8 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/catalogue/emerald-solitude.jpg", alt: "Emerald Solitude: The Chartreuse Crown by Nkem Agbo", position: 0 },
-      { url: "/images/catalogue/emerald-solitude-room.jpg", alt: "Emerald Solitude displayed in luxury interior setting", position: 1 },
+      { url: "/images/catalogue/emerald-solitude.jpg", alt: "Sovereign Grace: The Indigo Queen pure oil impasto canvas by Nkem Agbo", position: 0 },
+      { url: "/images/catalogue/emerald-solitude-room.jpg", alt: "Sovereign Grace: The Indigo Queen displayed in luxury gallery interior", position: 1 },
     ],
   },
   {
