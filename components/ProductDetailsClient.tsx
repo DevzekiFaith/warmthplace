@@ -187,10 +187,8 @@ export function ProductDetailsClient({ product }: ProductProps) {
           {/* View Mode Switcher: Studio Canvas vs. Gallery Display vs. Room Scale */}
           {isArt && (
             <div
+              className="pdp-viewmode-bar"
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
                 marginBottom: "0.85rem",
                 padding: "0.35rem 0.5rem",
                 backgroundColor: "var(--color-canvas-pure)",
@@ -198,7 +196,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                 border: "1px solid var(--border-subtle)",
               }}
             >
-              <div style={{ display: "flex", gap: "0.35rem" }}>
+              <div className="pdp-viewmode-buttons" style={{ display: "flex", gap: "0.35rem" }}>
                 <button
                   type="button"
                   onClick={() => setViewMode("canvas")}
@@ -240,6 +238,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
 
               <button
                 type="button"
+                className="pdp-scale-trigger-btn"
                 onClick={() => setScaleVisualizerOpen(true)}
                 style={{
                   fontSize: "0.76rem",
@@ -800,9 +799,9 @@ export function ProductDetailsClient({ product }: ProductProps) {
               </div>
 
               <div
+                className="acquisition-tier-grid"
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
                   gap: "0.85rem",
                 }}
               >
@@ -954,7 +953,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   marginBottom: "1.75rem",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+                <div className="pdp-price-header-row" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
                   <div style={{ display: "flex", alignItems: "baseline", gap: "0.85rem", flexWrap: "wrap" }}>
                     {hasStrikethrough && (
                       <span
