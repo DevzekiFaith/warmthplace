@@ -63,7 +63,8 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/hero/hero-african-drummers.jpg", alt: "Ceremonial African Drummers & Dancers canvas by Nkem Agbo", position: 0 },
+      { url: "/images/hero/hero-african-drummers.jpg", alt: "Ceremonial African Drummers & Dancers pure canvas by Nkem Agbo", position: 0 },
+      { url: "/images/catalogue/ceremonial-african-drummers-room.jpg", alt: "Ceremonial African Drummers & Dancers displayed in contemporary room interior", position: 1 },
     ],
   },
   {
@@ -132,7 +133,8 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/catalogue/obsidian-storm.jpg", alt: "Obsidian Storm — dark impasto abstract with silver cracks and ember highlights", position: 0 },
+      { url: "/images/catalogue/obsidian-storm.jpg", alt: "Obsidian Storm pure sculptural impasto canvas by Nkem Agbo", position: 0 },
+      { url: "/images/catalogue/obsidian-storm-room.jpg", alt: "Obsidian Storm displayed in luxury architectural interior", position: 1 },
     ],
   },
   {
@@ -166,7 +168,8 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/catalogue/flora-genesis.jpg", alt: "Flora Genesis — bold colourful botanical abstract in yellow, green, red and blue", position: 0 },
+      { url: "/images/catalogue/flora-genesis.jpg", alt: "Flora Genesis pure oil impasto canvas by Nkem Agbo", position: 0 },
+      { url: "/images/catalogue/flora-genesis-room.jpg", alt: "Flora Genesis displayed in contemporary living room interior", position: 1 },
     ],
   },
   {
@@ -200,7 +203,8 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/catalogue/chromatic-bloom.jpg", alt: "Chromatic Bloom — tall portrait impasto abstract in cobalt, yellow and green on black", position: 0 },
+      { url: "/images/catalogue/chromatic-bloom.jpg", alt: "Chromatic Bloom pure oil impasto canvas by Nkem Agbo", position: 0 },
+      { url: "/images/catalogue/chromatic-bloom-room.jpg", alt: "Chromatic Bloom displayed in contemporary residence interior", position: 1 },
     ],
   },
   {
@@ -234,7 +238,8 @@ export const HERO_PRODUCTS: HeroProduct[] = [
       location: "Enugu & Lagos, Nigeria",
     },
     images: [
-      { url: "/images/catalogue/oya-the-dancer.jpg", alt: "Oya the Dancer — figurative portrait of Yoruba deity in geometric cloth on ochre ground", position: 0 },
+      { url: "/images/catalogue/oya-the-dancer.jpg", alt: "Oya, the Dancer pure oil impasto canvas by Nkem Agbo", position: 0 },
+      { url: "/images/catalogue/oya-the-dancer-room.jpg", alt: "Oya, the Dancer displayed in luxury living room interior", position: 1 },
     ],
   },
   {

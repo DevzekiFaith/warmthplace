@@ -730,8 +730,13 @@ async function main() {
         create: [
           {
             url: "/images/hero/hero-african-drummers.jpg",
-            alt: "Ceremonial African Drummers & Dancers canvas by Nkem Agbo",
+            alt: "Ceremonial African Drummers & Dancers pure canvas by Nkem Agbo",
             position: 0,
+          },
+          {
+            url: "/images/catalogue/ceremonial-african-drummers-room.jpg",
+            alt: "Ceremonial African Drummers & Dancers displayed in contemporary living room interior",
+            position: 1,
           },
         ],
       },
