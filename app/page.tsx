@@ -22,7 +22,7 @@ export default async function HomePage() {
           artist: { select: { name: true, slug: true } },
           images: { orderBy: { position: "asc" } },
         },
-        take: 4,
+        take: 8,
         orderBy: { createdAt: "desc" },
       }),
       prisma.product.findMany({
@@ -255,7 +255,7 @@ export default async function HomePage() {
               <h2 style={{ marginTop: "0.5rem" }}>Selected Works: Art</h2>
             </div>
             <Link href="/shop/art" className="btn-text">
-              View All 7 Artworks In Gallery →
+              View All Artworks In Gallery →
             </Link>
           </div>
 

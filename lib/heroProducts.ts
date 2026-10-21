@@ -295,7 +295,7 @@ export const HERO_PRODUCTS: HeroProduct[] = [
     depthCm: 5,
     weightKg: 6.5,
     orientation: "PORTRAIT",
-    price: 385000000,
+    price: 50000000, // ₦500,000 NGN (~$333 USD)
     currency: "NGN",
     stock: 1,
     status: "PUBLISHED",
@@ -460,7 +460,8 @@ export function getHeroProduct(slug: string): HeroProduct | undefined {
       p.slug === slug ||
       (slug === "indigo-tide" && p.slug === "indigo-tide-evening-lantern") ||
       (slug === "canopy-and-grace" && (p.slug === "canopy-and-grace" || p.slug === "chromatic-field-impasto")) ||
-      (slug === "chromatic-field-impasto" && p.slug === "chromatic-field-impasto")
+      (slug === "chromatic-field-impasto" && p.slug === "chromatic-field-impasto") ||
+      ((slug === "sovereign-grace" || slug === "sovereign-grace-indigo-queen" || slug === "the-indigo-queen") && p.slug === "emerald-solitude")
   );
 }
 
@@ -618,17 +619,18 @@ export const HERO_ARTISTS: HeroArtist[] = [
       {
         id: "hero-emerald-solitude",
         slug: "emerald-solitude",
-        title: "Emerald Solitude: The Chartreuse Crown",
+        title: "Sovereign Grace: The Indigo Queen",
         department: "ART",
         category: "ORIGINAL_PAINTING",
         productType: "ORIGINAL",
-        price: 385000000,
+        price: 50000000,
         currency: "NGN",
         stock: 1,
         shippingClass: "FRAGILE",
         artist: { name: "Nkem Agbo", slug: "nkem-agbo" },
         images: [
-          { url: "/images/catalogue/emerald-solitude.jpg", alt: "Emerald Solitude by Nkem Agbo", position: 0 },
+          { url: "/images/catalogue/emerald-solitude.jpg", alt: "Sovereign Grace: The Indigo Queen pure oil impasto canvas by Nkem Agbo", position: 0 },
+          { url: "/images/catalogue/emerald-solitude-room.jpg", alt: "Sovereign Grace: The Indigo Queen displayed in luxury gallery interior", position: 1 },
         ],
       },
       {

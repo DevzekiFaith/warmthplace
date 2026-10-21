@@ -787,6 +787,51 @@ async function main() {
     },
   });
 
+  // 16 - Sovereign Grace: The Indigo Queen (New Artwork for Sale)
+  await prisma.product.create({
+    data: {
+      slug: "emerald-solitude",
+      title: "Sovereign Grace: The Indigo Queen",
+      department: "ART",
+      category: "ORIGINAL_PAINTING",
+      productType: "ORIGINAL",
+      description:
+        "A breathtaking museum-grade portrait celebrating regal African matriarchy, ancestral sovereignty, and sacred adornment. Rendered in exquisite profile, an African queen is adorned in an elaborate sculptural indigo-dyed adire headwrap interwoven with cowrie shells and delicate molten gold filigree. Her royal garments flow in layered cobalt, deep violet, and burnt sienna with thick, sculpted palette-knife impasto and shimmering gold leaf accents against an amber ground etched with ancient geometric glyphs. Hand-signed recto and verso by Nkem Agbo, delivered with an embossed studio certificate of provenance.",
+      medium: "Heavy-body oil, sculptural palette-knife impasto, natural fermented indigo, and 24k gold leaf on stretched Belgian linen, natural oak floating frame",
+      materials: "Belgian linen, artist oils & acrylics, 24k gold leaf foil, natural oak floater frame",
+      year: 2026,
+      widthCm: 75,
+      heightCm: 140,
+      depthCm: 5.0,
+      weightKg: 6.8,
+      orientation: "PORTRAIT",
+      price: 50000000, // ₦500,000 (~$333 USD)
+      currency: "NGN",
+      stock: 1,
+      status: "PUBLISHED",
+      enquiryOnly: false,
+      shippingClass: "FRAGILE",
+      featured: true,
+      isSample: true,
+      artistId: nkem.id,
+      collections: { connect: [{ id: colHeirloom.id }] },
+      images: {
+        create: [
+          {
+            url: "/images/catalogue/emerald-solitude.jpg",
+            alt: "Sovereign Grace: The Indigo Queen pure oil impasto canvas by Nkem Agbo",
+            position: 0,
+          },
+          {
+            url: "/images/catalogue/emerald-solitude-room.jpg",
+            alt: "Sovereign Grace: The Indigo Queen displayed in luxury gallery interior",
+            position: 1,
+          },
+        ],
+      },
+    },
+  });
+
   // 7. Editorial Articles
   await prisma.article.createMany({
     data: [

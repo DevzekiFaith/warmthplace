@@ -12,12 +12,24 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+function resolveProductSlug(slug: string): string {
+  if (
+    slug === "sovereign-grace" ||
+    slug === "sovereign-grace-indigo-queen" ||
+    slug === "the-indigo-queen"
+  ) {
+    return "emerald-solitude";
+  }
+  return slug;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const hero = getHeroProduct(slug);
+  const targetSlug = resolveProductSlug(slug);
+  const hero = getHeroProduct(targetSlug) || getHeroProduct(slug);
   try {
     const product = await prisma.product.findUnique({
-      where: { slug },
+      where: { slug: targetSlug },
       include: {
         artist: { select: { name: true } },
         images: { take: 1 },
@@ -59,9 +71,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 async function getProduct(slug: string) {
+  const targetSlug = resolveProductSlug(slug);
   try {
     const dbProduct = await prisma.product.findUnique({
-      where: { slug },
+      where: { slug: targetSlug },
       include: {
         artist: {
           select: {
@@ -74,10 +87,10 @@ async function getProduct(slug: string) {
         images: { orderBy: { position: "asc" } },
       },
     });
-    return dbProduct ?? getHeroProduct(slug) ?? null;
+    return dbProduct ?? getHeroProduct(targetSlug) ?? getHeroProduct(slug) ?? null;
   } catch (err) {
     console.warn("[ProductDetailPage] Database query notice:", err);
-    return getHeroProduct(slug) ?? null;
+    return getHeroProduct(targetSlug) ?? getHeroProduct(slug) ?? null;
   }
 }
 
