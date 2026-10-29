@@ -106,12 +106,13 @@ export function RoomScaleVisualizer({
         {/* Header */}
         <div
           style={{
-            padding: "1.25rem 1.75rem",
+            padding: "clamp(1rem, 3vw, 1.25rem) clamp(1rem, 3.5vw, 1.75rem)",
             borderBottom: "1px solid #E8E2D5",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             backgroundColor: "#FFFFFF",
+            gap: "0.75rem",
           }}
         >
           <div>
@@ -126,7 +127,7 @@ export function RoomScaleVisualizer({
             >
               Architectural Room Visualizer • Eye-Level Scale
             </div>
-            <h3 style={{ fontSize: "1.3rem", marginTop: "0.2rem", color: "#24221E" }}>
+            <h3 style={{ fontSize: "clamp(1.05rem, 2.5vw, 1.3rem)", marginTop: "0.2rem", color: "#24221E" }}>
               {artworkTitle}
             </h3>
           </div>
@@ -149,7 +150,7 @@ export function RoomScaleVisualizer({
         {/* Dimension & Staging Bar */}
         <div
           style={{
-            padding: "0.75rem 1.75rem",
+            padding: "0.75rem clamp(1rem, 3.5vw, 1.75rem)",
             backgroundColor: "#F4F0E8",
             display: "flex",
             justifyContent: "space-between",
@@ -164,7 +165,7 @@ export function RoomScaleVisualizer({
           <div>
             <strong>True Dimensions:</strong> {w}H × {h}W cm ({wIn}&quot;H × {hIn}&quot;W) • Depth: {depthCm} cm ({((depthCm || 5) * 0.3937).toFixed(1)}&quot;) • Finish: <strong>{frameFinish}</strong>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
             <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.06em", color: "#8A857B" }}>
               Stage Setting:
             </span>
@@ -282,6 +283,7 @@ export function RoomScaleVisualizer({
               position: "relative",
               marginTop: "48px",
               width: `${artWidthPx}px`,
+              maxWidth: "calc(100% - 2rem)",
               height: `${artHeightPx}px`,
               ...getFrameStyle(),
               borderRadius: "2px",
@@ -332,6 +334,7 @@ export function RoomScaleVisualizer({
               <div
                 style={{
                   width: "480px",
+                  maxWidth: "calc(100% - 2rem)",
                   height: "36px",
                   backgroundColor: "#D9D4CB",
                   borderRadius: "2px",
@@ -355,6 +358,7 @@ export function RoomScaleVisualizer({
               <div
                 style={{
                   width: "560px",
+                  maxWidth: "calc(100% - 1.5rem)",
                   height: "56px",
                   backgroundColor: "#E2DDD3",
                   borderRadius: "6px 6px 0 0",
@@ -367,6 +371,8 @@ export function RoomScaleVisualizer({
                   fontSize: "0.72rem",
                   color: "#8A857B",
                   letterSpacing: "0.05em",
+                  textAlign: "center",
+                  padding: "0 0.5rem",
                 }}
               >
                 Contemporary 3-Seater Sofa (220 cm Wide)
@@ -378,6 +384,7 @@ export function RoomScaleVisualizer({
               <div
                 style={{
                   width: "420px",
+                  maxWidth: "calc(100% - 2rem)",
                   height: "22px",
                   backgroundColor: "#B89A65",
                   borderRadius: "2px",

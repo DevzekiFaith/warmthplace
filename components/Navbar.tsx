@@ -119,21 +119,32 @@ export function Navbar() {
 
           {/* Action Controls: Currency Switcher, Search, Bag, Mobile Toggle */}
           <div className="header-actions">
-            {/* Desktop / Tablet Currency Switcher */}
-            <div className="currency-select-wrap">
-              <select
-                className="currency-select"
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-                aria-label="Select Currency"
-                title="Switch display currency"
+            {/* Responsive Naira / Dollar Toggle (Desktop, Tablet & Mobile) */}
+            <div
+              className="header-currency-toggle"
+              role="group"
+              aria-label="Toggle currency between Naira and Dollar"
+            >
+              <button
+                type="button"
+                onClick={() => setCurrency("NGN")}
+                className={`header-currency-btn ${currency === "NGN" ? "active" : ""}`}
+                aria-pressed={currency === "NGN"}
+                title="Display prices in Nigerian Naira (₦)"
               >
-                {Object.entries(currencies).map(([code, config]) => (
-                  <option key={code} value={code}>
-                    {config.label}
-                  </option>
-                ))}
-              </select>
+                <span className="currency-symbol">₦</span>
+                <span className="currency-code">NGN</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setCurrency("USD")}
+                className={`header-currency-btn ${currency === "USD" ? "active" : ""}`}
+                aria-pressed={currency === "USD"}
+                title="Display prices in US Dollars ($)"
+              >
+                <span className="currency-symbol">$</span>
+                <span className="currency-code">USD</span>
+              </button>
             </div>
 
             {/* Search Trigger */}
@@ -297,7 +308,32 @@ export function Navbar() {
 
             {/* Quick Currency Selector Pills */}
             <div className="mobile-currency-bar">
-              <span className="mobile-currency-label">Currency</span>
+              <div className="mobile-currency-header">
+                <span className="mobile-currency-label">Display Currency</span>
+                <span className="mobile-currency-active-tag">
+                  {currency === "NGN" ? "🇳🇬 Naira (₦)" : currency === "USD" ? "🇺🇸 US Dollar ($)" : `${currencies[currency]?.symbol || ""} ${currency}`}
+                </span>
+              </div>
+              <div className="mobile-currency-primary-toggle" role="group" aria-label="Switch between Naira and Dollar">
+                <button
+                  type="button"
+                  onClick={() => setCurrency("NGN")}
+                  className={`mobile-currency-toggle-btn ${currency === "NGN" ? "active" : ""}`}
+                  aria-pressed={currency === "NGN"}
+                >
+                  <span>🇳🇬</span>
+                  <span>₦ NGN (Naira)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCurrency("USD")}
+                  className={`mobile-currency-toggle-btn ${currency === "USD" ? "active" : ""}`}
+                  aria-pressed={currency === "USD"}
+                >
+                  <span>🇺🇸</span>
+                  <span>$ USD (Dollar)</span>
+                </button>
+              </div>
               <div className="mobile-currency-pills">
                 {Object.entries(currencies).map(([code, config]) => (
                   <button

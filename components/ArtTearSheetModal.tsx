@@ -137,9 +137,10 @@ export function ArtTearSheetModal({
         </div>
 
         {/* Printable Tear Sheet Content */}
-        <div style={{ padding: "2.5rem 3rem", color: "#24221E" }}>
+        <div className="tear-sheet-card" style={{ color: "#24221E" }}>
           {/* Studio Header */}
           <div
+            className="tear-sheet-header"
             style={{
               display: "flex",
               justifyContent: "space-between",
@@ -147,13 +148,15 @@ export function ArtTearSheetModal({
               borderBottom: "2px solid #24221E",
               paddingBottom: "1.25rem",
               marginBottom: "2rem",
+              flexWrap: "wrap",
+              gap: "1rem",
             }}
           >
             <div>
               <h2
                 style={{
                   fontFamily: "var(--font-serif)",
-                  fontSize: "1.8rem",
+                  fontSize: "clamp(1.4rem, 3.5vw, 1.8rem)",
                   letterSpacing: "0.08em",
                   textTransform: "uppercase",
                   fontWeight: 600,
@@ -173,7 +176,7 @@ export function ArtTearSheetModal({
                 Contemporary West African Art &amp; Living Gallery
               </div>
             </div>
-            <div style={{ textAlign: "right", fontSize: "0.8rem", color: "#5C5850" }}>
+            <div style={{ fontSize: "0.8rem", color: "#5C5850" }}>
               <div>Studio &amp; Archive: Lagos • London • Abuja</div>
               <div>curator@warmthplace.com • warmthplace.com</div>
               <div style={{ marginTop: "0.25rem", color: "#A64B32", fontWeight: 600 }}>
@@ -184,11 +187,8 @@ export function ArtTearSheetModal({
 
           {/* Main Grid: Artwork photo & core details */}
           <div
+            className="tear-sheet-main-grid"
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1.1fr",
-              gap: "2.5rem",
-              alignItems: "start",
               marginBottom: "2.5rem",
             }}
           >
@@ -259,6 +259,8 @@ export function ArtTearSheetModal({
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: "0.5rem",
                 }}
               >
                 <div>
@@ -365,10 +367,9 @@ export function ArtTearSheetModal({
 
           {/* Authentication & Signature Footer */}
           <div
+            className="tear-sheet-specs-grid"
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "2rem",
+              gap: "1.5rem",
               paddingTop: "1.5rem",
               borderTop: "1px solid #E8E2D5",
               fontSize: "0.78rem",

@@ -163,7 +163,7 @@ export default async function ArtistProfilePage({ params }: Props) {
             <p>{artist.bio}</p>
           </div>
 
-          <div style={{ display: "flex", gap: "1rem" }}>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <a href="#works" className="btn btn-primary">
               View Available Works ({artist.products.length})
             </a>

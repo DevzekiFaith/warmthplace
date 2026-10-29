@@ -16,17 +16,22 @@ export function ImageZoom({
       style={{
         overflow: "hidden",
         position: "relative",
+        aspectRatio: "auto",
       }}
     >
       <Image
         src={src}
         alt={alt}
-        fill
-        sizes="(max-width: 1024px) 100vw, 650px"
+        width={1200}
+        height={900}
+        sizes="(max-width: 1024px) 100vw, 680px"
         priority
         loading="eager"
         style={{
-          objectFit: "cover",
+          width: "100%",
+          height: "auto",
+          display: "block",
+          objectFit: "contain",
         }}
       />
     </div>

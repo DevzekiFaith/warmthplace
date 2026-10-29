@@ -55,7 +55,7 @@ export default async function ArtistsIndexPage() {
               flexDirection: "column",
             }}
           >
-            <div style={{ position: "relative", height: "380px", background: "#EEEAE1" }}>
+            <div style={{ position: "relative", height: "clamp(280px, 45vw, 380px)", background: "#EEEAE1" }}>
               <Image
                 src={artist.portraitImage || "/images/catalogue/harmattan-procession.jpg"}
                 alt={artist.name}
@@ -65,7 +65,7 @@ export default async function ArtistsIndexPage() {
               />
             </div>
 
-            <div style={{ padding: "2.25rem", display: "flex", flexDirection: "column", flexGrow: 1 }}>
+            <div style={{ padding: "clamp(1.25rem, 3.5vw, 2.25rem)", display: "flex", flexDirection: "column", flexGrow: 1 }}>
               <span
                 style={{
                   fontSize: "0.75rem",

@@ -133,7 +133,8 @@ export default async function JournalArticlePage({ params }: Props) {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "1.5rem",
+            flexWrap: "wrap",
+            gap: "0.75rem 1.5rem",
             fontSize: "0.85rem",
             color: "var(--color-ink-light)",
             paddingBottom: "2rem",
@@ -151,7 +152,7 @@ export default async function JournalArticlePage({ params }: Props) {
           <div
             style={{
               position: "relative",
-              height: "440px",
+              height: "clamp(240px, 45vw, 440px)",
               borderRadius: "3px",
               overflow: "hidden",
               marginBottom: "3rem",

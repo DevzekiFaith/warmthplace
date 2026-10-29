@@ -35,7 +35,7 @@ export default function ShippingReturnsPage() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
           gap: "2.5rem",
           marginBottom: "5rem",
         }}
@@ -45,7 +45,7 @@ export default function ShippingReturnsPage() {
           style={{
             backgroundColor: "#FFFFFF",
             border: "1px solid var(--border-subtle)",
-            padding: "2.25rem",
+            padding: "clamp(1.25rem, 3.5vw, 2.25rem)",
             borderRadius: "2px",
           }}
         >
@@ -80,7 +80,7 @@ export default function ShippingReturnsPage() {
           style={{
             backgroundColor: "#FFFFFF",
             border: "1px solid var(--border-subtle)",
-            padding: "2.25rem",
+            padding: "clamp(1.25rem, 3.5vw, 2.25rem)",
             borderRadius: "2px",
           }}
         >
@@ -114,7 +114,7 @@ export default function ShippingReturnsPage() {
           style={{
             backgroundColor: "#FFFFFF",
             border: "1px solid var(--border-subtle)",
-            padding: "2.25rem",
+            padding: "clamp(1.25rem, 3.5vw, 2.25rem)",
             borderRadius: "2px",
           }}
         >
@@ -216,7 +216,7 @@ export default function ShippingReturnsPage() {
             Customs Clearance, Duties & Export Permits
           </h2>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: "2rem" }}>
             <div>
               <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
                 National Antiquities Clearance & Export Documentation

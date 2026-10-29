@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { ProductCard } from "./ProductCard";
+import { useCurrency } from "./CurrencyContext";
 
 interface CatalogueProduct {
   id: string;
@@ -60,6 +61,7 @@ export function CatalogueView({
   const [selectedSort, setSelectedSort] = useState<string>("featured");
   const [selectedAvailability, setSelectedAvailability] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const { currency, setCurrency } = useCurrency();
 
   // Filter and sort products
   const filteredProducts = useMemo(() => {
@@ -129,15 +131,44 @@ export function CatalogueView({
           })}
         </div>
 
-        {/* Right Controls: Availability, Sort, Search */}
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+        {/* Right Controls: Currency Toggle, Availability, Sort, Search */}
+        <div className="catalogue-controls-group">
+          {/* Naira / Dollar Currency Toggle */}
+          <div
+            className="header-currency-toggle"
+            role="group"
+            aria-label="Toggle currency between Naira and Dollar"
+          >
+            <button
+              type="button"
+              onClick={() => setCurrency("NGN")}
+              className={`header-currency-btn ${currency === "NGN" ? "active" : ""}`}
+              aria-pressed={currency === "NGN"}
+              title="Display prices in Nigerian Naira (₦)"
+            >
+              <span>🇳🇬</span>
+              <span>₦ NGN</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setCurrency("USD")}
+              className={`header-currency-btn ${currency === "USD" ? "active" : ""}`}
+              aria-pressed={currency === "USD"}
+              title="Display prices in US Dollars ($)"
+            >
+              <span>🇺🇸</span>
+              <span>$ USD</span>
+            </button>
+          </div>
+
           {/* Quick Search Input */}
-          <div style={{ position: "relative" }}>
+          <div className="catalogue-search-wrap" style={{ position: "relative" }}>
             <input
               type="text"
               placeholder="Filter by keyword or artist..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              className="catalogue-search-input"
               style={{
                 padding: "0.45rem 0.85rem 0.45rem 2rem",
                 borderRadius: "30px",
@@ -173,6 +204,7 @@ export function CatalogueView({
           <select
             value={selectedAvailability}
             onChange={(e) => setSelectedAvailability(e.target.value)}
+            className="catalogue-select"
             style={{
               padding: "0.45rem 0.85rem",
               borderRadius: "2px",
@@ -192,6 +224,7 @@ export function CatalogueView({
           <select
             value={selectedSort}
             onChange={(e) => setSelectedSort(e.target.value)}
+            className="catalogue-select"
             style={{
               padding: "0.45rem 0.85rem",
               borderRadius: "2px",

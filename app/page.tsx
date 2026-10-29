@@ -284,7 +284,7 @@ export default async function HomePage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
               gap: "2rem",
             }}
           >
@@ -383,7 +383,7 @@ export default async function HomePage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
               gap: "2.5rem",
             }}
           >
@@ -397,7 +397,7 @@ export default async function HomePage() {
                   overflow: "hidden",
                 }}
               >
-                <div style={{ position: "relative", height: "320px", background: "#EEEAE1" }}>
+                <div style={{ position: "relative", height: "clamp(260px, 45vw, 320px)", background: "#EEEAE1" }}>
                   <Image
                     src={artist.portraitImage || "/images/catalogue/harmattan-procession.jpg"}
                     alt={artist.name}
@@ -406,7 +406,7 @@ export default async function HomePage() {
                     style={{ objectFit: "cover" }}
                   />
                 </div>
-                <div style={{ padding: "2rem" }}>
+                <div style={{ padding: "clamp(1.25rem, 3.5vw, 2rem)" }}>
                   <span
                     style={{
                       fontSize: "0.72rem",

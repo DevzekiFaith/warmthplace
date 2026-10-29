@@ -7,7 +7,12 @@ import { useRouter } from "next/navigation";
 import { useCart } from "./CartContext";
 import { useCurrency } from "./CurrencyContext";
 import { BASE_CURRENCY } from "@/lib/constants";
-import { formatPrice } from "@/lib/currency";
+import {
+  formatPrice,
+  getPrintPriceKobo,
+  PRINT_MIN_PRICE_KOBO,
+  PRINT_MAX_PRICE_KOBO,
+} from "@/lib/currency";
 
 export interface ProductCardProps {
   product: {
@@ -43,7 +48,7 @@ export interface ProductCardProps {
 export function ProductCard({ product, priority = false }: ProductCardProps) {
   const router = useRouter();
   const { addItem } = useCart();
-  const { currency, format } = useCurrency();
+  const { currency, setCurrency, format } = useCurrency();
   const [isSaved, setIsSaved] = useState(false);
 
   const primaryImage = product.images[0] || {
@@ -53,6 +58,16 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
   const isLcpCandidate =
     priority ||
+    primaryImage.url.includes("meadow-symphony-panoramic-impasto") ||
+    primaryImage.url.includes("white-stags-twilight-glade") ||
+    primaryImage.url.includes("royal-accord-ankara-couple") ||
+    primaryImage.url.includes("savannah-strata-azure-horizon") ||
+    primaryImage.url.includes("tufted-companion-on-olive-jute") ||
+    primaryImage.url.includes("courtyard-tambourine-celebration") ||
+    primaryImage.url.includes("midnight-afrobeat-saxophonist") ||
+    primaryImage.url.includes("harvest-canopy-tree-of-vitality") ||
+    primaryImage.url.includes("rain-on-ochre-pop-duck") ||
+    primaryImage.url.includes("trinity-blossoms-on-raw-jute") ||
     primaryImage.url.includes("canopy-and-grace") ||
     primaryImage.url.includes("royal-gazelles") ||
     primaryImage.url.includes("white-stags-twilight") ||
@@ -334,43 +349,79 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         </div>
 
         {/* Line 6: Price Row with Currency Switcher Support & Dual Print / Original Options */}
-        <div className="product-price-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "0.5rem" }}>
-          <div>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "0.45rem" }}>
+        <div className="product-price-row">
+          <div className="product-price-main">
+            <div style={{ display: "flex", alignItems: "baseline", gap: "0.45rem", flexWrap: "wrap" }}>
               <span className="product-price-primary">
                 {format(product.price)}
               </span>
               {isArt && (
                 <span style={{ fontSize: "0.7rem", color: "var(--color-ink-light)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 600 }}>
-                  Original
+                  {product.category === "PRINT_EDITION" ? "Print Edition" : "Original"}
                 </span>
               )}
             </div>
-            {isArt && (
+            {isArt && product.category !== "PRINT_EDITION" && (
               <div style={{ fontSize: "0.76rem", color: "var(--color-ink-muted)", marginTop: "2px" }}>
-                Prints from <strong style={{ color: "var(--color-ink-charcoal)" }}>{format(6500000)}</strong>
+                Prints: <strong style={{ color: "var(--color-ink-charcoal)" }}>{format(getPrintPriceKobo(product.price))}</strong>{" "}
+                <span style={{ fontSize: "0.68rem", color: "var(--color-ink-light)" }}>
+                  ({format(PRINT_MIN_PRICE_KOBO)}–{format(PRINT_MAX_PRICE_KOBO)})
+                </span>
+              </div>
+            )}
+            {currency !== BASE_CURRENCY && (
+              <div
+                className="product-price-indicative"
+                title="Official base checkout currency is Nigerian Naira (NGN)"
+              >
+                Base: {formatPrice(product.price, BASE_CURRENCY)}
               </div>
             )}
           </div>
 
-          {currency !== BASE_CURRENCY ? (
-            <span
-              className="product-price-indicative"
-              title="Official base checkout currency is Nigerian Naira (NGN)"
+          <div className="product-price-right">
+            <div
+              className="card-currency-toggle"
+              role="group"
+              aria-label="Toggle Naira or Dollar currency"
             >
-              Base: {formatPrice(product.price, BASE_CURRENCY)}
-            </span>
-          ) : (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCurrency("NGN");
+                }}
+                className={`card-currency-btn ${currency === "NGN" ? "active" : ""}`}
+                aria-pressed={currency === "NGN"}
+                title="Show price in Nigerian Naira (₦)"
+              >
+                ₦
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCurrency("USD");
+                }}
+                className={`card-currency-btn ${currency === "USD" ? "active" : ""}`}
+                aria-pressed={currency === "USD"}
+                title="Show price in US Dollars ($)"
+              >
+                $
+              </button>
+            </div>
             <span
               style={{
-                fontSize: "0.75rem",
+                fontSize: "0.73rem",
                 color: "#2E7D32",
                 fontWeight: 500,
               }}
             >
               ● In Studio
             </span>
-          )}
+          </div>
         </div>
       </div>
     </article>

@@ -443,7 +443,7 @@ async function main() {
       depthCm: 0.1,
       weightKg: 0.3,
       orientation: "SQUARE",
-      price: 42000000, // ₦420,000 (Approx $280 USD)
+      price: 8500000, // ₦85,000 NGN (Limited Edition Print)
       currency: "NGN",
       stock: 14,
       status: "PUBLISHED",
@@ -483,7 +483,7 @@ async function main() {
       depthCm: 0.1,
       weightKg: 0.3,
       orientation: "PORTRAIT",
-      price: 68000000, // ₦680,000 (Approx $450 USD)
+      price: 9500000, // ₦95,000 NGN (Fine-Art Photography Print)
       currency: "NGN",
       stock: 8,
       status: "PUBLISHED",
@@ -677,7 +677,7 @@ async function main() {
       depthCm: 15,
       weightKg: 1.1,
       orientation: "SQUARE",
-      price: 50000000, // ₦500,000 (~$333 USD)
+      price: 3500000, // ₦35,000 NGN (~$22 USD)
       currency: "NGN",
       stock: 12,
       status: "PUBLISHED",

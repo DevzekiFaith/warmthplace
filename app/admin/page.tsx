@@ -134,7 +134,7 @@ export default async function AdminPortalPage() {
       </div>
 
       {/* Catalogue Inventory Table */}
-      <div style={{ backgroundColor: "#FFFFFF", border: "1px solid var(--border-subtle)", padding: "2rem", borderRadius: "2px", marginBottom: "3rem" }}>
+      <div style={{ backgroundColor: "#FFFFFF", border: "1px solid var(--border-subtle)", padding: "clamp(1rem, 3.5vw, 2rem)", borderRadius: "2px", marginBottom: "3rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "1rem" }}>
           <div>
             <h2 style={{ fontSize: "1.4rem", margin: 0 }}>Recent Primary Market Inventory</h2>
@@ -142,7 +142,7 @@ export default async function AdminPortalPage() {
               Active stock ready for immediate museum crating and dispatch.
             </p>
           </div>
-          <div style={{ display: "flex", gap: "0.75rem" }}>
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
             <Link href="/shop/art" className="btn btn-secondary" style={{ fontSize: "0.78rem", padding: "0.6rem 1rem" }}>
               View Artworks →
             </Link>

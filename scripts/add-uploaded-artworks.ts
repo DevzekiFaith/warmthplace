@@ -189,7 +189,7 @@ async function main() {
     depthCm: 5,
     weightKg: 7.6,
     orientation: "PORTRAIT",
-    price: 355000000, // ₦3,550,000 (~$2,367 USD)
+    price: 50000000, // ₦500,000 NGN (~$313 USD)
     currency: "NGN",
     stock: 1,
     status: "PUBLISHED",
@@ -227,7 +227,7 @@ async function main() {
     depthCm: 4,
     weightKg: 6.5,
     orientation: "PORTRAIT",
-    price: 430000000, // ₦4,300,000 (~$2,867 USD)
+    price: 60000000, // ₦600,000 (~$400 USD)
     currency: "NGN",
     stock: 1,
     status: "PUBLISHED",

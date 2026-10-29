@@ -12,7 +12,12 @@ import { RoomScaleVisualizer } from "@/components/RoomScaleVisualizer";
 import { ArtTearSheetModal } from "@/components/ArtTearSheetModal";
 import { EstimatedDeliveryBox } from "@/components/EstimatedDeliveryBox";
 import { BASE_CURRENCY } from "@/lib/constants";
-import { formatPrice } from "@/lib/currency";
+import {
+  formatPrice,
+  getPrintPriceKobo,
+  PRINT_MIN_PRICE_KOBO,
+  PRINT_MAX_PRICE_KOBO,
+} from "@/lib/currency";
 
 export interface ProductProps {
   product: {
@@ -66,7 +71,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
   const { format, currency, setCurrency } = useCurrency();
 
   const isArt = product.department === "ART";
-  const printPriceKobo = 6500000; // ₦65,000 (~$45 USD) for Limited Archival Giclée Print
+  const printPriceKobo = getPrintPriceKobo(product.price); // ₦80,000 – ₦100,000 for Limited Archival Giclée Print
   const activePrice = isArt && selectedEdition === "PRINT" ? printPriceKobo : product.price;
 
   // Dimensions math
@@ -523,6 +528,8 @@ export function ProductDetailsClient({ product }: ProductProps) {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              flexWrap: "wrap",
+              gap: "0.6rem",
               marginTop: "1.25rem",
               padding: "0.75rem 1rem",
               backgroundColor: "var(--color-canvas-pure)",
@@ -531,7 +538,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
               fontSize: "0.82rem",
             }}
           >
-            <div style={{ display: "flex", gap: "1rem", color: "var(--color-ink-muted)" }}>
+            <div style={{ display: "flex", gap: "0.65rem", flexWrap: "wrap", color: "var(--color-ink-muted)" }}>
               <span>🔍 <strong>High-Definition</strong> Texture</span>
               <span>•</span>
               <span>🖋️ <strong>Hand-signed</strong> original</span>
@@ -550,25 +557,27 @@ export function ProductDetailsClient({ product }: ProductProps) {
         {/* =========================================================
             RIGHT COLUMN: THE ART DETAIL PANEL & CURATORIAL SPECS
            ========================================================= */}
-        <div>
+        <div className="pdp-details-column" style={{ minWidth: 0 }}>
           {/* Breadcrumb path & Catalog Ref */}
           <div
+            className="pdp-breadcrumb-row"
             style={{
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "baseline",
+              alignItems: "center",
               marginBottom: "0.85rem",
               flexWrap: "wrap",
-              gap: "0.5rem",
+              gap: "0.5rem 0.75rem",
             }}
           >
             <nav
               aria-label="Breadcrumb"
               style={{
-                fontSize: "0.78rem",
+                fontSize: "clamp(0.7rem, 2vw, 0.78rem)",
                 color: "var(--color-ink-light)",
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
+                lineHeight: 1.4,
               }}
             >
               <Link href="/">Home</Link> &gt;{" "}
@@ -580,14 +589,15 @@ export function ProductDetailsClient({ product }: ProductProps) {
 
             <span
               style={{
-                fontSize: "0.72rem",
-                letterSpacing: "0.14em",
+                fontSize: "0.7rem",
+                letterSpacing: "0.12em",
                 textTransform: "uppercase",
                 color: "var(--color-terracotta)",
                 fontWeight: 600,
                 backgroundColor: "rgba(166, 75, 50, 0.08)",
-                padding: "2px 8px",
+                padding: "3px 8px",
                 borderRadius: "2px",
+                whiteSpace: "nowrap",
               }}
             >
               ARCHIVE REF #SG748
@@ -595,7 +605,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
           </div>
 
           {/* Badges strip */}
-          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.85rem", flexWrap: "wrap" }}>
+          <div className="pdp-badges-strip">
             {isArt ? (
               selectedEdition === "ORIGINAL" ? (
                 <span className="badge badge-original">Original 1-of-1 Artwork</span>
@@ -648,11 +658,13 @@ export function ProductDetailsClient({ product }: ProductProps) {
 
           {/* Title */}
           <h1
+            className="pdp-product-title"
             style={{
-              fontSize: "clamp(2.2rem, 3.8vw, 3.2rem)",
+              fontSize: "clamp(1.65rem, 3.8vw, 3.1rem)",
               lineHeight: 1.15,
-              marginBottom: "0.45rem",
+              marginBottom: "0.5rem",
               color: "var(--color-ink-charcoal)",
+              overflowWrap: "break-word",
             }}
           >
             {product.title}
@@ -660,12 +672,15 @@ export function ProductDetailsClient({ product }: ProductProps) {
 
           {/* Meson Art / Pinterest Structured Sub-line */}
           <div
+            className="pdp-specs-subline"
             style={{
-              fontSize: "0.95rem",
+              fontSize: "clamp(0.8rem, 2.2vw, 0.92rem)",
+              lineHeight: 1.5,
               fontFamily: "var(--font-sans)",
               color: "var(--color-ink-muted)",
               marginBottom: "1.25rem",
-              letterSpacing: "0.02em",
+              letterSpacing: "0.01em",
+              overflowWrap: "anywhere",
             }}
           >
             <strong style={{ color: "var(--color-ink-charcoal)" }}>#SG748</strong> • 1P ({selectedEdition === "ORIGINAL" ? `Each ${h}H × ${w}W CM / ${hIn}"H × ${wIn}"W IN` : `Fine Art 310gsm Rag / ${h}H × ${w}W CM`}) / Stretch + {selectedFrame} Frame
@@ -673,18 +688,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
 
           {/* Artist Provenance Card */}
           {product.artist && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-                padding: "0.85rem 1.15rem",
-                backgroundColor: "var(--color-canvas-pure)",
-                borderRadius: "3px",
-                border: "1px solid var(--border-subtle)",
-                marginBottom: "1.5rem",
-              }}
-            >
+            <div className="pdp-artist-card">
               <div
                 style={{
                   width: "46px",
@@ -711,8 +715,8 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   style={{ objectFit: "cover" }}
                 />
               </div>
-              <div style={{ flexGrow: 1 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+              <div className="pdp-artist-info">
+                <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", flexWrap: "wrap" }}>
                   <Link
                     href={`/artists/${product.artist.slug}`}
                     style={{
@@ -736,14 +740,14 @@ export function ProductDetailsClient({ product }: ProductProps) {
                     ✓
                   </span>
                 </div>
-                <div style={{ fontSize: "0.78rem", color: "var(--color-ink-light)" }}>
+                <div style={{ fontSize: "0.78rem", color: "var(--color-ink-light)", lineHeight: 1.4, marginTop: "2px" }}>
                   {product.artist.discipline} • {product.artist.location}
                 </div>
               </div>
               <Link
                 href={`/artists/${product.artist.slug}`}
-                className="btn-text"
-                style={{ fontSize: "0.76rem" }}
+                className="btn-text pdp-artist-profile-link"
+                style={{ fontSize: "0.75rem", flexShrink: 0, whiteSpace: "nowrap" }}
               >
                 Profile →
               </Link>
@@ -754,31 +758,17 @@ export function ProductDetailsClient({ product }: ProductProps) {
               2-OPTION ACQUISITION SELECTOR: ORIGINAL CANVAS VS ARCHIVAL PRINT
              ========================================================= */}
           {isArt && (
-            <div
-              style={{
-                marginBottom: "1.5rem",
-                padding: "1.15rem",
-                backgroundColor: "var(--color-canvas-pure)",
-                borderRadius: "4px",
-                border: "1px solid var(--border-subtle)",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "0.85rem",
-                }}
-              >
+            <div className="pdp-acquisition-box">
+              <div className="pdp-tier-header">
                 <label
                   style={{
-                    fontSize: "0.8rem",
+                    fontSize: "0.78rem",
                     fontFamily: "var(--font-sans)",
                     fontWeight: 700,
-                    letterSpacing: "0.08em",
+                    letterSpacing: "0.06em",
                     textTransform: "uppercase",
                     color: "var(--color-ink-charcoal)",
+                    lineHeight: 1.4,
                   }}
                 >
                   Acquisition Tier:{" "}
@@ -786,87 +776,64 @@ export function ProductDetailsClient({ product }: ProductProps) {
                     {selectedEdition === "ORIGINAL" ? "1-of-1 Original Canvas" : "Limited Archival Fine Art Print"}
                   </span>
                 </label>
-                <span
-                  style={{
-                    fontSize: "0.72rem",
-                    color: "var(--color-ink-light)",
-                    letterSpacing: "0.04em",
-                    textTransform: "uppercase",
-                  }}
-                >
+                <span className="pdp-tier-provenance-tag">
                   Direct Studio Provenance
                 </span>
               </div>
 
-              <div
-                className="acquisition-tier-grid"
-                style={{
-                  display: "grid",
-                  gap: "0.85rem",
-                }}
-              >
+              <div className="acquisition-tier-grid">
                 {/* Option 1: 1-of-1 Original Canvas */}
                 <button
                   type="button"
                   onClick={() => setSelectedEdition("ORIGINAL")}
-                  style={{
-                    position: "relative",
-                    textAlign: "left",
-                    padding: "1.1rem 1.15rem",
-                    borderRadius: "3px",
-                    border:
-                      selectedEdition === "ORIGINAL"
-                        ? "2px solid var(--color-ink-charcoal)"
-                        : "1px solid var(--border-medium)",
-                    backgroundColor:
-                      selectedEdition === "ORIGINAL"
-                        ? "var(--color-canvas-light)"
-                        : "#FFFFFF",
-                    boxShadow:
-                      selectedEdition === "ORIGINAL"
-                        ? "0 4px 16px rgba(0,0,0,0.08)"
-                        : "none",
-                    cursor: "pointer",
-                    transition: "all var(--transition-fast)",
-                  }}
+                  className={`acquisition-tier-card ${selectedEdition === "ORIGINAL" ? "selected" : ""}`}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
-                    <span
-                      style={{
-                        fontSize: "0.68rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        padding: "2px 7px",
-                        borderRadius: "2px",
-                        backgroundColor:
-                          selectedEdition === "ORIGINAL"
-                            ? "var(--color-ink-charcoal)"
-                            : "rgba(36, 34, 30, 0.08)",
-                        color: selectedEdition === "ORIGINAL" ? "#FFFFFF" : "var(--color-ink-charcoal)",
-                      }}
-                    >
-                      1-of-1 Original
-                    </span>
-                    <span
-                      style={{
-                        fontSize: "1rem",
-                        fontWeight: 700,
-                        color: selectedEdition === "ORIGINAL" ? "var(--color-terracotta)" : "transparent",
-                      }}
-                    >
-                      ✓
-                    </span>
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem", marginBottom: "0.45rem" }}>
+                      <span
+                        style={{
+                          fontSize: "0.66rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          padding: "3px 7px",
+                          borderRadius: "2px",
+                          backgroundColor:
+                            selectedEdition === "ORIGINAL"
+                              ? "var(--color-ink-charcoal)"
+                              : "rgba(36, 34, 30, 0.08)",
+                          color: selectedEdition === "ORIGINAL" ? "#FFFFFF" : "var(--color-ink-charcoal)",
+                        }}
+                      >
+                        1-of-1 Original
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "0.95rem",
+                          fontWeight: 700,
+                          color: selectedEdition === "ORIGINAL" ? "var(--color-terracotta)" : "transparent",
+                          lineHeight: 1,
+                        }}
+                      >
+                        ✓
+                      </span>
+                    </div>
+
+                    <div style={{ fontSize: "1.02rem", fontWeight: 700, color: "var(--color-ink-charcoal)", fontFamily: "var(--font-serif)", marginBottom: "0.3rem" }}>
+                      Original Canvas
+                    </div>
+                    <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.45, marginBottom: "0.75rem" }}>
+                      Hand-painted oil &amp; impasto on Belgian linen. Hand-signed with timber crated transit.
+                    </div>
                   </div>
 
-                  <div style={{ fontSize: "1.02rem", fontWeight: 700, color: "var(--color-ink-charcoal)", fontFamily: "var(--font-serif)", marginBottom: "0.3rem" }}>
-                    Original Canvas
-                  </div>
-                  <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.4, marginBottom: "0.65rem" }}>
-                    Hand-painted oil &amp; impasto on Belgian linen. Hand-signed with timber crated transit.
-                  </div>
-                  <div style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--color-ink-charcoal)", letterSpacing: "-0.01em" }}>
-                    {format(product.price)}
+                  <div style={{ marginTop: "auto" }}>
+                    <div style={{ fontSize: "clamp(1.1rem, 3vw, 1.25rem)", fontWeight: 700, color: "var(--color-ink-charcoal)", letterSpacing: "-0.01em" }}>
+                      {format(product.price)}
+                    </div>
+                    <div style={{ fontSize: "0.68rem", color: "var(--color-ink-light)", marginTop: "0.2rem" }}>
+                      Unique 1/1 Collector Canvas
+                    </div>
                   </div>
                 </button>
 
@@ -874,64 +841,54 @@ export function ProductDetailsClient({ product }: ProductProps) {
                 <button
                   type="button"
                   onClick={() => setSelectedEdition("PRINT")}
-                  style={{
-                    position: "relative",
-                    textAlign: "left",
-                    padding: "1.1rem 1.15rem",
-                    borderRadius: "3px",
-                    border:
-                      selectedEdition === "PRINT"
-                        ? "2px solid var(--color-ink-charcoal)"
-                        : "1px solid var(--border-medium)",
-                    backgroundColor:
-                      selectedEdition === "PRINT"
-                        ? "var(--color-canvas-light)"
-                        : "#FFFFFF",
-                    boxShadow:
-                      selectedEdition === "PRINT"
-                        ? "0 4px 16px rgba(0,0,0,0.08)"
-                        : "none",
-                    cursor: "pointer",
-                    transition: "all var(--transition-fast)",
-                  }}
+                  className={`acquisition-tier-card ${selectedEdition === "PRINT" ? "selected" : ""}`}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
-                    <span
-                      style={{
-                        fontSize: "0.68rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        padding: "2px 7px",
-                        borderRadius: "2px",
-                        backgroundColor:
-                          selectedEdition === "PRINT"
-                            ? "var(--color-terracotta)"
-                            : "rgba(166, 75, 50, 0.12)",
-                        color: selectedEdition === "PRINT" ? "#FFFFFF" : "var(--color-terracotta)",
-                      }}
-                    >
-                      Edition of 75
-                    </span>
-                    <span
-                      style={{
-                        fontSize: "1rem",
-                        fontWeight: 700,
-                        color: selectedEdition === "PRINT" ? "var(--color-terracotta)" : "transparent",
-                      }}
-                    >
-                      ✓
-                    </span>
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem", marginBottom: "0.45rem" }}>
+                      <span
+                        style={{
+                          fontSize: "0.66rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          padding: "3px 7px",
+                          borderRadius: "2px",
+                          backgroundColor:
+                            selectedEdition === "PRINT"
+                              ? "var(--color-terracotta)"
+                              : "rgba(166, 75, 50, 0.12)",
+                          color: selectedEdition === "PRINT" ? "#FFFFFF" : "var(--color-terracotta)",
+                        }}
+                      >
+                        Edition of 75
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "0.95rem",
+                          fontWeight: 700,
+                          color: selectedEdition === "PRINT" ? "var(--color-terracotta)" : "transparent",
+                          lineHeight: 1,
+                        }}
+                      >
+                        ✓
+                      </span>
+                    </div>
+
+                    <div style={{ fontSize: "1.02rem", fontWeight: 700, color: "var(--color-ink-charcoal)", fontFamily: "var(--font-serif)", marginBottom: "0.3rem" }}>
+                      Archival Giclée Print
+                    </div>
+                    <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.45, marginBottom: "0.75rem" }}>
+                      Museum-grade 310gsm German etching cotton rag with pigment inks. Numbered edition.
+                    </div>
                   </div>
 
-                  <div style={{ fontSize: "1.02rem", fontWeight: 700, color: "var(--color-ink-charcoal)", fontFamily: "var(--font-serif)", marginBottom: "0.3rem" }}>
-                    Archival Giclée Print
-                  </div>
-                  <div style={{ fontSize: "0.78rem", color: "var(--color-ink-muted)", lineHeight: 1.4, marginBottom: "0.65rem" }}>
-                    Museum-grade 310gsm German etching cotton rag with pigment inks. Numbered edition.
-                  </div>
-                  <div style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--color-ink-charcoal)", letterSpacing: "-0.01em" }}>
-                    {format(printPriceKobo)}
+                  <div style={{ marginTop: "auto" }}>
+                    <div style={{ fontSize: "clamp(1.1rem, 3vw, 1.25rem)", fontWeight: 700, color: "var(--color-ink-charcoal)", letterSpacing: "-0.01em" }}>
+                      {format(printPriceKobo)}
+                    </div>
+                    <div style={{ fontSize: "0.68rem", color: "var(--color-ink-light)", marginTop: "0.2rem" }}>
+                      Studio Print Tier ({format(PRINT_MIN_PRICE_KOBO)} – {format(PRINT_MAX_PRICE_KOBO)})
+                    </div>
                   </div>
                 </button>
               </div>
@@ -953,95 +910,84 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   marginBottom: "1.75rem",
                 }}
               >
-                <div className="pdp-price-header-row" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.85rem", flexWrap: "wrap" }}>
-                    {hasStrikethrough && (
-                      <span
-                        style={{
-                          fontSize: "1.35rem",
-                          color: "var(--color-ink-light)",
-                          textDecoration: "line-through",
-                          textDecorationColor: "var(--color-terracotta)",
-                          fontFamily: "var(--font-sans)",
-                          fontWeight: 400,
-                        }}
-                        title="Original Valuation"
-                      >
-                        {format(originalPrice)}
-                      </span>
-                    )}
+                <div className="pdp-price-header-row">
+                  <div className="pdp-price-amount-group">
+                    <div className="pdp-price-badge-line">
+                      {hasStrikethrough && (
+                        <span
+                          style={{
+                            fontSize: "1.35rem",
+                            color: "var(--color-ink-light)",
+                            textDecoration: "line-through",
+                            textDecorationColor: "var(--color-terracotta)",
+                            fontFamily: "var(--font-sans)",
+                            fontWeight: 400,
+                          }}
+                          title="Original Valuation"
+                        >
+                          {format(originalPrice)}
+                        </span>
+                      )}
 
-                    <AnimatePresence mode="wait" initial={false}>
-                      <motion.span
-                        key={`${currency}-${selectedEdition}`}
-                        initial={{ opacity: 0, y: -4 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 4 }}
-                        transition={{ duration: 0.15 }}
-                        style={{
-                          fontSize: "2.3rem",
-                          fontWeight: 700,
-                          color: "var(--color-ink-charcoal)",
-                          fontFamily: "var(--font-sans)",
-                          letterSpacing: "-0.02em",
-                          display: "inline-block",
-                          lineHeight: 1.1,
-                        }}
-                      >
-                        {format(activePrice)}
-                      </motion.span>
-                    </AnimatePresence>
+                      <AnimatePresence mode="wait" initial={false}>
+                        <motion.span
+                          key={`${currency}-${selectedEdition}`}
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 4 }}
+                          transition={{ duration: 0.15 }}
+                          className="pdp-price-amount"
+                          style={{
+                            fontSize: "clamp(1.75rem, 5.5vw, 2.3rem)",
+                            fontWeight: 700,
+                            color: "var(--color-ink-charcoal)",
+                            fontFamily: "var(--font-sans)",
+                            letterSpacing: "-0.02em",
+                            display: "inline-block",
+                            lineHeight: 1.1,
+                          }}
+                        >
+                          {format(activePrice)}
+                        </motion.span>
+                      </AnimatePresence>
 
-                    {hasStrikethrough && (
-                      <span
-                        style={{
-                          fontSize: "0.72rem",
-                          fontWeight: 700,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.08em",
-                          padding: "3px 8px",
-                          backgroundColor: "rgba(166, 75, 50, 0.12)",
-                          color: "var(--color-terracotta)",
-                          borderRadius: "2px",
-                          border: "1px solid rgba(166, 75, 50, 0.25)",
-                        }}
-                      >
-                        Save 71% • Studio Release
-                      </span>
-                    )}
+                      {hasStrikethrough && (
+                        <span
+                          style={{
+                            fontSize: "0.7rem",
+                            fontWeight: 700,
+                            textTransform: "uppercase",
+                            letterSpacing: "0.06em",
+                            padding: "4px 8px",
+                            backgroundColor: "rgba(166, 75, 50, 0.12)",
+                            color: "var(--color-terracotta)",
+                            borderRadius: "2px",
+                            border: "1px solid rgba(166, 75, 50, 0.25)",
+                          }}
+                        >
+                          Save 71% • Studio Release
+                        </span>
+                      )}
 
-                    {isArt && !isOriginal && (
-                      <span
-                        style={{
-                          fontSize: "0.72rem",
-                          fontWeight: 700,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.08em",
-                          padding: "3px 8px",
-                          backgroundColor: "rgba(184, 154, 101, 0.15)",
-                          color: "var(--color-ink-charcoal)",
-                          borderRadius: "2px",
-                          border: "1px solid rgba(184, 154, 101, 0.35)",
-                        }}
-                      >
-                        Archival Fine Art Print • Ed. of 75
-                      </span>
+                      {isArt && !isOriginal && (
+                        <span className="pdp-edition-price-pill">
+                          Archival Fine Art Print • Ed. of 75
+                        </span>
+                      )}
+                    </div>
+
+                    {currency !== BASE_CURRENCY && (
+                      <div style={{ fontSize: "0.76rem", color: "var(--color-ink-light)", marginTop: "0.25rem" }}>
+                        Base studio price: <strong style={{ color: "var(--color-ink-charcoal)" }}>{formatPrice(activePrice, BASE_CURRENCY)}</strong>
+                      </div>
                     )}
                   </div>
 
                   {/* Framer Motion Smart Currency Toggle */}
                   <div
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      backgroundColor: "var(--color-canvas-pure)",
-                      padding: "4px",
-                      borderRadius: "24px",
-                      position: "relative",
-                      border: "1px solid var(--border-medium)",
-                      boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-                      flexShrink: 0,
-                    }}
+                    className="pdp-currency-toggle"
+                    role="group"
+                    aria-label="Toggle between Naira and US Dollar"
                   >
                     {[
                       { code: "NGN", label: "₦ NGN", flag: "🇳🇬" },
@@ -1053,12 +999,11 @@ export function ProductDetailsClient({ product }: ProductProps) {
                           key={opt.code}
                           type="button"
                           onClick={() => setCurrency(opt.code)}
+                          aria-pressed={isSelected}
+                          className={`pdp-currency-btn ${isSelected ? "active" : ""}`}
                           style={{
                             position: "relative",
                             zIndex: 2,
-                            padding: "6px 14px",
-                            fontSize: "0.78rem",
-                            fontWeight: 600,
                             border: "none",
                             background: "transparent",
                             color: isSelected ? "#FFFFFF" : "var(--color-ink-muted)",
@@ -1066,6 +1011,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                             borderRadius: "20px",
                             display: "flex",
                             alignItems: "center",
+                            justifyContent: "center",
                             gap: "6px",
                             transition: "color 0.18s ease",
                             userSelect: "none",
@@ -1138,6 +1084,8 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: "0.4rem",
                   marginBottom: "0.75rem",
                 }}
               >
@@ -1153,7 +1101,7 @@ export function ProductDetailsClient({ product }: ProductProps) {
                 >
                   Framing Option: <span style={{ color: "var(--color-terracotta)" }}>{selectedFrame}</span>
                 </label>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", flexWrap: "wrap" }}>
                   <span style={{ fontSize: "0.75rem", color: "var(--color-ink-light)" }}>
                     Slimline Floating Shadow Gap Included
                   </span>
@@ -1237,15 +1185,13 @@ export function ProductDetailsClient({ product }: ProductProps) {
 
           {/* Dimensions Metric & Imperial Matrix */}
           <div
+            className="pdp-dimensions-matrix"
             style={{
               padding: "1rem 1.25rem",
               backgroundColor: "var(--color-canvas-light)",
               borderRadius: "3px",
               border: "1px solid var(--border-subtle)",
               marginBottom: "2rem",
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "1rem",
               fontSize: "0.85rem",
             }}
           >
@@ -1317,8 +1263,16 @@ export function ProductDetailsClient({ product }: ProductProps) {
                   <button
                     type="button"
                     onClick={handleAddToCart}
-                    className="btn btn-primary"
-                    style={{ flex: "2 1 240px", height: "52px", fontSize: "0.92rem" }}
+                    className="btn btn-primary pdp-primary-acquire-btn"
+                    style={{
+                      flex: "2 1 220px",
+                      minHeight: "52px",
+                      fontSize: "clamp(0.78rem, 2.2vw, 0.9rem)",
+                      padding: "0.75rem 1.15rem",
+                      whiteSpace: "normal",
+                      textAlign: "center",
+                      lineHeight: 1.25,
+                    }}
                   >
                     {isArt
                       ? selectedEdition === "ORIGINAL"
@@ -1331,7 +1285,12 @@ export function ProductDetailsClient({ product }: ProductProps) {
                     type="button"
                     onClick={() => setEnquiryOpen(true)}
                     className="btn btn-secondary"
-                    style={{ flex: "1 1 140px", height: "52px", fontSize: "0.88rem" }}
+                    style={{
+                      flex: "1 1 140px",
+                      minHeight: "52px",
+                      fontSize: "clamp(0.78rem, 2.2vw, 0.88rem)",
+                      padding: "0.75rem 1rem",
+                    }}
                   >
                     Concierge Inquiry
                   </button>
@@ -1343,7 +1302,8 @@ export function ProductDetailsClient({ product }: ProductProps) {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    gap: "0.5rem",
+                    flexWrap: "wrap",
+                    gap: "0.65rem",
                     paddingTop: "0.75rem",
                     borderTop: "1px solid var(--border-subtle)",
                   }}

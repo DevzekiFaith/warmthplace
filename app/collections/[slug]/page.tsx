@@ -156,8 +156,9 @@ export default async function CollectionDetailPage({ params }: Props) {
           <div
             style={{
               position: "absolute",
-              bottom: "2rem",
-              left: "2.5rem",
+              bottom: "clamp(1.25rem, 3vw, 2rem)",
+              left: "clamp(1.25rem, 4vw, 2.5rem)",
+              right: "1.25rem",
               color: "#fff",
             }}
           >
@@ -193,6 +194,8 @@ export default async function CollectionDetailPage({ params }: Props) {
             display: "flex",
             alignItems: "baseline",
             justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "0.5rem",
             marginBottom: "2.5rem",
             borderBottom: "1px solid var(--border-subtle)",
             paddingBottom: "1rem",

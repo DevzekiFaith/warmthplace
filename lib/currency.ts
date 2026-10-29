@@ -49,3 +49,19 @@ export function getIndicativePrice(
     baseFormatted,
   };
 }
+
+export const PRINT_MIN_PRICE_KOBO = 8000000; // ₦80,000 NGN
+export const PRINT_MAX_PRICE_KOBO = 10000000; // ₦100,000 NGN
+
+/**
+ * Returns the Limited Archival Fine Art Print price in kobo (₦80,000 – ₦100,000)
+ * scaled by the artwork's valuation tier.
+ */
+export function getPrintPriceKobo(originalPriceInKobo: number): number {
+  if (originalPriceInKobo <= 22000000) return 8000000; // ₦80,000
+  if (originalPriceInKobo <= 25500000) return 8500000; // ₦85,000
+  if (originalPriceInKobo <= 29500000) return 9000000; // ₦90,000
+  if (originalPriceInKobo < 50000000) return 9500000; // ₦95,000
+  return 10000000; // ₦100,000 (for ₦500,000+ originals)
+}
+

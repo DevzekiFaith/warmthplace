@@ -79,7 +79,7 @@ export default function CartPage() {
             Explore our curated gallery collection of original African canvases,
             sculptures, ceramics, and textiles.
           </p>
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
+          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/shop/art" className="btn btn-primary">
               Discover Fine Art
             </Link>
@@ -96,13 +96,10 @@ export default function CartPage() {
               {items.map((item) => (
                 <div
                   key={item.id}
+                  className="cart-page-item-row"
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "100px 1fr auto",
-                    gap: "1.5rem",
                     paddingBottom: "1.5rem",
                     borderBottom: "1px solid var(--border-subtle)",
-                    alignItems: "center",
                   }}
                 >
                   <div
@@ -189,13 +186,13 @@ export default function CartPage() {
                     </div>
                   </div>
 
-                  <div style={{ textAlign: "right" }}>
+                  <div className="cart-page-item-price-col" style={{ textAlign: "right" }}>
                     <div
                       style={{
                         fontSize: "1.15rem",
                         fontWeight: 600,
                         color: "var(--color-ink-charcoal)",
-                        marginBottom: "0.5rem",
+                        marginBottom: "0.25rem",
                       }}
                     >
                       {format(item.price * item.quantity)}
@@ -229,7 +226,7 @@ export default function CartPage() {
               backgroundColor: "var(--color-canvas-light)",
               border: "1px solid var(--border-subtle)",
               borderRadius: "3px",
-              padding: "2rem",
+              padding: "clamp(1.25rem, 3.5vw, 2rem)",
             }}
           >
             <h2 style={{ fontSize: "1.6rem", marginBottom: "1.5rem" }}>
@@ -270,7 +267,7 @@ export default function CartPage() {
                 Estimate Shipping by Destination
               </label>
 
-              <div style={{ display: "flex", gap: "0.5rem" }}>
+              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
                 <select
                   value={destinationCountry}
                   onChange={(e) => setDestinationCountry(e.target.value)}

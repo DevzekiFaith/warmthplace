@@ -76,7 +76,7 @@ export function EstimatedDeliveryBox({
         backgroundColor: "var(--color-canvas-pure)",
         border: "1px solid var(--border-medium)",
         borderRadius: "3px",
-        padding: "1.25rem 1.5rem",
+        padding: "clamp(1rem, 3vw, 1.25rem) clamp(1rem, 3.5vw, 1.5rem)",
         marginBottom: "2rem",
         boxShadow: "0 4px 15px rgba(36, 34, 30, 0.03)",
       }}
@@ -91,35 +91,37 @@ export function EstimatedDeliveryBox({
           paddingBottom: "0.85rem",
           marginBottom: "1rem",
           flexWrap: "wrap",
-          gap: "0.5rem",
+          gap: "0.65rem",
         }}
       >
         <div>
           <span
             style={{
-              fontSize: "0.72rem",
+              fontSize: "0.7rem",
               textTransform: "uppercase",
-              letterSpacing: "0.14em",
+              letterSpacing: "0.12em",
               color: "#2E7D32",
               fontWeight: 600,
               display: "flex",
               alignItems: "center",
+              flexWrap: "wrap",
               gap: "0.35rem",
             }}
           >
-            <span style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: "#2E7D32" }} />
+            <span style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: "#2E7D32", flexShrink: 0 }} />
             Ready for Dispatch • Tracked Express Delivery
           </span>
 
           <div
             style={{
-              fontSize: "1.15rem",
+              fontSize: "clamp(1rem, 2.8vw, 1.15rem)",
               fontWeight: 600,
               color: "var(--color-ink-charcoal)",
-              marginTop: "0.25rem",
+              marginTop: "0.3rem",
               display: "flex",
               alignItems: "center",
-              gap: "0.5rem",
+              flexWrap: "wrap",
+              gap: "0.35rem 0.5rem",
             }}
           >
             <span>🚚 Estimated Arrival:</span>

@@ -37,7 +37,7 @@ export default function TermsPage() {
           style={{
             backgroundColor: "var(--color-gallery-ivory)",
             border: "1px solid var(--border-subtle)",
-            padding: "2.25rem",
+            padding: "clamp(1.25rem, 3.5vw, 2.25rem)",
             borderRadius: "2px",
             marginBottom: "2rem",
           }}
