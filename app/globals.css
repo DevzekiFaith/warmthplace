@@ -3741,4 +3741,387 @@ body {
   }
 }
 
+/* =====================================================================
+   10. JUMIA / TEMU / KONGA STYLE COMPACT FLASH COUPON POP-UP (MAX 325px)
+   ===================================================================== */
+
+/* Compact Floating Corner Widget */
+.jtk-floating-widget {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 95;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.7rem 0.35rem 0.4rem;
+  background: #1F1D1A;
+  color: #FFFFFF;
+  border: 1.5px solid #E85D04;
+  border-radius: 999px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.jtk-floating-widget:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(232, 93, 4, 0.35);
+}
+
+.jtk-widget-tag {
+  background: linear-gradient(135deg, #FF4D00 0%, #D92B04 100%);
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.22rem 0.48rem;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.jtk-widget-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.1;
+}
+
+.jtk-widget-title {
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #FFB703;
+}
+
+.jtk-widget-timer {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Backdrop & Compact 325px Popup Wrapper */
+.jtk-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(12, 11, 10, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.jtk-popup-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 325px;
+}
+
+.jtk-card {
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid #FF6B00;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+/* Top Flash Header Banner (Jumia / Temu Orange-Terracotta Gradient) */
+.jtk-header {
+  background: linear-gradient(135deg, #D9381E 0%, #FF6B00 100%);
+  color: #FFFFFF;
+  padding: 0.75rem 0.9rem 0.7rem;
+  text-align: center;
+}
+
+.jtk-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.jtk-flash-pill {
+  background: #FFE600;
+  color: #181512;
+  font-size: 0.6rem;
+  font-weight: 900;
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.jtk-timer-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.jtk-timer-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.92);
+  margin-right: 3px;
+}
+
+.jtk-t-box {
+  background: #181512;
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 4px;
+  border-radius: 3px;
+  min-width: 20px;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.jtk-t-sec {
+  background: #FFE600;
+  color: #181512;
+}
+
+.jtk-t-sep {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.jtk-headline {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #FFFFFF;
+  line-height: 1.15;
+  margin: 0 0 2px;
+  letter-spacing: -0.01em;
+}
+
+.jtk-big-pct {
+  color: #FFE600;
+}
+
+.jtk-sub {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.25;
+}
+
+/* Compact Card Body */
+.jtk-body {
+  padding: 0.75rem;
+  background: #FFFDF9;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+/* Ticket-Style Voucher Strip */
+.jtk-coupon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: #FFF5EB;
+  border: 1.5px dashed #FF6B00;
+  border-radius: 8px;
+  padding: 0.45rem 0.6rem;
+}
+
+.jtk-coupon-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.jtk-coupon-badge {
+  background: #D9381E;
+  color: #FFFFFF;
+  font-size: 0.68rem;
+  font-weight: 900;
+  padding: 0.28rem 0.45rem;
+  border-radius: 5px;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.jtk-coupon-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.jtk-coupon-code {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #181512;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+}
+
+.jtk-coupon-desc {
+  font-size: 0.58rem;
+  color: #6E6A61;
+  line-height: 1.15;
+}
+
+.jtk-copy-btn {
+  background: #FF6B00;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.jtk-copy-btn:hover {
+  background: #D9381E;
+}
+
+.jtk-copy-btn.copied {
+  background: #166534;
+}
+
+/* 3-Item Mini Flash Grid (Tiny 56px Square Thumbnails) */
+.jtk-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+}
+
+.jtk-mini-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid #EAE4D7;
+  border-radius: 7px;
+  padding: 0.35rem;
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.jtk-mini-item:hover {
+  border-color: #FF6B00;
+  transform: translateY(-1px);
+}
+
+.jtk-mini-thumb {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #F4EFE6;
+  margin-bottom: 0.25rem;
+}
+
+.jtk-mini-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #D9381E;
+  color: #FFFFFF;
+  font-size: 0.5rem;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 3px;
+  line-height: 1.1;
+}
+
+.jtk-mini-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+}
+
+.jtk-mini-price strong {
+  font-size: 0.64rem;
+  font-weight: 800;
+  color: #D9381E;
+}
+
+.jtk-mini-price del {
+  font-size: 0.54rem;
+  color: #9A948A;
+}
+
+/* Full-Width Primary CTA Button */
+.jtk-cta-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(135deg, #FF6B00 0%, #D9381E 100%);
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 0.62rem 0.75rem;
+  border-radius: 7px;
+  text-decoration: none;
+  box-shadow: 0 6px 14px rgba(217, 56, 30, 0.28);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.jtk-cta-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(217, 56, 30, 0.38);
+  color: #FFFFFF;
+}
+
+/* Temu / Jumia Circular Bottom Close Button */
+.jtk-close-circle {
+  margin-top: 0.65rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+  background: rgba(24, 21, 18, 0.65);
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.jtk-close-circle:hover {
+  background: #D9381E;
+  border-color: #FFFFFF;
+  transform: scale(1.08);
+}
+
+@media (max-width: 360px) {
+  .jtk-popup-wrap {
+    max-width: 295px;
+  }
+  .jtk-mini-thumb {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+
+
 

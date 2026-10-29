@@ -5,6 +5,7 @@ import { CartProvider } from "@/components/CartContext";
 import { Navbar } from "@/components/Navbar";
 import { CartDrawer } from "@/components/CartDrawer";
 import { Footer } from "@/components/Footer";
+import { QuickSaleModal } from "@/components/QuickSaleModal";
 import { SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION } from "@/lib/constants";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -88,6 +89,7 @@ export default function RootLayout({
             <main style={{ flexGrow: 1 }}>{children}</main>
             <Footer />
             <CartDrawer />
+            <QuickSaleModal />
           </CartProvider>
         </CurrencyProvider>
         <Analytics />
