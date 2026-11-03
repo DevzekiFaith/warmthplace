@@ -71,6 +71,23 @@ PAYMENT_PROVIDER="mock"
     console.log("[prepare-db] Prisma client already generated or locked by dev server.");
   }
 
+  // Ensure newest artwork is registered in DB
+  try {
+    const addMaternalScript = path.join(__dirname, "add-maternal-devotion-db.js");
+    if (fs.existsSync(addMaternalScript)) {
+      execSync(`node "${addMaternalScript}"`, {
+        cwd: projectRoot,
+        stdio: "inherit",
+        env: {
+          ...process.env,
+          DATABASE_URL: `file:${prismaDb}`,
+        },
+      });
+    }
+  } catch (err) {
+    console.warn("[prepare-db] Notice registering maternal devotion artwork:", err.message);
+  }
+
   console.log("[prepare-db] Database ready for Next.js build.");
 } catch (err) {
   console.warn("[prepare-db] Non-fatal notice during database prep:", err.message);

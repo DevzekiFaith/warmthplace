@@ -58,6 +58,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
   const isLcpCandidate =
     priority ||
+    primaryImage.url.includes("maternal-devotion") ||
     primaryImage.url.includes("meadow-symphony-panoramic-impasto") ||
     primaryImage.url.includes("white-stags-twilight-glade") ||
     primaryImage.url.includes("royal-accord-ankara-couple") ||
